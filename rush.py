@@ -1,23 +1,17 @@
 from car import Car
 from truck import Truck
-# import numpy as np
+import numpy as np
 import matplotlib.pyplot as plt
 
 class RushHour(object):
+    """
+    Rush Hour class for loading and playing Rush Hour
+    """
     def __init__(self, size):
         self.size = size
-        self.field = []
 
-
-    def load_field(self):
-
-        # repeat size times for field height of size
-        for i in range(self.size):
-
-            # set field with to size
-            self.field.append([0] * self.size)
-
-        return self.field
+        # create empty matrix with numpy function zeros
+        self.field = np.zeros((size, size), dtype=int)
 
 
     def load_vehicles(self, car_size, x, y, id, orientation):
@@ -66,7 +60,7 @@ class RushHour(object):
 
                 # vehicle id on filled spot
                 self.field[y_car][x_car] = id
-                
+
 
         return self.field
 
@@ -75,13 +69,24 @@ class RushHour(object):
 
             return True
 
+    def show_field(self):
+        """
+        All matplotlib details for showing the Rush Hour board
+        """
+        plt.matshow(rush.field)
+        row_labels = ['6', '5', '4', '3', '2', '1']
+        col_labels = ['1', '2', '3', '4', '5', '6']
+        plt.xticks(range(6), col_labels)
+        plt.gca().xaxis.tick_bottom()
+        plt.yticks(range(6), row_labels)
+        plt.show()
+
+        return True
 
 
 if __name__ == "__main__":
     rush = RushHour(6)
-    rush.load_field()
-    rush.load_vehicles(3, 1, 100, 1, 'v')
-    plt.imshow(rush.field)
-    plt.axis("off")
-    plt.show()
+    rush.load_vehicles(2, 1, 1, 1, 'h')
+    rush.load_vehicles(3, 1, 2, 2, 'v')
+    rush.show_field()
     print(rush.field)

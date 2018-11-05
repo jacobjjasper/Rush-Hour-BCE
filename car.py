@@ -13,7 +13,7 @@ class Car(object):
         if y in range(6):
             self.y = y
         else:
-            raise ValueError(f"Invalid y: {y}")
+            raise ValueError("Invalid y: y", y={y})
 
         if orientation.upper() == 'H':
             self.orientation = orientation

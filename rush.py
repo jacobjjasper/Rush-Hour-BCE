@@ -1,7 +1,7 @@
 from car import Car
 from truck import Truck
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 class RushHour(object):
     def __init__(self, size):
@@ -11,7 +11,7 @@ class RushHour(object):
 
     def load_field(self):
         for i in range(self.size):
-            self.field.append([''] * self.size)
+            self.field.append([0] * self.size)
 
         return self.field
 
@@ -24,7 +24,6 @@ class RushHour(object):
         print(f"y={y}")
         print(id)
         print(orientation)
-
 
         # horizontal
         if orientation.upper() == 'H':
@@ -42,6 +41,9 @@ class RushHour(object):
                 x_car = x - 1
                 self.field[y_car + i][x] = id
 
+        plt.imshow(self.field)
+        plt.show()
+
         return self.field
 
 
@@ -55,5 +57,5 @@ if __name__ == "__main__":
     rush = RushHour(6)
     rush.load_field()
     rush.load_vehicles(2, 2, 0, 2, 'H')
-    rush.load_vehicles(2, 0, 5, 3, 'V')
+    rush.load_vehicles(3, 0, 5, 3, 'V')
     print(rush.field)

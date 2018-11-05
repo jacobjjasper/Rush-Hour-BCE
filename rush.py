@@ -10,7 +10,11 @@ class RushHour(object):
 
 
     def load_field(self):
+
+        # repeat size times for field height of size
         for i in range(self.size):
+
+            # set field with to size
             self.field.append([0] * self.size)
 
         return self.field
@@ -21,19 +25,30 @@ class RushHour(object):
 
         # horizontal
         if orientation.upper() == 'H':
-            print(f"orient: {orientation}")
+
+            # if vehicle is of size 2, fill 2 spots
             for i in range(size):
+
+                # input y = 1: y-coordinate = 0 (left bottom)
                 y_car = self.size - y
+
+                # input x = 1: x-coordinate = 0
                 x_car = x - 1 + i
+
+                # vehicle id on filled spot
                 self.field[y_car][x_car] = id
 
         # vertical
         if orientation.upper() == 'V':
-            for i in range(1, size + 1):
-                y_car = self.size - y - 1 - i
-                print(y_car)
+            for i in range(size):
+
+                # input y = 1: y-coordinate = 0 (left bottom)
+                y_car = self.size - y - i
+
+                # input x = 1: x-coordinate = 0
                 x_car = x - 1
-                print(x_car)
+
+                # vehicle id on filled spot
                 self.field[y_car][x_car] = id
 
         return self.field
@@ -48,7 +63,7 @@ class RushHour(object):
 if __name__ == "__main__":
     rush = RushHour(6)
     rush.load_field()
-    rush.load_vehicles(3, 1, 1, 1, 'H')
+    rush.load_vehicles(3, 1, 1, 1, 'v')
     plt.imshow(rush.field)
     plt.axis("off")
     plt.show()

@@ -66,7 +66,7 @@ class RushHour(object):
 
                 # vehicle id on filled spot
                 self.field[y_car][x_car] = id
-                
+
 
         return self.field
 
@@ -84,4 +84,6 @@ if __name__ == "__main__":
     plt.imshow(rush.field)
     plt.axis("off")
     plt.show()
-    print(rush.field)
+
+    for i in rush.field:
+        print(i)

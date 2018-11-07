@@ -86,7 +86,18 @@ class RushHour(object):
 
 if __name__ == "__main__":
     rush = RushHour(6)
+<<<<<<< HEAD
     rush.load_vehicles(2, 1, 1, 1, 'h')
     rush.load_vehicles(3, 1, 2, 2, 'v')
     rush.show_field()
     print(rush.field)
+=======
+    rush.load_field()
+    rush.load_vehicles(3, 1, 100, 1, 'v')
+    plt.imshow(rush.field)
+    plt.axis("off")
+    plt.show()
+
+    for i in rush.field:
+        print(i)
+>>>>>>> 01ea502b27f5ee9cac7be0fbbe8112e31a9e3481

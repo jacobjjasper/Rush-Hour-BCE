@@ -1,0 +1,35 @@
+Heuristieken hoorcollege 05-11-2019
+
+Hoeveel mogelijkheden?
+- Upperbound = maximaal zoveel mogelijkheden, dus langste pad die je nodig hebt om
+  het probleem op te lossen.
+- Lowerbound = snelst mogelijke manier om het probleem op te lossen
+- Concept van het maken van een ruimte met al je mogelijkheden is het begin van je
+  probleem eigenlijk in de heuristieken.
+- Complexiteitsfunctie van de toestandsruimte (2^n-1)
+- (n boven k) = N!/ k!(n-k)!
+- Moeilijkheid instantie: toestandsruimtegrootte
+- Moeiljkheid probleem: toename t'grootte
+- Moeilijkheid van een pronleem (instantie)
+  - Klassiek antwoord: "Probleem si moeilijk als het efficientste algoritme voor
+    moeilijkste instantie niet in polynomiale tijd een oplossing vindt"
+  - We kennen dat algoritme niet (en kunnen dat niet kennen)
+  - Verschillen per instantie zijn groot
+- Constraints satisfaction problem (CSP)
+  - Oplossing moet voldoen aan constraints
+  - Alle oplossingen even goed
+- Constrained optimization problem (COP)
+  - Oplossing: zo goed mogelijk
+  - Objective function (scorefunctie, fitnessfunctie)
+  - OOK constraints aan variabelen
+- Free optimization problem (FOP)
+  - Oplossing: zo goed mogelijke
+  - Objective function (scorefunctie, fitnessfunctie)
+  - Geen constraints aan variabelen
+GEMIST STUKJE
+- Een instantie is makkelijk als:
+  - De toestandsruimte klein is
+  - De oplossingsdichtheid hoog is
+  - Er goed bruikbare leuds zijn
+  - De oplossingen patronen vertonen
+  - De objective function is convex

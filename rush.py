@@ -2,6 +2,7 @@ from car import Car
 from truck import Truck
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 
 class RushHour(object):
     """
@@ -73,12 +74,23 @@ class RushHour(object):
         """
         All matplotlib details for showing the Rush Hour board
         """
-        plt.matshow(rush.field)
-        row_labels = ['6', '5', '4', '3', '2', '1']
-        col_labels = ['1', '2', '3', '4', '5', '6']
-        plt.xticks(range(6), col_labels)
+
+        # add ones around field
+        rush.field = np.pad(rush.field, ((1,1),(1,1)), 'constant', constant_values=1)
+
+        # add exit
+        exit_row = self.size - (self.size // 2 + 1) + 1
+        rush.field[exit_row][-1] = 0
+
+        # create colormap: 0 = white, 1 = black, 2(myCar) = red
+        cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y'])
+
+        plt.matshow(rush.field, cmap=cmap)
+        col_labels = range(self.size, 0, -1)
+        row_labels = range(1, self.size + 1)
+        plt.xticks(range(1, self.size + 1), row_labels)
         plt.gca().xaxis.tick_bottom()
-        plt.yticks(range(6), row_labels)
+        plt.yticks(range(1, self.size + 1), col_labels)
         plt.show()
 
         return True
@@ -86,18 +98,20 @@ class RushHour(object):
 
 if __name__ == "__main__":
     rush = RushHour(6)
-<<<<<<< HEAD
-    rush.load_vehicles(2, 1, 1, 1, 'h')
-    rush.load_vehicles(3, 1, 2, 2, 'v')
+
+    # my car (id = 2)
+    rush.load_vehicles(2, 4, 4, 2, 'h')
+
+    # other cars and trucks
+    rush.load_vehicles(3, 3, 4, 3, 'v')
+    rush.load_vehicles(3, 4, 1, 4, 'v')
+    rush.load_vehicles(3, 6, 4, 5, 'v')
+    rush.load_vehicles(2, 1, 1, 6, 'v')
+    rush.load_vehicles(2, 2, 2, 7, 'h')
+    rush.load_vehicles(2, 5, 1, 3, 'h')
+    rush.load_vehicles(2, 5, 3, 3, 'h')
+    rush.load_vehicles(2, 4, 6, 3, 'h')
+
+
     rush.show_field()
     print(rush.field)
-=======
-    rush.load_field()
-    rush.load_vehicles(3, 1, 100, 1, 'v')
-    plt.imshow(rush.field)
-    plt.axis("off")
-    plt.show()
-
-    for i in rush.field:
-        print(i)
->>>>>>> 01ea502b27f5ee9cac7be0fbbe8112e31a9e3481

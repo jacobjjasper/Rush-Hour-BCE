@@ -83,7 +83,7 @@ class RushHour(object):
         rush.field[exit_row][-1] = 0
 
         # create colormap: 0 = white, 1 = black, 2(myCar) = red
-        cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y'])
+        cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'orange', 'grey', 'purple'])
 
         plt.matshow(rush.field, cmap=cmap)
         col_labels = range(self.size, 0, -1)
@@ -108,9 +108,9 @@ if __name__ == "__main__":
     rush.load_vehicles(3, 6, 4, 5, 'v')
     rush.load_vehicles(2, 1, 1, 6, 'v')
     rush.load_vehicles(2, 2, 2, 7, 'h')
-    rush.load_vehicles(2, 5, 1, 3, 'h')
-    rush.load_vehicles(2, 5, 3, 3, 'h')
-    rush.load_vehicles(2, 4, 6, 3, 'h')
+    rush.load_vehicles(2, 5, 1, 8, 'h')
+    rush.load_vehicles(2, 5, 3, 9, 'h')
+    rush.load_vehicles(2, 4, 6, 10, 'h')
 
 
     rush.show_field()

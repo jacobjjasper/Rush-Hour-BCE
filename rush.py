@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
+
 class RushHour(object):
     """
     Rush Hour class for loading and playing Rush Hour
@@ -11,12 +12,16 @@ class RushHour(object):
     def __init__(self, size):
         self.size = size
 
-        # create empty matrix with numpy function zeros
+        # create matrix of zeros with numpy
         self.field = np.zeros((size, size), dtype=int)
 
 
     def load_vehicle(self, vehicle):
+        """
+        Loads one vehicle in matrix
+        """
 
+        # get attributes from vehicle object
         vehicle_size = vehicle.size
         x = vehicle.x
         y = vehicle.y
@@ -71,12 +76,62 @@ class RushHour(object):
         return self.field
 
 
-    def fill_field(self, vehicles):
+    def fill_field(self, field):
         """
+        Creates list of all vehicles from file and calls load_vehicle()
         """
 
+        # create empty array of all vehicles
+        vehicles = []
 
-        return True
+        # open text file with rush hour field
+        with open(field) as file:
+            reader = file.readlines()
+
+            # boolean for more than 9 vehicles in field
+            under_10_vehicles = True
+
+            # get every line in file, strip from \n
+            for line in reader:
+                line = line.strip()
+
+                # type car (C) or truck (T)
+                type = line[0]
+
+                # if vehicle id is two digits (see .txt file)
+                if line == "---":
+                    under_10_vehicles = False
+                    continue
+
+                # vehicles with id < 10
+                if under_10_vehicles:
+                    id = int(line[1])
+                    x = int(line[2])
+                    y = int(line[3])
+                    orientation = line[4]
+
+                # vehicles with id >= 10
+                else:
+                    id = int(line[1] + line[2])
+                    x = int(line[3])
+                    y = int(line[4])
+                    orientation = line[5]
+
+                # make either car or truck, else print error
+                if type == "C":
+                    new = Car(id, x, y, orientation)
+                elif type == "T":
+                    new = Truck(id, x, y, orientation)
+                else:
+                    print(line)
+
+                # append object to list of vehicles
+                vehicles.append(new)
+
+        # call load_vehicle function for every vehicle in list
+        for vehicle in vehicles:
+            rush.load_vehicle(vehicle)
+
 
     def show_field(self):
         """
@@ -101,48 +156,9 @@ class RushHour(object):
         plt.yticks(range(1, self.size + 1), col_labels)
         plt.show()
 
-        return True
 
 
 if __name__ == "__main__":
     rush = RushHour(6)
-
-    vehicles = []
-
-    input_file = "game1.txt"
-    with open(input_file) as file:
-        reader = file.readlines()
-        under_10 = True
-        for line in reader:
-            line = line.strip()
-            print(line)
-            type = line[0]
-            if line == "---":
-                under_10 = False
-                continue
-
-            if under_10:
-                id = int(line[1])
-                x = int(line[2])
-                y = int(line[3])
-                orientation = line[4]
-            else:
-                id = int(line[1] + line[2])
-                x = int(line[3])
-                y = int(line[4])
-                orientation = line[5]
-            if type == "C":
-                new = Car(id, x, y, orientation)
-            elif type == "T":
-                new = Truck(id, x, y, orientation)
-            else:
-                print(line)
-
-            vehicles.append(new)
-
-    print(vehicles)
-    for vehicle in vehicles:
-        rush.load_vehicle(vehicle)
-
-    print(rush.field)
+    rush.fill_field("game1.txt")
     rush.show_field()

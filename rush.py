@@ -15,8 +15,13 @@ class RushHour(object):
         self.field = np.zeros((size, size), dtype=int)
 
 
-    def load_vehicles(self, car_size, x, y, id, orientation):
-        vehicles = []
+    def load_vehicle(self, vehicle):
+
+        vehicle_size = vehicle.size
+        x = vehicle.x
+        y = vehicle.y
+        id = vehicle.id
+        orientation = vehicle.orientation
 
         # weg als car.py wordt gebruikt
         if y < 0:
@@ -28,11 +33,11 @@ class RushHour(object):
         if orientation.upper() == 'H':
 
             # if vehicle is of size 2, fill 2 spots
-            for i in range(car_size):
+            for i in range(vehicle_size):
 
                 # vehicle cannot go off the board
                 # weg als car.py wordt gebruikt
-                if x + car_size - 1 > self.size:
+                if x + vehicle_size - 1 > self.size:
                     return print("Error too big")
 
                 # input y = 1: y-coordinate = 0 (left bottom)
@@ -46,11 +51,11 @@ class RushHour(object):
 
         # vertical
         if orientation.upper() == 'V':
-            for i in range(car_size):
+            for i in range(vehicle_size):
 
                 # vehicle cannot go off the board
                 # weg als car.py wordt gebruikt
-                if y + car_size - 1 > self.size:
+                if y + vehicle_size - 1 > self.size:
                     return print("Error too big")
 
                 # input y = 1: y-coordinate = 0 (left bottom)
@@ -67,8 +72,11 @@ class RushHour(object):
 
 
     def fill_field(self, vehicles):
+        """
+        """
 
-            return True
+
+        return True
 
     def show_field(self):
         """
@@ -99,19 +107,42 @@ class RushHour(object):
 if __name__ == "__main__":
     rush = RushHour(6)
 
-    # my car (id = 2)
-    rush.load_vehicles(2, 4, 4, 2, 'h')
+    vehicles = []
 
-    # other cars and trucks
-    rush.load_vehicles(3, 3, 4, 3, 'v')
-    rush.load_vehicles(3, 4, 1, 4, 'v')
-    rush.load_vehicles(3, 6, 4, 5, 'v')
-    rush.load_vehicles(2, 1, 1, 6, 'v')
-    rush.load_vehicles(2, 2, 2, 7, 'h')
-    rush.load_vehicles(2, 5, 1, 8, 'h')
-    rush.load_vehicles(2, 5, 3, 9, 'h')
-    rush.load_vehicles(2, 4, 6, 10, 'h')
+    input_file = "game1.txt"
+    with open(input_file) as file:
+        reader = file.readlines()
+        under_10 = True
+        for line in reader:
+            line = line.strip()
+            print(line)
+            type = line[0]
+            if line == "---":
+                under_10 = False
+                continue
 
+            if under_10:
+                id = int(line[1])
+                x = int(line[2])
+                y = int(line[3])
+                orientation = line[4]
+            else:
+                id = int(line[1] + line[2])
+                x = int(line[3])
+                y = int(line[4])
+                orientation = line[5]
+            if type == "C":
+                new = Car(id, x, y, orientation)
+            elif type == "T":
+                new = Truck(id, x, y, orientation)
+            else:
+                print(line)
 
-    rush.show_field()
+            vehicles.append(new)
+
+    print(vehicles)
+    for vehicle in vehicles:
+        rush.load_vehicle(vehicle)
+
     print(rush.field)
+    rush.show_field()

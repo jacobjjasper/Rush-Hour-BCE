@@ -9,11 +9,8 @@ class RushHour(object):
     """
     Rush Hour class for loading and playing Rush Hour
     """
-    def __init__(self, size):
-        self.size = size
-
-        # create matrix of zeros with numpy
-        self.field = np.zeros((size, size), dtype=int)
+    def __init__(self, game):
+        self.fill_field(game)
 
 
     def load_vehicle(self, vehicle):
@@ -52,7 +49,7 @@ class RushHour(object):
                 x_car = x - 1 + i
 
                 # vehicle id on filled spot
-                self.field[y_car][x_car] = id
+                self.field[y_car][x_car] = vehicle
 
         # vertical
         if orientation.upper() == 'V':
@@ -70,11 +67,7 @@ class RushHour(object):
                 x_car = x - 1
 
                 # vehicle id on filled spot
-                self.field[y_car][x_car] = id
-
-
-        return self.field
-
+                self.field[y_car][x_car] = vehicle
 
     def fill_field(self, field):
         """
@@ -88,11 +81,20 @@ class RushHour(object):
         with open(field) as file:
             reader = file.readlines()
 
+            # get field size
+            self.size = int(reader[0][0])
+            reader.pop(0)
+
+            # build field with list comprehension
+            self.field = [[0 for i in range(self.size)] for n in range(self.size)]
+
             # boolean for more than 9 vehicles in field
             under_10_vehicles = True
 
-            # get every line in file, strip from \n
+            # get every line in file
             for line in reader:
+
+                # strip from \n
                 line = line.strip()
 
                 # type car (C) or truck (T)
@@ -130,25 +132,34 @@ class RushHour(object):
 
         # call load_vehicle function for every vehicle in list
         for vehicle in vehicles:
-            rush.load_vehicle(vehicle)
+            self.load_vehicle(vehicle)
 
+        return self.field
 
     def show_field(self):
         """
         All matplotlib details for showing the Rush Hour board
         """
+        # copy field to new variable
+        print_field = self.field
+
+        # change objects into their integers for printing
+        for index, y in enumerate(print_field):
+            for i, x in enumerate(y):
+                if not isinstance(x, int):
+                    print_field[index][i] = x.id
 
         # add ones around field
-        rush.field = np.pad(rush.field, ((1,1),(1,1)), 'constant', constant_values=1)
+        print_field = np.pad(print_field, ((1,1),(1,1)), 'constant', constant_values=1)
 
         # add exit
         exit_row = self.size - (self.size // 2 + 1) + 1
-        rush.field[exit_row][-1] = 0
+        print_field[exit_row][-1] = 0
 
         # create colormap: 0 = white, 1 = black, 2(myCar) = red
         cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'orange', 'grey', 'purple'])
 
-        plt.matshow(rush.field, cmap=cmap)
+        plt.matshow(print_field, cmap=cmap)
         col_labels = range(self.size, 0, -1)
         row_labels = range(1, self.size + 1)
         plt.xticks(range(1, self.size + 1), row_labels)
@@ -159,6 +170,5 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rush = RushHour(6)
-    rush.fill_field("game1.txt")
+    rush = RushHour("game1.txt")
     rush.show_field()

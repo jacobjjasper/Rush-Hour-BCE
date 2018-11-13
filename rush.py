@@ -75,7 +75,7 @@ class RushHour(object):
         """
 
         # create empty array of all vehicles
-        vehicles = []
+        self.vehicles = {}
 
         # open text file with rush hour field
         with open(field) as file:
@@ -128,10 +128,10 @@ class RushHour(object):
                     print(line)
 
                 # append object to list of vehicles
-                vehicles.append(new)
+                self.vehicles[id] = new
 
         # call load_vehicle function for every vehicle in list
-        for vehicle in vehicles:
+        for vehicle in self.vehicles.values():
             self.load_vehicle(vehicle)
 
         return self.field
@@ -168,7 +168,70 @@ class RushHour(object):
         plt.show()
 
 
+    def move(self, id, move):
+        """
+        Move vehicle
+        """
+        vehicle = self.vehicles[id]
+
+        # if move is to the right or up
+        if move > 0:
+
+            # if vehicle is placed horizontally
+            if vehicle.orientation == 'H':
+
+                # check for every block
+                for i in range(move):
+
+                    # if places in matrix are not 0
+                    if self.field[self.size - vehicle.y][vehicle.x + vehicle.size - 1 + i] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.x += move
+
+            elif vehicle.orientation == 'V':
+                for i in range(move):
+                    if self.field[self.size - (vehicle.y + vehicle.size + i)][vehicle.x - 1] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.y += move
+
+        # if move is to the left or down
+        if move < 0:
+
+            # if vehicle is placed horizontally
+            if vehicle.orientation == 'H':
+
+                # check for every block
+                for i in range(move):
+
+                    # if places in matrix are not 0
+                    if self.field[self.size - vehicle.y][vehicle.x + i - 1] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.x += move
+
+            elif vehicle.orientation == 'V':
+                for i in range(move):
+                    if self.field[self.size - (vehicle.y + i - 1)][vehicle.x - 1] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.y += move
+
+
+
 
 if __name__ == "__main__":
     rush = RushHour("game1.txt")
     rush.show_field()
+    rush.move(7, -3)
+    print(rush.vehicles[7].x)
+    print(rush.vehicles[7].x + rush.vehicles[7].size -1)

@@ -1,5 +1,6 @@
 Heuristieken hoorcollege 05-11-2019
 
+College 2
 Hoeveel mogelijkheden?
 - Upperbound = maximaal zoveel mogelijkheden, dus langste pad die je nodig hebt om
   het probleem op te lossen.
@@ -33,3 +34,45 @@ GEMIST STUKJE
   - Er goed bruikbare leuds zijn
   - De oplossingen patronen vertonen
   - De objective function is convex
+
+College 3
+  Probleemtypes
+    - constraint satisfaction (CSP)
+    - constrained optimization (COP)
+    - Free optimization (FOP)
+
+  De basics
+    - Iteratief algoritme
+    - Sterk voor een algoritme dat je sowieso een oplossing vindt.
+    - Back tracking: 1-->1-->1-->1 en dan checken of het een geldige oplossing
+      is (nee?)--> dan ga je dus het eerste vakje terug vervangen met alle
+      mogelijkheden en dan checken voor elke verandering of die klopt (Nee?)-->
+      dan check je de voorlaatste mogelijkheid om mogelijkheden enz. dus je
+      je maakt laatste vakje elke mogelijkheid, nee geen oplossing, dan ga je
+      dus terug naar een mogelijkheid met leeg vakje, vult in het voorlaatste
+      vakje een 2 in en vult dan weer 1-9 in, in het lege vakje, etc. Depth
+      first
+    - Depth- first checklist: stack, recursie, archief, back tracking, pruning,
+      exhaustive, brute force, compleet
+
+  Depth- first: open issues
+    - Depth-limited search, iterative deepening search
+    - Alleen mutaties op de stack?
+    - Efficientie van het archief
+    - (On)eindigheid ...
+    - Breadth-first checklist: queue, geen recursie, archief, geen back
+      tracking, pruning (ja, door archief), exhaustive, brute force ja,
+      compleet ja maar ook optimaal
+    - Alleen maar nadelen bij een kakuru
+    - Als je niet helemaal naar beneden hoeft in je boom, is breadth firt heel
+      handig. Dus met de schuifjes (of zoals met rushhour). Maar het nadeel is,
+      is dat de queue dus heel groot kan worden. Bij de schuifjes is dit dus
+      een probleem (lowerbound = 2; upperbound = 4) stijgt dus met elke child
+      2/4 keer, dus exponentieel en dit kan een heel groot probleem zijn voor je
+      geheugen. Archief moet dan net zo groot zijn als de statespace (9!).
+
+Branch-and-Bound
+  - Depth-first voor Constrained Optimization problems, archief, Backtracking?,
+    recursie, pruning (yes, in a way), Exhaustive, Brute force, optimaal
+  - Breadth firt waarbij je de mogelijkheden die het maximum overschrijden
+    gelijk weg doet.

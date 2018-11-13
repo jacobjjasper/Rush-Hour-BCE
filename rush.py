@@ -228,10 +228,19 @@ class RushHour(object):
 
 
 
+        # empty field
+        for index, y in enumerate(self.field):
+            for i, x in enumerate(y):
+                    self.field[index][i] = 0
+
+        # fill field with moved vehicle
+        for vehicle in self.vehicles.values():
+            self.load_vehicle(vehicle)
+
+        self.show_field()
 
 if __name__ == "__main__":
-    rush = RushHour("game1.txt")
+    rush = RushHour("easy.txt")
     rush.show_field()
-    rush.move(7, -3)
-    print(rush.vehicles[7].x)
-    print(rush.vehicles[7].x + rush.vehicles[7].size -1)
+    rush.move(3, -3)
+    rush.move(2, 1)

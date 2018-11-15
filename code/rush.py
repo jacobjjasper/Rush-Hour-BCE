@@ -251,16 +251,19 @@ class RushHour(object):
 
     def play(self):
 
-        while not self.won():
+        return True
 
-            # promt user
-            command = input("> ").upper()
 
-            self.move(int(command[0]), int(command.split(' ')[1]))
+        # while not self.won():
+        #
+        #     # promt user
+        #     command = input("> ").upper()
+        #
+        #     self.move(int(command[0]), int(command.split(' ')[1]))
 
 
 
 if __name__ == "__main__":
-    rush = RushHour("easy.txt")
+    rush = RushHour("../data/game1.txt")
     rush.show_field()
     rush.play()

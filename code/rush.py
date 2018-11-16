@@ -11,6 +11,10 @@ class RushHour(object):
     def __init__(self, game):
         self.make_first_field(game)
 
+        # make field archive and add hash of initial field to the set
+        self.archive = set()
+        self.archive.add(self.create_hash(list(self.vehicles.values())))
+
 
     def make_first_field(self, field):
         """
@@ -334,21 +338,45 @@ class RushHour(object):
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
+        self.check(child_fields)
+
+        return True
+
+    def create_hash(self, vehicles):
+        """ Creates a unique respresentation of field """
+
+        field = 0
+
+        for i, vehicle in enumerate(vehicles):
+            if vehicle.orientation == 'H':
+
+                # add coordinate to integer field, as if it's made up of
+                # single digits -> from the last car id until the red car
+                field += vehicle.x * pow(10, i)
+            else:
+                field += vehicle.y * pow(10, i)
+
+        return field
 
 
+    def check(self, childs):
+
+        for field in childs:
+
+            # remember old length of archive (type: set)
+            old_length = len(self.archive)
+
+            # add hash value of field to archive
+            self.archive.add(self.create_hash(field))
+
+            # if it has been added, the field is unique
+            if len(self.archive) > old_length:
+
+                # add to queue
+                pass
+            else:
+                print("field already seen")
 
 
-        for field in child_fields:
-            for vehicle in field:
-                print(vehicle.x, vehicle.y)
             self.fill_field(field)
             self.show_field()
-
-
-        return child_fields
-
-
-if __name__ == "__main__":
-    rush = RushHour("../data/easy.txt")
-    rush.show_field()
-    rush.get_child_fields()

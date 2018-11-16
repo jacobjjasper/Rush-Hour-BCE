@@ -33,12 +33,8 @@ class Vehicle:
             raise ValueError(f"Invalid orientation: {orientation} for vehicle id: {id}")
 
 
-
-
-        self.options = []
-
         def __str__(self):
-            return f"Car {id}, x: {x}, y:{y}, orientation: {orientation}"
+            return f"Vehicle {self.id}, x: {self.x}, y:{self.y}, orientation: {self.orientation}"
 
         def __repr__(self):
-            return f"Car {id}, x: {x}, y:{y}, orientation: {orientation}"
+            return f"Vehicle {self.id}, x: {self.x}, y:{self.y}, orientation: {self.orientation}"

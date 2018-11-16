@@ -275,9 +275,7 @@ class RushHour(object):
 
         child_fields = []
 
-
         for vehicle in list(self.vehicles.values()):
-            new_vehicles = list(self.vehicles.values())
 
             x = vehicle.x
             y = vehicle.y
@@ -291,12 +289,14 @@ class RushHour(object):
                     # if not blocked by other vehicle
                     if self.field[self.size - vehicle.y][vehicle.x - 2] == 0:
 
+                        # get parent field
+                        new_vehicles = list(self.vehicles.values())
+
                         # create new vehicle
                         new_vehicle = Vehicle(vehicle.id, x - 1, y, vehicle.orientation, vehicle.length)
 
                         # exchange old with new vehicle
-                        new_vehicles.remove(vehicle)
-                        new_vehicles.append(new_vehicle)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
 
                         # add to child_fields
                         child_fields.append(new_vehicles)
@@ -306,9 +306,9 @@ class RushHour(object):
 
                     # if not blocked by other vehicle
                     if self.field[self.size - vehicle.y][vehicle.x + vehicle.length - 1] == 0:
+                        new_vehicles = list(self.vehicles.values())
                         new_vehicle = Vehicle(vehicle.id, x + 1, y, vehicle.orientation, vehicle.length)
-                        new_vehicles.remove(vehicle)
-                        new_vehicles.append(new_vehicle)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
             # if vehicle is vertical
@@ -319,9 +319,9 @@ class RushHour(object):
 
                     # if not blocked by other vehicle
                     if self.field[self.size - (vehicle.y - 1)][vehicle.x - 1] == 0:
+                        new_vehicles = list(self.vehicles.values())
                         new_vehicle = Vehicle(vehicle.id, x, y - 1, vehicle.orientation, vehicle.length)
-                        new_vehicles.remove(vehicle)
-                        new_vehicles.append(new_vehicle)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
                 # if vehicle is not on top edge
@@ -329,14 +329,18 @@ class RushHour(object):
 
                     # if not blocked by other vehicle
                     if self.field[self.size - (vehicle.y + vehicle.length)][vehicle.x - 1] == 0:
+                        new_vehicles = list(self.vehicles.values())
                         new_vehicle = Vehicle(vehicle.id, x, y + 1, vehicle.orientation, vehicle.length)
-                        new_vehicles.remove(vehicle)
-                        new_vehicles.append(new_vehicle)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
 
+
+
+
         for field in child_fields:
-            print(field)
+            for vehicle in field:
+                print(vehicle.x, vehicle.y)
             self.fill_field(field)
             self.show_field()
 
@@ -345,6 +349,6 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rush = RushHour("../data/game1.txt")
+    rush = RushHour("../data/easy.txt")
     rush.show_field()
     rush.get_child_fields()

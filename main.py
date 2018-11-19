@@ -12,10 +12,15 @@ import algorithms
 from rush import RushHour
 
 class Main():
-    algorithms.random()
+
+    def __init__(self, board):
+        rush = RushHour(board)
+
+        # rush.show_field()
+        algorithms.random(rush)
 
 
 
 
 if __name__ == "__main__":
-    Main()
+    Main("data/easy.txt")

@@ -2,14 +2,14 @@ from vehicle import Vehicle
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-
+import copy
 
 class RushHour(object):
     """
     Rush Hour class for loading and playing Rush Hour
     """
-    def __init__(self, game):
-        self.make_first_field(game)
+    def __init__(self, board):
+        self.make_first_field(board)
 
         # make field archive and add hash of initial field to the set
         self.archive = set()
@@ -95,6 +95,7 @@ class RushHour(object):
         for vehicle in vehicles:
             self.load_vehicle(vehicle)
 
+        return True
 
     def load_vehicle(self, vehicle):
         """
@@ -158,13 +159,17 @@ class RushHour(object):
         All matplotlib details for showing the Rush Hour board
         """
         # copy field to new variable
-        print_field = self.field
+        print_field = copy.deepcopy(self.field)
+
 
         # change objects into their integers for printing
         for index, y in enumerate(print_field):
             for i, x in enumerate(y):
                 if not isinstance(x, int):
                     print_field[index][i] = x.id
+
+        for i in print_field:
+            print(i)
 
         # add ones around field
         print_field = np.pad(print_field, ((1,1),(1,1)), 'constant', constant_values=1)
@@ -182,18 +187,26 @@ class RushHour(object):
         plt.xticks(range(1, self.size + 1), row_labels)
         plt.gca().xaxis.tick_bottom()
         plt.yticks(range(1, self.size + 1), col_labels)
-        plt.show()
+        plt.show(block=False)
+        plt.pause(0.01)
+        plt.close()
+
 
 
     def won(self):
         """
         Game is won
         """
-        if self.vehicles[2].x == self.size - 1:
-            print("You've won the game!")
-            return True
-        else:
+        if self.field[self.size - 4][self.size - 1] == 0:
             return False
+        else:
+            if self.field[self.size - 4][self.size - 1].id == 2:
+                print("You've won the game!")
+                return True
+            else:
+                return False
+
+
 
     def move(self, id, move):
         """
@@ -259,27 +272,15 @@ class RushHour(object):
         for vehicle in self.vehicles.values():
             self.load_vehicle(vehicle)
 
-        # self.show_field()
 
+    def get_child_fields(self, vehicles):
+        """ Comments """
 
-    def play(self):
-
-        return True
-
-
-        # while not self.won():
-        #
-        #     # promt user
-        #     command = input("> ").upper()
-        #
-        #     self.move(int(command[0]), int(command.split(' ')[1]))
-
-
-    def get_child_fields(self):
+        self.fill_field(vehicles)
 
         child_fields = []
 
-        for vehicle in list(self.vehicles.values()):
+        for vehicle in vehicles:
 
             x = vehicle.x
             y = vehicle.y
@@ -294,7 +295,7 @@ class RushHour(object):
                     if self.field[self.size - vehicle.y][vehicle.x - 2] == 0:
 
                         # get parent field
-                        new_vehicles = list(self.vehicles.values())
+                        new_vehicles = vehicles
 
                         # create new vehicle
                         new_vehicle = Vehicle(vehicle.id, x - 1, y, vehicle.orientation, vehicle.length)
@@ -310,7 +311,7 @@ class RushHour(object):
 
                     # if not blocked by other vehicle
                     if self.field[self.size - vehicle.y][vehicle.x + vehicle.length - 1] == 0:
-                        new_vehicles = list(self.vehicles.values())
+                        new_vehicles = vehicles
                         new_vehicle = Vehicle(vehicle.id, x + 1, y, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
@@ -323,7 +324,7 @@ class RushHour(object):
 
                     # if not blocked by other vehicle
                     if self.field[self.size - (vehicle.y - 1)][vehicle.x - 1] == 0:
-                        new_vehicles = list(self.vehicles.values())
+                        new_vehicles = vehicles
                         new_vehicle = Vehicle(vehicle.id, x, y - 1, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
@@ -333,14 +334,31 @@ class RushHour(object):
 
                     # if not blocked by other vehicle
                     if self.field[self.size - (vehicle.y + vehicle.length)][vehicle.x - 1] == 0:
-                        new_vehicles = list(self.vehicles.values())
+                        new_vehicles = vehicles
                         new_vehicle = Vehicle(vehicle.id, x, y + 1, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
         self.check(child_fields)
 
-        return True
+        return child_fields
+
+
+    def check(self, childs):
+
+        for field in childs:
+
+            # remember old length of archive (type: set)
+            old_length = len(self.archive)
+            # add hash value of field to archive
+            self.archive.add(self.create_hash(field))
+            # if it has been added, the field is unique
+            if len(self.archive) > old_length:
+
+                # add to queue
+                pass
+            else:
+                pass
 
     def create_hash(self, vehicles):
         """ Creates a unique respresentation of field """
@@ -357,26 +375,3 @@ class RushHour(object):
                 field += vehicle.y * pow(10, i)
 
         return field
-
-
-    def check(self, childs):
-
-        for field in childs:
-
-            # remember old length of archive (type: set)
-            old_length = len(self.archive)
-
-            # add hash value of field to archive
-            self.archive.add(self.create_hash(field))
-
-            # if it has been added, the field is unique
-            if len(self.archive) > old_length:
-
-                # add to queue
-                pass
-            else:
-                print("field already seen")
-
-
-            self.fill_field(field)
-            self.show_field()

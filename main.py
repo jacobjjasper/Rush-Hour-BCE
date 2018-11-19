@@ -23,4 +23,4 @@ class Main():
 
 
 if __name__ == "__main__":
-    Main("data/easy.txt")
+    Main("data/game1.txt")

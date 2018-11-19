@@ -188,7 +188,7 @@ class RushHour(object):
         plt.gca().xaxis.tick_bottom()
         plt.yticks(range(1, self.size + 1), col_labels)
         plt.show(block=False)
-        plt.pause(0.01)
+        plt.pause(0.001)
         plt.close()
 
 

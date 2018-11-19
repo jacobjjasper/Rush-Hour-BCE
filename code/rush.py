@@ -276,8 +276,6 @@ class RushHour(object):
     def get_child_fields(self, vehicles):
         """ Comments """
 
-        self.fill_field(vehicles)
-
         child_fields = []
 
         for vehicle in vehicles:
@@ -292,10 +290,10 @@ class RushHour(object):
                 if x != 1:
 
                     # if not blocked by other vehicle
-                    if self.field[self.size - vehicle.y][vehicle.x - 2] == 0:
+                    if self.field[self.size - y][x - 2] == 0:
 
                         # get parent field
-                        new_vehicles = vehicles
+                        new_vehicles = vehicles.copy()
 
                         # create new vehicle
                         new_vehicle = Vehicle(vehicle.id, x - 1, y, vehicle.orientation, vehicle.length)
@@ -310,8 +308,8 @@ class RushHour(object):
                 if x + vehicle.length - 1 != self.size:
 
                     # if not blocked by other vehicle
-                    if self.field[self.size - vehicle.y][vehicle.x + vehicle.length - 1] == 0:
-                        new_vehicles = vehicles
+                    if self.field[self.size - y][x + vehicle.length - 1] == 0:
+                        new_vehicles = vehicles.copy()
                         new_vehicle = Vehicle(vehicle.id, x + 1, y, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
@@ -323,8 +321,8 @@ class RushHour(object):
                 if y != 1:
 
                     # if not blocked by other vehicle
-                    if self.field[self.size - (vehicle.y - 1)][vehicle.x - 1] == 0:
-                        new_vehicles = vehicles
+                    if self.field[self.size - (y - 1)][x - 1] == 0:
+                        new_vehicles = vehicles.copy()
                         new_vehicle = Vehicle(vehicle.id, x, y - 1, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
@@ -333,8 +331,8 @@ class RushHour(object):
                 if y + vehicle.length - 1 != self.size:
 
                     # if not blocked by other vehicle
-                    if self.field[self.size - (vehicle.y + vehicle.length)][vehicle.x - 1] == 0:
-                        new_vehicles = vehicles
+                    if self.field[self.size - (y + vehicle.length)][x - 1] == 0:
+                        new_vehicles = vehicles.copy()
                         new_vehicle = Vehicle(vehicle.id, x, y + 1, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)

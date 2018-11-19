@@ -10,8 +10,9 @@ def random(game):
 
     while not game.won():
 
-
+        # get random child field and fill game
         vehicles = secrets.choice(child_fields)
+        game.fill_field(vehicles)
 
         # increment moves
         moves += 1
@@ -22,5 +23,5 @@ def random(game):
 
         game.show_field()
 
-        if moves == 15:
+        if moves == 20:
             break

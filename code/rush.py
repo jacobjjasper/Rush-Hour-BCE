@@ -39,7 +39,7 @@ class RushHour(object):
             two_digits = True
 
             # get every line in file
-            for line in reader:
+            for id, line in enumerate(reader, 2):
 
                 # strip from \n
                 line = line.strip()
@@ -48,23 +48,27 @@ class RushHour(object):
                 type = line[0]
 
                 # if vehicle id is two digits (see .txt file)
-                if line == "---":
-                    two_digits = False
-                    continue
+                # if line == "---":
+                #     two_digits = False
+                #     continue
 
                 # vehicles with id < 10
-                if two_digits:
-                    id = int(line[1])
-                    x = int(line[2])
-                    y = int(line[3])
-                    orientation = line[4]
+                # if two_digits:
+                #     # id = int(line[1])
+                #     x = int(line[2])
+                #     y = int(line[3])
+                #     orientation = line[4]
 
                 # vehicles with id >= 10
-                else:
-                    id = int(line[1] + line[2])
-                    x = int(line[3])
-                    y = int(line[4])
-                    orientation = line[5]
+                # else:
+                #     id = int(line[1] + line[2])
+                #     x = int(line[3])
+                #     y = int(line[4])
+                #     orientation = line[5]
+
+                x = int(line[1])
+                y = int(line[2])
+                orientation = line[3]
 
                 # make either car or truck, else print error
                 if type == "C":
@@ -111,9 +115,9 @@ class RushHour(object):
 
         # weg als car.py wordt gebruikt
         if y < 0:
-            return print("Error: y negative")
+            return print(f"Error: y negative for car {id}")
         elif x < 0:
-            return print("Error: x negative")
+            return print(f"Error: x negative for car {id}")
 
         # horizontal
         if orientation.upper() == 'H':
@@ -124,7 +128,7 @@ class RushHour(object):
                 # vehicle cannot go off the board
                 # weg als car.py wordt gebruikt
                 if x + vehicle_length - 1 > self.size:
-                    return print("Error too big")
+                    return print(f"Error too big for car {id}")
 
                 # input y = 1: y-coordinate = 0 (left bottom)
                 y_car = self.size - y
@@ -142,7 +146,7 @@ class RushHour(object):
                 # vehicle cannot go off the board
                 # weg als car.py wordt gebruikt
                 if y + vehicle_length - 1 > self.size:
-                    return print("Error too big")
+                    return print(f"Error too big  for car {id}")
 
                 # input y = 1: y-coordinate = 0 (left bottom)
                 y_car = self.size - y - i
@@ -168,9 +172,6 @@ class RushHour(object):
                 if not isinstance(x, int):
                     print_field[index][i] = x.id
 
-        for i in print_field:
-            print(i)
-
         # add ones around field
         print_field = np.pad(print_field, ((1,1),(1,1)), 'constant', constant_values=1)
 
@@ -179,7 +180,7 @@ class RushHour(object):
         print_field[exit_row][-1] = 0
 
         # create colormap: 0 = white, 1 = black, 2(myCar) = red
-        cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'orange', 'grey', 'purple'])
+        cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'orange', 'grey', 'purple', 'lightgrey', 'darkblue', 'darkgrey'])
 
         plt.matshow(print_field, cmap=cmap)
         col_labels = range(self.size, 0, -1)
@@ -187,10 +188,10 @@ class RushHour(object):
         plt.xticks(range(1, self.size + 1), row_labels)
         plt.gca().xaxis.tick_bottom()
         plt.yticks(range(1, self.size + 1), col_labels)
-        plt.show(block=False)
-        plt.pause(0.001)
-        plt.close()
-
+        # plt.show(block=False)
+        # plt.pause(0.001)
+        # plt.close()
+        plt.show()
 
 
     def won(self):
@@ -201,11 +202,10 @@ class RushHour(object):
             return False
         else:
             if self.field[self.size - 4][self.size - 1].id == 2:
-                print("You've won the game!")
+                # print("You've won the game!")
                 return True
             else:
                 return False
-
 
 
     def move(self, id, move):
@@ -357,6 +357,7 @@ class RushHour(object):
                 pass
             else:
                 pass
+
 
     def create_hash(self, vehicles):
         """ Creates a unique respresentation of field """

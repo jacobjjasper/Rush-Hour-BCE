@@ -19,11 +19,9 @@ def random(game):
 
         # increment moves
         moves += 1
-    
+
         # get new childs
         child_fields = game.get_child_fields(vehicles)
-
-        # game.show_field()
 
     # print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
     return moves, (time.clock() - start)

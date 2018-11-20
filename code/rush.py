@@ -180,7 +180,13 @@ class RushHour(object):
         print_field[exit_row][-1] = 0
 
         # create colormap: 0 = white, 1 = black, 2(myCar) = red
-        cmap = ListedColormap(['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'orange', 'grey', 'purple', 'lightgrey', 'darkblue', 'darkgrey'])
+        all_colors = ['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'lime',
+            'brown', 'purple', 'orange', 'grey', 'pink', 'darkred',
+            'greenyellow', 'darkcyan', 'gold', 'darkgoldenrod', 'turquoise',
+            'darkblue', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkturquoise',
+            'deeppink', 'maroon', 'plum']
+        colors = all_colors[0:len(self.vehicles) + 2]
+        cmap = ListedColormap(colors)
 
         plt.matshow(print_field, cmap=cmap)
         col_labels = range(self.size, 0, -1)

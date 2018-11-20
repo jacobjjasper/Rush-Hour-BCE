@@ -13,28 +13,42 @@ from matplotlib.colors import ListedColormap
 import algorithms
 from rush import RushHour
 
-# CHANGE RESULT_CSV NAME WHEN CHANGING ALGORITHM
-RESULT_CSV = 'results/random.csv'
+
 
 class Main():
 
     def __init__(self, board):
-        for i in range(1):
-            rush = RushHour(board)
+        self.board = f"data/game{board}.txt"
+        self.rush = RushHour(f"data/game{board}.txt")
+        self.results_csv = f"results/random_game{board}.csv"
 
-            # rush.show_field()
+
+    def random(self, number):
+        """
+        Runs random algorithm for {number} of times
+        Plots all (including previous) results
+        """
+
+        # makes new game every time
+        for i in range(number):
+            rush = RushHour(self.board)
+
+            # run algorithm and get return values
             moves, runtime = algorithms.random(rush)
 
-            with open(RESULT_CSV, 'a') as outfile:
+            # add values to csv file
+            with open(self.results_csv, 'a') as outfile:
                 writer = csv.writer(outfile)
                 writer.writerow([moves, runtime])
 
-            print(i)
+        # plot histogram
+        moves_info = self.hist_plot(self.results_csv)
 
-        moves_info = self.hist_plot(RESULT_CSV)
-        print(moves_info)
+        # print results
+        [print(f"{key}: {value}") for key, value in moves_info.items()]
 
     def hist_plot(self, infile):
+
         # load infile
         with open(infile) as data:
             reader = csv.DictReader(data, fieldnames = ['moves', 'runtime'])
@@ -46,6 +60,7 @@ class Main():
 
             # information
             moves_info = {}
+            moves_info['total runs'] = len(moves)
             moves_info['max'] = max(moves)
             moves_info['min'] = min(moves)
             moves_info['mean'] = round(np.mean(moves), 2)
@@ -64,6 +79,6 @@ class Main():
 
 
 if __name__ == "__main__":
-    Main("data/game1.txt")
-    # rush = RushHour("data/game4.txt")
-    # rush.show_field()
+    main = Main(1)
+    # main.rush.show_field()
+    main.random(0)

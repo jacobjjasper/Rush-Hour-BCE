@@ -79,6 +79,11 @@ class Main():
 
 
 if __name__ == "__main__":
-    main = Main(1)
-    # main.rush.show_field()
-    main.random(0)
+    main = Main(6)
+    main.rush.show_field()
+    child_fields = main.rush.get_child_fields_2(list(main.rush.vehicles.values()))
+    for i in range(len(child_fields)):
+        main.rush.fill_field(child_fields[i])
+        main.rush.show_field()
+
+    # main.random(0)

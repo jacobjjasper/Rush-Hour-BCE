@@ -44,28 +44,7 @@ class RushHour(object):
                 # strip from \n
                 line = line.strip()
 
-                # type car (C) or truck (T)
                 type = line[0]
-
-                # if vehicle id is two digits (see .txt file)
-                # if line == "---":
-                #     two_digits = False
-                #     continue
-
-                # vehicles with id < 10
-                # if two_digits:
-                #     # id = int(line[1])
-                #     x = int(line[2])
-                #     y = int(line[3])
-                #     orientation = line[4]
-
-                # vehicles with id >= 10
-                # else:
-                #     id = int(line[1] + line[2])
-                #     x = int(line[3])
-                #     y = int(line[4])
-                #     orientation = line[5]
-
                 x = int(line[1])
                 y = int(line[2])
                 orientation = line[3]
@@ -380,3 +359,102 @@ class RushHour(object):
                 field += vehicle.y * pow(10, i)
 
         return field
+
+
+    def get_child_fields_2(self, vehicles):
+        """ Comments """
+
+        child_fields = []
+
+        for vehicle in vehicles:
+
+            x = vehicle.x
+            y = vehicle.y
+
+            # if vehicle is horizontal
+            if vehicle.orientation == 'H':
+
+                # if vehicle is not on left edge
+                if x != 1:
+
+                    # if not blocked by other vehicle
+                    if self.field[self.size - y][x - 2] == 0:
+
+                        # check how many next blocks in field are 0
+                        i = 0
+                        while self.field[self.size - y][x - 2 - i] == 0:
+                            i += 1
+
+                            # break if next is not the edge
+                            if x - i == 1:
+                                break
+
+                        # get parent field
+                        new_vehicles = vehicles.copy()
+
+                        # create new vehicle
+                        new_vehicle = Vehicle(vehicle.id, x - i, y, vehicle.orientation, vehicle.length)
+
+                        # exchange old with new vehicle
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+
+                        # add to child_fields
+                        child_fields.append(new_vehicles)
+
+                # if vehicle is not on right edge
+                if x + vehicle.length - 1 != self.size:
+
+                    # if not blocked by other vehicle
+                    if self.field[self.size - y][x + vehicle.length - 1] == 0:
+
+                        i = 0
+                        while self.field[self.size - y][x + vehicle.length - 1 + i] == 0:
+                            i += 1
+                            if x + vehicle.length - i == self.size:
+                                break
+
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, x + i, y, vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+            # if vehicle is vertical
+            if vehicle.orientation == 'V':
+
+                # if vehicle is not on lower edge
+                if y != 1:
+
+                    # if not blocked by other vehicle
+                    if self.field[self.size - (y - 1)][x - 1] == 0:
+
+                        i = 0
+                        while self.field[self.size - (y - 1 - i)][x - 1] == 0:
+                            i += 1
+                            if y - i == 1:
+                                break
+
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, x, y - i, vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+                # if vehicle is not on top edge
+                if y + vehicle.length - 1 != self.size:
+
+                    # if not blocked by other vehicle
+                    if self.field[self.size - (y + vehicle.length)][x - 1] == 0:
+
+                        i = 0
+                        while self.field[self.size - (y + vehicle.length + i)][x - 1] == 0:
+                            i += 1
+                            if y + vehicle.length - 1 + i == self.size:
+                                break
+                                
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, x, y + i, vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+        self.check(child_fields)
+
+        return child_fields

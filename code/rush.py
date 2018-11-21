@@ -173,10 +173,10 @@ class RushHour(object):
         plt.xticks(range(1, self.size + 1), row_labels)
         plt.gca().xaxis.tick_bottom()
         plt.yticks(range(1, self.size + 1), col_labels)
-        # plt.show(block=False)
-        # plt.pause(0.001)
-        # plt.close()
-        plt.show()
+        plt.show(block=False)
+        plt.pause(0.0001)
+        plt.close()
+        # plt.show()
 
 
     def won(self):
@@ -187,7 +187,7 @@ class RushHour(object):
             return False
         else:
             if self.field[self.size - 4][self.size - 1].id == 2:
-                # print("You've won the game!")
+                print("You've won the game!")
                 return True
             else:
                 return False
@@ -322,26 +322,26 @@ class RushHour(object):
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
-        self.check(child_fields)
-
         return child_fields
 
 
-    def check(self, childs):
+    def is_unique(self, field):
+        """
+        Return true if field is not in archive, calls hash function
+        """
 
-        for field in childs:
+        # remember old length of archive (type: set)
+        old_length = len(self.archive)
 
-            # remember old length of archive (type: set)
-            old_length = len(self.archive)
-            # add hash value of field to archive
-            self.archive.add(self.create_hash(field))
-            # if it has been added, the field is unique
-            if len(self.archive) > old_length:
+        # add hash value of field to archive
+        self.archive.add(self.create_hash(field))
 
-                # add to queue
-                pass
-            else:
-                pass
+        # if it has been added, the field is unique
+        if len(self.archive) > old_length:
+
+            return True
+        else:
+            return False
 
 
     def create_hash(self, vehicles):
@@ -410,7 +410,7 @@ class RushHour(object):
                         i = 0
                         while self.field[self.size - y][x + vehicle.length - 1 + i] == 0:
                             i += 1
-                            if x + vehicle.length - i == self.size:
+                            if x + vehicle.length - 1 + i == self.size:
                                 break
 
                         new_vehicles = vehicles.copy()
@@ -449,12 +449,11 @@ class RushHour(object):
                             i += 1
                             if y + vehicle.length - 1 + i == self.size:
                                 break
-                                
+
                         new_vehicles = vehicles.copy()
                         new_vehicle = Vehicle(vehicle.id, x, y + i, vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
-        self.check(child_fields)
 
         return child_fields

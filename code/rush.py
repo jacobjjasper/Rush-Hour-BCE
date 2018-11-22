@@ -63,7 +63,6 @@ class RushHour(object):
         # call fill_field function on list of vehicles
         self.fill_field(list(self.vehicles.values()))
 
-
     def fill_field(self, vehicles):
         """
         Fills field with list of vehicles
@@ -136,7 +135,6 @@ class RushHour(object):
                 # vehicle id on filled spot
                 self.field[y_car][x_car] = vehicle
 
-
     def show_field(self):
         """
         All matplotlib details for showing the Rush Hour board
@@ -178,7 +176,6 @@ class RushHour(object):
         plt.close()
         # plt.show()
 
-
     def won(self):
         """
         Game is won
@@ -192,8 +189,7 @@ class RushHour(object):
             else:
                 return False
 
-
-    def move(self, id, move):
+    # def move(self, id, move):
         """
         Move vehicle
         """
@@ -257,8 +253,7 @@ class RushHour(object):
         for vehicle in self.vehicles.values():
             self.load_vehicle(vehicle)
 
-
-    def get_child_fields(self, vehicles):
+    def get_child_fields_1_step(self, vehicles):
         """ Comments """
 
         child_fields = []
@@ -324,7 +319,6 @@ class RushHour(object):
 
         return child_fields
 
-
     def is_unique(self, field):
         """
         Return true if field is not in archive, calls hash function
@@ -343,7 +337,6 @@ class RushHour(object):
         else:
             return False
 
-
     def create_hash(self, vehicles):
         """ Creates a unique respresentation of field """
 
@@ -360,8 +353,7 @@ class RushHour(object):
 
         return field
 
-
-    def get_child_fields_2(self, vehicles):
+    def get_child_fields_whole_step(self, vehicles):
         """ Comments """
 
         child_fields = []

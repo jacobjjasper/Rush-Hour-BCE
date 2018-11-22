@@ -7,7 +7,7 @@ def random(game):
     start = time.clock()
 
     game_vehicles = list(game.vehicles.values())
-    child_fields = game.get_child_fields_2(game_vehicles)
+    child_fields = game.get_child_fields_whole_step(game_vehicles)
 
     moves = 0
 
@@ -21,11 +21,10 @@ def random(game):
         moves += 1
 
         # get new childs
-        child_fields = game.get_child_fields(vehicles)
+        child_fields = game.get_child_fields_whole_step(vehicles)
 
     # print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
     return moves, (time.clock() - start)
-
 
 def depth_first(game):
     """
@@ -51,7 +50,7 @@ def depth_first(game):
         game.show_field()
 
         # get childs
-        child_fields = game.get_child_fields_2(vehicles)
+        child_fields = game.get_child_fields_whole_step(vehicles)
 
         moves += 1
         print(moves)
@@ -64,5 +63,44 @@ def depth_first(game):
 
         if moves == 1000:
             break
+
+    return moves
+
+def breadth_first(game):
+    """
+    First in first out
+    """
+
+    queue = []
+    moves = 0
+
+    initial_vehicles = list(game.vehicles.values())
+
+    # append field and moves to queue
+    queue.append(initial_vehicles)
+    queue.append(moves)
+
+
+    while not game.won():
+
+        # get first item from queue
+        vehicles = queue.pop(0)
+        moves = queue.pop(0)
+
+        # fill game.field with vehicles
+        game.fill_field(vehicles)
+        # game.show_field()
+
+        # get childs
+        child_fields = game.get_child_fields_whole_step(vehicles)
+
+        moves += 1
+        # print(moves)
+
+        # check if field is in archive and add to queue
+        for field in child_fields:
+            if game.is_unique(field):
+                queue.append(field)
+                queue.append(moves)
 
     return moves

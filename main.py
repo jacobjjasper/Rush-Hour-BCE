@@ -19,8 +19,9 @@ class Main():
 
     def __init__(self, board):
         self.board = f"data/game{board}.txt"
-        # self.rush = RushHour(f"data/game{board}.txt")
-        # self.results_csv = f"results/random2_game{board}.csv"
+        self.rush = RushHour(f"data/game{board}.txt")
+        # self.results_csv = f"results/random_1_step_game{board}.csv"
+        self.results_csv = f"results/random_whole_step_game{board}.csv"
 
 
     def call_random(self, number):
@@ -77,23 +78,22 @@ class Main():
 
             return moves_info
 
-    def call_depth_first(self, number):
+    def call_depth_first(self):
 
         # makes new game every time
-        for i in range(number):
-            rush = RushHour(self.board)
+        rush = RushHour(self.board)
 
-            # run algorithm
-            algorithms.depth_first(rush)
+        # run algorithm
+        algorithms.depth_first(rush)
 
+    def call_breadth_first(self):
+        rush = RushHour(self.board)
+        print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
     main = Main(3)
     # main.rush.show_field()
-    # child_fields = main.rush.get_child_fields_2(list(main.rush.vehicles.values()))
-    # for i in range(len(child_fields)):
-    #     main.rush.fill_field(child_fields[i])
-    #     main.rush.show_field()
 
-    # main.call_random(0)
-    main.call_depth_first(1)
+    main.call_random(0)
+    # main.call_depth_first()
+    # main.call_breadth_first()

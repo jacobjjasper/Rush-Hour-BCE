@@ -31,12 +31,12 @@ The following games will be played. The data files of these games are in the fol
 
 
 ## How to start Rush Hour
-
+Run main.py
 
 
 ## Students
 * Jacob Jasper
 * Tobias Maätita
-* Fried Schölvinck 🍟
+* Fried Schölvinck
 
 University of Amsterdam, Heuristieken

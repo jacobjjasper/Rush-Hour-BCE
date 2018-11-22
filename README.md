@@ -6,12 +6,11 @@ Rush Hour looks like an easy game, but can be quite hard. The goal is to move th
 
 ## Data (game boards)
 The following games will be played. The data files of these games are in the folder 'data' and contain:
-* The game board size (e.g. 6) on the first line
+* The game board size (e.g. 6 or 9) on the first line
 * The red car on the second line
-* The other vehicles thereafter, with a '----' line after the ninth vehicle id
+* Other vehicles thereafter (no particular order)
 * A vehicle is build up of:
   * 'C' or 'T' (for Car or Truck)
-  * The vehicle id (starting from 3)
   * X-coordinate (leftest)
   * Y-coordinate (lowest)
   * 'H' or 'V' (for horizontal or vertical positioning)

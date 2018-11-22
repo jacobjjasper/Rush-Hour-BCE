@@ -1,1 +1,3 @@
-# negeer bestanden
+# ignore files
+.DS_Store
+aantekeningen.txt

@@ -24,7 +24,7 @@ def random(game):
         # get new childs
         child_fields = game.get_child_fields_whole_step(vehicles)
 
-    # print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
+    print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
     return moves, (time.clock() - start)
 
 def depth_first(game):

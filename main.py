@@ -18,6 +18,7 @@ from rush import RushHour
 class Main():
 
     def __init__(self, board):
+        self.board_no = board
         self.board = f"data/game{board}.txt"
         self.rush = RushHour(f"data/game{board}.txt")
         # self.results_csv = f"results/random_1_step_game{board}.csv"
@@ -43,12 +44,14 @@ class Main():
                 writer.writerow([moves, runtime])
 
         # plot histogram
-        moves_info = self.hist_plot(self.results_csv)
+        moves_info = self.hist_plot(self.results_csv, 'Random')
 
         # print results
         [print(f"{key}: {value}") for key, value in moves_info.items()]
 
-    def hist_plot(self, infile):
+    def hist_plot(self, infile, algorithm):
+
+        algorithm = algorithm
 
         # load infile
         with open(infile) as data:
@@ -69,10 +72,14 @@ class Main():
             moves_info['stddev'] = round(np.std(moves), 2)
 
             # histogram
-            plt.hist(moves, bins = 30, rwidth = 0.8)
-            plt.title('Frequency distribution random Rush Hour solver', fontsize = 16)
-            plt.xticks(np.arange(0, moves_info['max'] + 1000, 20000))
-            plt.xlabel('Number of moves (one car, one block)')
+            plt.style.use('ggplot')
+            plt.rcParams["axes.edgecolor"] = "0.15"
+            plt.rcParams["axes.linewidth"]  = 1.25
+            plt.grid(b = True, axis = 'y', zorder = 0)
+            plt.hist(moves, bins = 50, rwidth = 1, zorder = 3,edgecolor='black', linewidth=1.2)
+            plt.suptitle('Frequency distribution Rush Hour solver', fontsize = 16)
+            plt.title(f"{algorithm} solutions of game {self.board_no}")
+            plt.xlabel('Number of moves')
             plt.ylabel('Frequency')
             plt.show()
 
@@ -94,6 +101,6 @@ if __name__ == "__main__":
     main = Main(1)
     # main.rush.show_field()
 
-    # main.call_random(0)
+    main.call_random(0)
     # main.call_depth_first()
-    main.call_breadth_first()
+    # main.call_breadth_first()

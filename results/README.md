@@ -5,14 +5,14 @@
 
 
 ## Game 1
-##### State Space
+#### State Space
 Lower Bound: 
 Upper Bound:
 
-##### Breath-First
+#### Breath-First
 34 moves
 
-##### Random Solver
+#### Random Solver
 total runs: 1000
 max: 32516
 min: 293
@@ -21,14 +21,14 @@ median: 3407.0
 stddev: 3733.6
 
 ## Game 2
-##### State Space
+#### State Space
 Lower Bound: 
 Upper Bound:
 
-##### Breath-First
+#### Breath-First
 16 moves
 
-##### Random Solver
+#### Random Solver
 total runs: 1000
 max: 5058
 min: 38

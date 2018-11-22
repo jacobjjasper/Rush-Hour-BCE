@@ -1,6 +1,7 @@
 from rush import RushHour
 import time
 import secrets
+from collections import deque
 
 def random(game):
     """ Comments """
@@ -71,7 +72,8 @@ def breadth_first(game):
     First in first out
     """
 
-    queue = []
+    # deque for fast appends and pops
+    queue = deque()
     moves = 0
 
     initial_vehicles = list(game.vehicles.values())
@@ -84,8 +86,8 @@ def breadth_first(game):
     while not game.won():
 
         # get first item from queue
-        vehicles = queue.pop(0)
-        moves = queue.pop(0)
+        vehicles = queue.popleft()
+        moves = queue.popleft()
 
         # fill game.field with vehicles
         game.fill_field(vehicles)

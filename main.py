@@ -91,9 +91,9 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(3)
+    main = Main(1)
     # main.rush.show_field()
 
-    main.call_random(0)
+    # main.call_random(0)
     # main.call_depth_first()
-    # main.call_breadth_first()
+    main.call_breadth_first()

@@ -9,7 +9,7 @@
 Lower Bound: 
 Upper Bound:
 
-#### Breath-First
+#### Breadth-First
 34 moves
 
 #### Random Solver
@@ -25,7 +25,7 @@ stddev: 3733.6
 Lower Bound: 
 Upper Bound:
 
-#### Breath-First
+#### Breadth-First
 16 moves
 
 #### Random Solver
@@ -43,7 +43,7 @@ stddev: 793.94
 Lower Bound: 
 Upper Bound:
 
-##### Breath-First
+##### Breadth-First
 22 moves
 
 ##### Random Solver

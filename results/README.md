@@ -6,8 +6,8 @@
 
 ## Game 1
 #### State Space
-* Lower Bound: 
-* Upper Bound:
+* Lower Bound: 34
+* Upper Bound: 
 
 #### Breadth-First
 * 34 moves
@@ -22,7 +22,7 @@
 
 ## Game 2
 #### State Space
-* Lower Bound: 
+* Lower Bound: 16
 * Upper Bound:
 
 #### Breadth-First
@@ -40,7 +40,7 @@
 
 ## Game 3
 ##### State Space
-* Lower Bound: 
+* Lower Bound: 22
 * Upper Bound:
 
 ##### Breadth-First

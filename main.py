@@ -91,7 +91,7 @@ class Main():
         rush = RushHour(self.board)
 
         # run algorithm
-        algorithms.depth_first(rush)
+        print(f"Moves: {algorithms.depth_first(rush)}")
 
     def call_breadth_first(self):
         rush = RushHour(self.board)

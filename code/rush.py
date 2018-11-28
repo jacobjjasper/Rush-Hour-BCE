@@ -359,7 +359,9 @@ class RushHour(object):
 
     def check_block(self, vehicles):
         """
-        Checks whether a car is blocking the red car
+        Checks whether a car is blocking the red car.
+        Heuristic: fewer cars between the red car and the exit makes for a
+        higher priority.
         """
 
         # get red car's x
@@ -370,7 +372,7 @@ class RushHour(object):
         if my_car.x == 5:
             return 0
 
-        # start at prio = 1 when game is not yet finished
+        # start at prio = 1 or (prio = 0??) when game is not yet finished
         blocking_vehicles = 1
         for vehicle in vehicles:
             # check for blocking vehicle

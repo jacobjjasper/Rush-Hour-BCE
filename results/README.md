@@ -1,7 +1,7 @@
 # Results
 ### Calculating the state space and the bounds of the objective function
 To calculate the upper bound of our state space, we used the following formula:  
-_upper bound = (field size - 1)^(cars) * (field size - 2)^(trucks)_
+_upper bound_ = _(field size - 1)_^cars * _(field size - 2)_^trucks
 
 
 

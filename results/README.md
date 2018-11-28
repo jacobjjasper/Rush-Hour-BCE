@@ -4,52 +4,19 @@
 
 
 
-## Game 1
-#### State Space
-* Lower Bound: 34
-* Upper Bound: 
-
-#### Breadth-First
-* 34 moves
-
-#### Random Solver
-* total runs: 1000
-* max: 32516
-* min: 293
-* mean: 4469.48
-* median: 3407.0
-* stddev: 3733.6
-
-## Game 2
-#### State Space
-* Lower Bound: 16
-* Upper Bound:
-
-#### Breadth-First
-* 16 moves
-
-#### Random Solver
-* total runs: 1000
-* max: 5058
-* min: 38
-* mean: 977.75
-* median: 741.5
-* stddev: 793.94
-
-
-
-## Game 3
-##### State Space
-* Lower Bound: 22
-* Upper Bound:
-
-##### Breadth-First
-* 22 moves
-
-##### Random Solver
-* total runs: 1000
-* max: 14649
-* min: 82
-* mean: 2284.88
-* median: 1677.0
-* stddev: 2022.18
+|Game 1|Game 2|Game 3|
+| :--- | :---: | ---:|
+|State Space|State Space|State Space|
+|Lower Bound: 34|Lower Bound: 16|Lower Bound: 22
+|Upper Bound: |Upper Bound: |Upper Bound:
+| :--- | :---: | ---:|
+|Random Solver|Random Solver|Random Solver
+|total runs: 1000|total runs: 1000|total runs: 1000
+|max: 32516|max: 5058|max: 14649
+|min: 293|min: 38|min: 82
+|mean: 4469.48|mean: 977.75|mean: 2284.88
+|median: 3407.0|median: 741.5|median: 1677.0
+|stddev: 3733.6|stddev: 793.94|stddev: 2022.18
+| :--- | :---: | ---:|
+|Breadth-First|Breadth-First|Breadth-First
+|34 moves|16 moves|22 moves

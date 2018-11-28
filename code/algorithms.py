@@ -1,4 +1,4 @@
-from rush import RushHour
+from rush import RushHour, PriorityQueue
 import time
 import secrets
 from collections import deque
@@ -72,37 +72,80 @@ def breadth_first(game):
     First in first out
     """
 
+    # # deque for fast appends and pops
+    # queue = deque()
+    # moves = 0
+    #
+    # initial_vehicles = list(game.vehicles.values())
+    #
+    # # append field and moves to queue
+    # queue.append(initial_vehicles)
+    # queue.append(moves)
+    #
+    #
+    #
+    # while not game.won():
+    #
+    #     # get first item from queue
+    #     vehicles = queue.popleft()
+    #
+    #     moves = queue.popleft()
+    #
+    #     # fill game.field with vehicles
+    #     game.fill_field(vehicles)
+    #     # game.show_field()
+    #
+    #     # get childs
+    #     child_fields = game.get_child_fields_whole_step(vehicles)
+    #
+    #     moves += 1
+    #     # print(moves)
+    #
+    #     # check if field is in archive and add to queue
+    #     for field in child_fields:
+    #         if game.is_unique(field):
+    #             queue.append(field)
+    #             queue.append(moves)
+    #
+    # return moves
+
+    # to proberen:
     # deque for fast appends and pops
-    queue = deque()
+    queue = PriorityQueue()
     moves = 0
 
     initial_vehicles = list(game.vehicles.values())
 
     # append field and moves to queue
-    queue.append(initial_vehicles)
-    queue.append(moves)
+    queue.push([moves, initial_vehicles], 0)
 
+    while not queue.isempty():
+    # while not game.won():
 
-    while not game.won():
-
-        # get first item from queue
-        vehicles = queue.popleft()
-        moves = queue.popleft()
+        # get first (highest priority) item from queue
+        moves, vehicles = queue.get_prio()
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
         # game.show_field()
 
+        if game.won():
+            return moves
+
         # get childs
-        child_fields = game.get_child_fields_whole_step(vehicles)
+        child_fields = game.get_child_fields_1_step(vehicles)
 
         moves += 1
-        # print(moves)
+
+        print(moves)
 
         # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
-                queue.append(field)
-                queue.append(moves)
+                priority = moves + game.check_block(field)
+                queue.push([moves, field], priority)
+        # if moves == 2:
+        #     return True
 
-    return moves
+        # return moves
+    return "QUEUE EMPTY"

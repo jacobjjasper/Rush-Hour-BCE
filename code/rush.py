@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import copy
+import heapq
+
 
 class RushHour(object):
     """
@@ -180,16 +182,16 @@ class RushHour(object):
         """
         Game is won
         """
-        if self.field[self.size - 4][self.size - 1] == 0:
+        if self.field[self.size - (self.size // 2 + 1)][self.size - 1] == 0:
             return False
         else:
-            if self.field[self.size - 4][self.size - 1].id == 2:
+            if self.field[self.size - (self.size // 2 + 1)][self.size - 1].id == 2:
                 print("You've won the game!")
                 return True
             else:
                 return False
 
-    # def move(self, id, move):
+    def move(self, id, move):
         """
         Move vehicle
         """
@@ -252,6 +254,7 @@ class RushHour(object):
         # fill field with moved vehicle
         for vehicle in self.vehicles.values():
             self.load_vehicle(vehicle)
+
 
     def get_child_fields_1_step(self, vehicles):
         """ Comments """
@@ -353,6 +356,38 @@ class RushHour(object):
 
         return field
 
+
+    def check_block(self, vehicles):
+        """
+        Checks whether a car is blocking the red car
+        """
+
+        # get red car's x
+        my_car = vehicles[0]
+
+        # if red car is on x = 4, the game is finished
+        # return 0 means priority = 0, i.e. the highest priority
+        if my_car.x == 5:
+            return 0
+
+        # start at prio = 1 when game is not yet finished
+        blocking_vehicles = 1
+        for vehicle in vehicles:
+            # check for blocking vehicle
+            # can only be vertically oriented, x must be greater than the red car's position
+            # y must be smaller than or equal to the red car's y position, and y + length must
+            # be greater than the red car's y position (car on y = 2 gives 2 + 2 = 4, but does
+            # not block the read car). Therefore, y + length must be greater than the red
+            # car's y coordinate.
+            if vehicle.orientation == 'V' and vehicle.x >= (my_car.x + my_car.length) and vehicle.y <= my_car.y and (vehicle.y + vehicle.length) > my_car.y:
+                # print()
+                # print(my_car.x, my_car.y)
+                # print(vehicle.id, vehicle.orientation, vehicle.x, vehicle.y)
+                # print()
+                blocking_vehicles += 1
+
+        return blocking_vehicles
+
     def get_child_fields_whole_step(self, vehicles):
         """ Comments """
 
@@ -447,5 +482,21 @@ class RushHour(object):
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
-
         return child_fields
+
+
+class PriorityQueue:
+
+    def __init__(self):
+        self.queue = []
+        self.index = 0
+
+    def push(self, board, priority):
+        heapq.heappush(self.queue, (priority, self.index, board))
+        self.index += 1
+
+    def get_prio(self):
+        return heapq.heappop(self.queue)[-1]
+
+    def isempty(self):
+        return len(self.queue) == 0

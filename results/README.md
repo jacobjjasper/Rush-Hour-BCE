@@ -18,7 +18,7 @@ lower bound to be ... and the upper bound to be ... .
 ||Game 1|Game 2|Game 3|Game 4|Game 5|Game 6|Game 7|
 |---| :--- | :--- | :---| :---| :---| :---| :---|
 |_State Space_|Lower Bound: 34|Lower Bound: 16|Lower Bound: 22|Lower Bound: |Lower Bound: |Lower Bound: |Lower Bound: |
-||Upper Bound: 1.000.000|Upper Bound: 976.562.500|Upper Bound:976.562.500|Upper Bound: 2,43 * 10E18|Upper Bound:2,12 * 10E21|Upper Bound: 1,04 * 10E23 |Upper Bound:1,31 * 10E44|
+||Upper Bound: 1.000.000|Upper Bound: 976.562.500|Upper Bound:976.562.500|Upper Bound: 2,43E18|Upper Bound:2,12E21|Upper Bound: 1,04E23 |Upper Bound:1,31E44|
 |_Objective Function_|Lower Bound: 1|Lower Bound: 1|Lower Bound: 1|Lower Bound: 1|Lower Bound: 1|Lower Bound: 1|Lower Bound: 1|
 ||Upper Bound: |Upper Bound: |Upper Bound: |Upper Bound: |Upper Bound: |Upper Bound: |Upper Bound: |
 |_Random Solver_|total runs: 1000|total runs: 1000|total runs: 1000|total runs: 0|total runs: 0|total runs: 0|total runs: 0|

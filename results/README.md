@@ -5,7 +5,7 @@
 
 
 ||Game 1|Game 2|Game 3|
-|| :--- | :---: | ---:|
+|---| :--- | :---: | ---:|
 |_State Space_|Lower Bound: 34|Lower Bound: 16|Lower Bound: 22|
 ||Upper Bound: |Upper Bound: |Upper Bound:|
 |_Random Solver_|total runs: 1000|total runs: 1000|total runs: 1000|

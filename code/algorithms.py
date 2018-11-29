@@ -73,44 +73,48 @@ def breadth_first(game):
     First in first out
     """
 
-    # # deque for fast appends and pops
-    # queue = deque()
-    # moves = 0
-    #
-    # initial_vehicles = list(game.vehicles.values())
-    #
-    # # append field and moves to queue
-    # queue.append(initial_vehicles)
-    # queue.append(moves)
-    #
-    #
-    #
-    # while not game.won():
-    #
-    #     # get first item from queue
-    #     vehicles = queue.popleft()
-    #
-    #     moves = queue.popleft()
-    #
-    #     # fill game.field with vehicles
-    #     game.fill_field(vehicles)
-    #     # game.show_field()
-    #
-    #     # get childs
-    #     child_fields = game.get_child_fields_whole_step(vehicles)
-    #
-    #     moves += 1
-    #     # print(moves)
-    #
-    #     # check if field is in archive and add to queue
-    #     for field in child_fields:
-    #         if game.is_unique(field):
-    #             queue.append(field)
-    #             queue.append(moves)
-    #
-    # return moves
+    # deque for fast appends and pops
+    queue = deque()
+    moves = 0
 
-    # breadth first with priority queue heuristic
+    initial_vehicles = list(game.vehicles.values())
+
+    # append field and moves to queue
+    queue.append(initial_vehicles)
+    queue.append(moves)
+
+
+
+    while not game.won():
+
+        # get first item from queue
+        vehicles = queue.popleft()
+
+        moves = queue.popleft()
+
+        # fill game.field with vehicles
+        game.fill_field(vehicles)
+        # game.show_field()
+
+        # get childs
+        child_fields = game.get_child_fields_whole_step(vehicles)
+
+        moves += 1
+        # print(moves)
+
+        # check if field is in archive and add to queue
+        for field in child_fields:
+            if game.is_unique(field):
+                queue.append(field)
+                queue.append(moves)
+
+    return moves
+
+
+def bf_priority_queue(game):
+    """
+    breadth first with priority queue heuristic
+    """
     queue = PriorityQueue()
     moves = 0
 
@@ -119,8 +123,8 @@ def breadth_first(game):
     # append field and moves to queue
     queue.push([moves, initial_vehicles], 0)
 
-    while not queue.isempty():
-    # while not game.won():
+    # while not queue.isempty():
+    while not game.won():
 
         # get first (highest priority) item from queue
         moves, vehicles = queue.get_prio()
@@ -129,8 +133,8 @@ def breadth_first(game):
         game.fill_field(vehicles)
         # game.show_field()
 
-        if game.won():
-            return moves
+        # if game.won():
+        #     return moves
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
@@ -147,4 +151,4 @@ def breadth_first(game):
 
 
 
-    return "QUEUE EMPTY"
+    return moves

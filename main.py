@@ -98,7 +98,7 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(1)
+    main = Main(2)
     main.rush.show_field()
     for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
         main.rush.fill_field(field)

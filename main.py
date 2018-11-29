@@ -11,7 +11,7 @@ import statistics as stat
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import algorithms
-from rush import RushHour
+from rush2 import RushHour
 
 
 
@@ -19,8 +19,8 @@ class Main():
 
     def __init__(self, board):
         self.board_no = board
-        self.board = f"data/game{board}.txt"
-        self.rush = RushHour(f"data/game{board}.txt")
+        self.board = f"data2/game{board}.txt"
+        self.rush = RushHour(f"data2/game{board}.txt")
         # self.results_csv = f"results/random_1_step_game{board}.csv"
         self.results_csv = f"results/random_whole_step_game{board}.csv"
 
@@ -98,9 +98,9 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(3)
-    # main.rush.show_field()
+    main = Main(2)
+    main.rush.show_field()
 
     # main.call_random(0)
     # main.call_depth_first()
-    main.call_breadth_first()
+    # main.call_breadth_first()

@@ -334,11 +334,7 @@ class RushHour(object):
         self.archive.add(self.create_hash(field))
 
         # if it has been added, the field is unique
-        if len(self.archive) > old_length:
-
-            return True
-        else:
-            return False
+        return len(self.archive) > old_length
 
     def create_hash(self, vehicles):
         """ Creates a unique respresentation of field """

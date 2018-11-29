@@ -135,8 +135,8 @@ class RushHour(object):
         cmap = ListedColormap(colors)
 
         plt.matshow(print_field, cmap=cmap)
-        col_labels = range(self.size, 0, -1)
-        row_labels = range(1, self.size + 1)
+        col_labels = range(self.size)
+        row_labels = range(self.size)
         plt.xticks(range(1, self.size + 1), row_labels)
         plt.gca().xaxis.tick_bottom()
         plt.yticks(range(1, self.size + 1), col_labels)

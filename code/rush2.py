@@ -89,6 +89,7 @@ class RushHour(object):
         y = vehicle.y
         id = vehicle.id
         orientation = vehicle.orientation
+        print(x, y, id, orientation)
 
         # horizontal
         if orientation.upper() == 'H':

@@ -22,7 +22,7 @@ class Main():
         self.board = f"data2/game{board}.txt"
         self.rush = RushHour(f"data2/game{board}.txt")
         # self.results_csv = f"results/random_1_step_game{board}.csv"
-        # self.results_csv = f"results/random_whole_step_game{board}.csv"
+        self.results_csv = f"results/random_whole_step_game{board}.csv"
 
 
     def call_random(self, number):
@@ -76,7 +76,12 @@ class Main():
             plt.rcParams["axes.edgecolor"] = "0.15"
             plt.rcParams["axes.linewidth"]  = 1.25
             plt.grid(b = True, axis = 'y', zorder = 0)
-            plt.hist(moves, bins = 50, rwidth = 1, zorder = 3,edgecolor='black', linewidth=1.2)
+            # plt.hist(moves, bins = 50, rwidth = 1, zorder = 3,edgecolor='black', linewidth=1.2)
+            plt.hist(moves, bins=np.logspace(1, round(np.log10(moves_info['max'])), 70), rwidth = 0.85, zorder = 3)
+
+            # bins = 10**(np.arange(0,7))
+            # plt.hist(moves, bins = bins, rwidth = 0.8)
+            plt.gca().set_xscale("log")
             plt.suptitle('Frequency distribution Rush Hour solver', fontsize = 16)
             plt.title(f"{algorithm} solutions of game {self.board_no}")
             plt.xlabel('Number of moves')
@@ -98,12 +103,12 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(14)
-    main.rush.show_field()
+    main = Main(1)
+    # main.rush.show_field()
     # for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
     #     main.rush.fill_field(field)
     #     main.rush.show_field()
 
-    # main.call_random(0)
+    main.call_random(0)
     # main.call_depth_first()
-    main.call_breadth_first()
+    # main.call_breadth_first()

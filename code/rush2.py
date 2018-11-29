@@ -89,7 +89,6 @@ class RushHour(object):
         y = vehicle.y
         id = vehicle.id
         orientation = vehicle.orientation
-        print(x, y, id, orientation)
 
         # horizontal
         if orientation.upper() == 'H':
@@ -150,7 +149,8 @@ class RushHour(object):
         """
         Game is won
         """
-        return vehicles[0].x == self.size - 1
+        # first vehicle is always the red car
+        return vehicles[0].x == self.size - 2
 
 
     def get_child_fields_1_step(self, vehicles):
@@ -364,13 +364,12 @@ class RushHour(object):
 
                         i = 1
                         while self.field[y][x + vehicle.length - 1 + i] == 0:
-
                             new_vehicles = vehicles.copy()
                             new_vehicle = Vehicle(vehicle.id, x + i, y, vehicle.orientation, vehicle.length)
                             new_vehicles[vehicle.id - 2] = new_vehicle
                             child_fields.append(new_vehicles)
 
-                            if x + vehicle.length - 1 + i == self.size:
+                            if x + vehicle.length + i == self.size:
                                 break
                             else:
                                 i += 1
@@ -403,7 +402,7 @@ class RushHour(object):
                             new_vehicles[vehicle.id - 2] = new_vehicle
                             child_fields.append(new_vehicles)
 
-                            if y + vehicle.length - 1 + i == self.size:
+                            if y + vehicle.length + i == self.size:
                                 break
                             else:
                                 i += 1
@@ -437,9 +436,13 @@ class RushHour(object):
 
                 # add coordinate to integer field, as if it's made up of
                 # single digits -> from the last car id until the red car
-                field += vehicle.x * pow(10, i)
+                # coordinate + 1, because multiplying with 0 doesn't work
+                # this only works for fields 9 x 9 or smaller
+                x = vehicle.x + 1
+                field += x * pow(10, i)
             else:
-                field += vehicle.y * pow(10, i)
+                y = vehicle.y + 1
+                field += y * pow(10, i)
 
         return field
 

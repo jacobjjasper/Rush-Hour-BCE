@@ -76,15 +76,15 @@ def breadth_first(game):
     queue = deque()
     moves = 0
 
-    initial_vehicles = list(game.vehicles.values())
+    vehicles = list(game.vehicles.values())
 
     # append field and moves to queue
-    queue.append(initial_vehicles)
+    queue.append(vehicles)
     queue.append(moves)
 
 
 
-    while not game.won():
+    while not game.won(vehicles):
 
         # get first item from queue
         vehicles = queue.popleft()
@@ -96,8 +96,8 @@ def breadth_first(game):
         # game.show_field()
 
         # get childs
-        child_fields = game.get_child_fields_whole_step(vehicles)
-    
+        child_fields = game.get_child_fields_every_step(vehicles)
+
         moves += 1
         # print(moves)
 
@@ -110,6 +110,8 @@ def breadth_first(game):
     return moves
 
 
+def piority(game):
+    """ Breadth-First with priority """
 
     # to proberen:
     # deque for fast appends and pops

@@ -48,13 +48,13 @@ def depth_first(game):
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
-        # game.show_field()
+        game.show_field()
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
 
         moves += 1
-        # print(moves)
+        print(moves)
 
         # check if field is in archive and add to stack
         for field in child_fields:
@@ -62,8 +62,7 @@ def depth_first(game):
                 stack.append(field)
                 stack.append(moves)
 
-        if moves == 10000:
-            print("Not found after 10000 moves")
+        if moves == 1000:
             break
 
     return moves
@@ -98,7 +97,7 @@ def breadth_first(game):
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
-
+    
         moves += 1
         # print(moves)
 
@@ -111,10 +110,9 @@ def breadth_first(game):
     return moves
 
 
-def bf_priority_queue(game):
-    """
-    breadth first with priority queue heuristic
-    """
+
+    # to proberen:
+    # deque for fast appends and pops
     queue = PriorityQueue()
     moves = 0
 
@@ -123,8 +121,8 @@ def bf_priority_queue(game):
     # append field and moves to queue
     queue.push([moves, initial_vehicles], 0)
 
-    # while not queue.isempty():
-    while not game.won():
+    while not queue.isempty():
+    # while not game.won():
 
         # get first (highest priority) item from queue
         moves, vehicles = queue.get_prio()
@@ -133,22 +131,23 @@ def bf_priority_queue(game):
         game.fill_field(vehicles)
         # game.show_field()
 
-        # if game.won():
-        #     return moves
+        if game.won():
+            return moves
 
         # get childs
-        child_fields = game.get_child_fields_whole_step(vehicles)
+        child_fields = game.get_child_fields_1_step(vehicles)
 
         moves += 1
 
-        # print(moves)
+        print(moves)
 
         # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
                 priority = moves + game.check_block(field)
                 queue.push([moves, field], priority)
+        # if moves == 2:
+        #     return True
 
-
-
-    return moves
+        # return moves
+    return "QUEUE EMPTY"

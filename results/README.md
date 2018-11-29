@@ -30,7 +30,7 @@ the algorithm has not returned a solution.
  This means that the lower bound, especially in the larger boards, could be lower
  than suggested by this algorithm, due to not making an 'ideal' move.
 
-||Game 1|Game 2|Game 3|Game 4|Game 5|Game 6|
+||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|
 |_State Space_|Lower: 34|Lower: 16|Lower: 22|
 ||Upper: 1.000.000|Upper: 976.562.500|Upper: 976.562.500|

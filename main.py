@@ -31,12 +31,16 @@ class Main():
         Plots all (including previous) results
         """
 
+        bound = 1000
+
         # makes new game every time
         for i in range(number):
             rush = RushHour(self.board)
 
             # run algorithm and get return values
-            moves, runtime = algorithms.random(rush)
+            moves, runtime = algorithms.random(rush, bound)
+            bound = moves
+            print(moves)
 
             # add values to csv file
             with open(self.results_csv, 'a') as outfile:
@@ -46,7 +50,7 @@ class Main():
         # plot histogram
         moves_info = self.hist_plot(self.results_csv, 'Random')
 
-        # print results
+        print results
         [print(f"{key}: {value}") for key, value in moves_info.items()]
 
     def hist_plot(self, infile, algorithm):
@@ -109,6 +113,6 @@ if __name__ == "__main__":
     #     main.rush.fill_field(field)
     #     main.rush.show_field()
 
-    main.call_random(0)
+    main.call_random(100000)
     # main.call_depth_first()
     # main.call_breadth_first()

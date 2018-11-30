@@ -3,16 +3,16 @@ import time
 import secrets
 from collections import deque
 
-def random(game):
+def random(game, bound):
     """ Comments """
     start = time.clock()
 
-    game_vehicles = list(game.vehicles.values())
-    child_fields = game.get_child_fields_whole_step(game_vehicles)
+    vehicles = list(game.vehicles.values())
+    child_fields = game.get_child_fields_whole_step(vehicles)
 
     moves = 0
 
-    while not game.won():
+    while not game.won(vehicles):
 
         # get random child field and fill game
         vehicles = secrets.choice(child_fields)
@@ -20,6 +20,8 @@ def random(game):
 
         # increment moves
         moves += 1
+        if moves == bound:
+            return moves, 0
 
         # get new childs
         child_fields = game.get_child_fields_whole_step(vehicles)

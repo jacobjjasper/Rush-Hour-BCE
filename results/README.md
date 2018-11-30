@@ -17,7 +17,7 @@ state space for each game.
 lower bound to be ... and the upper bound to be ... .  
 
   Furthermore, we solved the first three games with three different algorithms:
-a random algorithm; a breath-first algorith; and a depth-first algorithm. To implement
+a random algorithm; a breath-first algorithm; and a depth-first algorithm. To implement
 a heuristic, we applied a priority queue to the breath-first algorithm: fewer cars
 between the red car and the exit makes for a higher priority.
 
@@ -25,10 +25,6 @@ between the red car and the exit makes for a higher priority.
 after about 50 (game 4) or 26 layers (game 5), the queue seems to be empty and
 the algorithm has not returned a solution.
 
-  It should be noted that, in these algorithms, moving a vehicle means moving it
- until the car is blocked by either the end of the board or another vehicle.
- This means that the lower bound, especially in the larger boards, could be lower
- than suggested by this algorithm, due to not making an 'ideal' move.
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|

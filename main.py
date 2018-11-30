@@ -22,7 +22,7 @@ class Main():
         self.board = f"data2/game{board}.txt"
         self.rush = RushHour(f"data2/game{board}.txt")
         # self.results_csv = f"results/random_1_step_game{board}.csv"
-        self.results_csv = f"results/random_whole_step_game{board}.csv"
+        self.results_csv = f"results/random_bb_whole_step_game{board}.csv"
 
 
     def call_random(self, number):
@@ -43,15 +43,15 @@ class Main():
             print(moves)
 
             # add values to csv file
-        #     with open(self.results_csv, 'a') as outfile:
-        #         writer = csv.writer(outfile)
-        #         writer.writerow([moves, runtime])
-        #
-        # # plot histogram
-        # moves_info = self.hist_plot(self.results_csv, 'Random')
-        #
+            with open(self.results_csv, 'a') as outfile:
+                writer = csv.writer(outfile)
+                writer.writerow([moves, runtime])
+
+        # plot histogram
+        moves_info = self.hist_plot(self.results_csv, 'Random')
+
         # print results
-        # [print(f"{key}: {value}") for key, value in moves_info.items()]
+        [print(f"{key}: {value}") for key, value in moves_info.items()]
 
     def hist_plot(self, infile, algorithm):
 
@@ -65,6 +65,8 @@ class Main():
             moves = []
             for row in reader:
                 moves.append(int(row['moves']))
+
+            moves.sort(reverse = True)
 
             # information
             moves_info = {}
@@ -81,15 +83,17 @@ class Main():
             plt.rcParams["axes.linewidth"]  = 1.25
             plt.grid(b = True, axis = 'y', zorder = 0)
             # plt.hist(moves, bins = 50, rwidth = 1, zorder = 3,edgecolor='black', linewidth=1.2)
-            plt.hist(moves, bins=np.logspace(1, round(np.log10(moves_info['max'])), 70), rwidth = 0.85, zorder = 3)
 
-            # bins = 10**(np.arange(0,7))
-            # plt.hist(moves, bins = bins, rwidth = 0.8)
-            plt.gca().set_xscale("log")
-            plt.suptitle('Frequency distribution Rush Hour solver', fontsize = 16)
+            # log scale
+            # plt.hist(moves, bins=np.logspace(1, round(np.log10(moves_info['max'])), 70), rwidth = 0.85, zorder = 3)
+            # plt.gca().set_xscale("log")
+
+            plt.plot(moves)
+
+            plt.suptitle('Number of steps to solution, branch & bound', fontsize = 16)
             plt.title(f"{algorithm} solutions of game {self.board_no}")
-            plt.xlabel('Number of moves')
-            plt.ylabel('Frequency')
+            plt.xlabel('Runs')
+            plt.ylabel('Number of moves')
             plt.show()
 
             return moves_info
@@ -107,12 +111,12 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(5)
+    main = Main(3)
     # main.rush.show_field()
     # for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
     #     main.rush.fill_field(field)
     #     main.rush.show_field()
 
-    main.call_random(100000)
+    main.call_random(30000)
     # main.call_depth_first()
     # main.call_breadth_first()

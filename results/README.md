@@ -17,7 +17,7 @@ state space for each game.
 lower bound to be ... and the upper bound to be ... .  
 
   Furthermore, we solved the first three games with three different algorithms:
-a random algorithm; a breath-first algorith; and a depth-first algorithm. To implement
+a random algorithm; a breath-first algorithm; and a depth-first algorithm. To implement
 a heuristic, we applied a priority queue to the breath-first algorithm: fewer cars
 between the red car and the exit makes for a higher priority.
 

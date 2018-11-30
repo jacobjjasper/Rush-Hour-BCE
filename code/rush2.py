@@ -31,7 +31,7 @@ class RushHour(object):
             reader = file.readlines()
 
             # get field size
-            self.size = int(reader[0][0])
+            self.size = int(reader[0])
             reader.pop(0)
 
             # build field with list comprehension
@@ -42,6 +42,9 @@ class RushHour(object):
 
                 # strip from \n
                 line = line.strip()
+
+                if self.size > 10:
+                    line = line.split()
 
                 type = line[0]
                 x = int(line[1])
@@ -126,11 +129,10 @@ class RushHour(object):
         print_field[exit_row][-1] = 0
 
         # create colormap: 0 = white, 1 = black, 2(myCar) = red
-        all_colors = ['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y', 'lime',
-            'brown', 'purple', 'orange', 'grey', 'pink', 'darkred',
-            'greenyellow', 'darkcyan', 'gold', 'darkgoldenrod', 'turquoise',
-            'darkblue', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkturquoise',
-            'deeppink', 'maroon', 'plum']
+        all_colors = ['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y','lime', 'brown', 'purple', 'orange', 'grey', 'pink', 'darkred','greenyellow', 'darkcyan', 'gold', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y']
+
+        # extra colors: , 'darkgoldenrod', 'turquoise','darkblue', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkturquoise','deeppink', 'maroon', 'plum'
+
         colors = all_colors[0:len(self.vehicles) + 2]
         cmap = ListedColormap(colors)
 

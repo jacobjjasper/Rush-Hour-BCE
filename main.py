@@ -111,12 +111,12 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(3)
-    # main.rush.show_field()
+    main = Main(7)
+    main.rush.show_field()
     # for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
     #     main.rush.fill_field(field)
     #     main.rush.show_field()
 
-    main.call_random(30000)
+    # main.call_random(100000)
     # main.call_depth_first()
     # main.call_breadth_first()

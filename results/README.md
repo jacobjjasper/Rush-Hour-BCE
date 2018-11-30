@@ -25,10 +25,6 @@ between the red car and the exit makes for a higher priority.
 after about 50 (game 4) or 26 layers (game 5), the queue seems to be empty and
 the algorithm has not returned a solution.
 
-  It should be noted that, in these algorithms, moving a vehicle means moving it
- until the car is blocked by either the end of the board or another vehicle.
- This means that the lower bound, especially in the larger boards, could be lower
- than suggested by this algorithm, due to not making an 'ideal' move.
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|

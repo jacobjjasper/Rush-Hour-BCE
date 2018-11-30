@@ -43,15 +43,15 @@ class Main():
             print(moves)
 
             # add values to csv file
-            with open(self.results_csv, 'a') as outfile:
-                writer = csv.writer(outfile)
-                writer.writerow([moves, runtime])
-
-        # plot histogram
-        moves_info = self.hist_plot(self.results_csv, 'Random')
-
-        print results
-        [print(f"{key}: {value}") for key, value in moves_info.items()]
+        #     with open(self.results_csv, 'a') as outfile:
+        #         writer = csv.writer(outfile)
+        #         writer.writerow([moves, runtime])
+        #
+        # # plot histogram
+        # moves_info = self.hist_plot(self.results_csv, 'Random')
+        #
+        # print results
+        # [print(f"{key}: {value}") for key, value in moves_info.items()]
 
     def hist_plot(self, infile, algorithm):
 
@@ -107,7 +107,7 @@ class Main():
         print(f"Moves: {algorithms.breadth_first(rush)}")
 
 if __name__ == "__main__":
-    main = Main(1)
+    main = Main(5)
     # main.rush.show_field()
     # for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
     #     main.rush.fill_field(field)

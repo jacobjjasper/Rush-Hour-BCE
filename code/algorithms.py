@@ -8,7 +8,7 @@ def random(game, bound):
     start = time.clock()
 
     vehicles = list(game.vehicles.values())
-    child_fields = game.get_child_fields_whole_step(vehicles)
+    child_fields = game.get_child_fields_every_step(vehicles)
 
     moves = 0
 
@@ -24,7 +24,7 @@ def random(game, bound):
             return moves, 0
 
         # get new childs
-        child_fields = game.get_child_fields_whole_step(vehicles)
+        child_fields = game.get_child_fields_every_step(vehicles)
 
     print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
     return moves, (time.clock() - start)

@@ -17,7 +17,7 @@ def random(game, bound):
         # get random child field and fill game
         vehicles = secrets.choice(child_fields)
         game.fill_field(vehicles)
-        # game.show_field()
+        game.show_field2(vehicles)
 
         # increment moves
         moves += 1

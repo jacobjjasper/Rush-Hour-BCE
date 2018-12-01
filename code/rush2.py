@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import copy
 import heapq
-
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 class RushHour(object):
     """
@@ -129,9 +129,16 @@ class RushHour(object):
         print_field[exit_row][-1] = 0
 
         # create colormap: 0 = white, 1 = black, 2(myCar) = red
-        all_colors = ['w', 'k', 'r', 'b', 'g', 'c', 'm', 'y','lime', 'brown', 'purple', 'orange', 'grey', 'pink', 'darkred','greenyellow', 'darkcyan', 'gold', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y', 'b', 'g', 'c', 'm', 'y']
-
-        # extra colors: , 'darkgoldenrod', 'turquoise','darkblue', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkturquoise','deeppink', 'maroon', 'plum'
+        all_colors = ['w', 'k', 'r',
+                      'green', 'yellow', 'blue', 'orange', 'purple', 'cyan',
+                      'magenta', 'lime', 'pink', 'teal', 'brown', 'maroon',
+                      'olive', 'navy', 'grey',
+                      'g', 'y', 'b', 'orange', 'purple', 'cyan', 'magenta',
+                      'lime', 'pink', 'teal', 'brown', 'maroon',
+                      'olive', 'navy', 'grey',
+                      'g', 'y', 'b', 'orange', 'purple', 'cyan', 'magenta',
+                      'lime', 'pink', 'teal', 'brown', 'maroon',
+                      'olive', 'navy', 'grey']
 
         colors = all_colors[0:len(self.vehicles) + 2]
         cmap = ListedColormap(colors)
@@ -146,6 +153,60 @@ class RushHour(object):
         # plt.pause(0.0001)
         # plt.close()
         plt.show()
+
+    def show_field2(self, vehicles):
+
+        # horizontal
+        x_coor_hor = [78, 151, 222, 294, 366]
+        y_coor_hor = [49, 118, 192, 263, 331, 407]
+
+        # vertical
+        x_coor_vert = [43, 112, 183, 255, 326, 400]
+        y_coor_vert = [80, 153, 226, 295, 371]
+
+        # show field
+        field = plt.imread('data2/RushHourImages/RushHour.jpg')
+
+        fig, ax = plt.subplots()
+        plt.imshow(field)
+        plt.axis('off')
+
+        for vehicle in vehicles:
+            x = vehicle.x
+            y = vehicle.y
+
+            # horizontal
+            if vehicle.orientation == 'H':
+                x = x_coor_hor[x]
+                y = y_coor_hor[y]
+                if vehicle.length == 2:
+                    car = plt.imread(f"data2/RushHourImages/Car{vehicle.id}.png")
+                else:
+                    car = plt.imread(f"data2/RushHourImages/Truck{vehicle.id}.png")
+                    y += 40
+
+            # vertical
+            if vehicle.orientation == 'V':
+                x = x_coor_vert[x]
+                y = y_coor_vert[y]
+                if vehicle.length == 2:
+                    car = plt.imread(f"data2/RushHourImages/Car-rotated{vehicle.id}.png")
+                else:
+                    car = plt.imread(f"data2/RushHourImages/Truck-rotated{vehicle.id}.png")
+                    y += 40
+
+            imagebox = OffsetImage(car, zoom=0.6)
+            imagebox.image.axes = ax
+            xy = (x, y)
+            ab = AnnotationBbox(imagebox, xy, frameon=False)
+            ax.add_artist(ab)
+
+        plt.show(block=False)
+        plt.pause(0.0001)
+        plt.close()
+
+        # plt.show()
+
 
     def won(self, vehicles):
         """

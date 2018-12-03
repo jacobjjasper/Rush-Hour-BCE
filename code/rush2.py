@@ -158,10 +158,10 @@ class RushHour(object):
 
         # horizontal
         x_coor_hor = [78, 151, 222, 294, 366]
-        y_coor_hor = [49, 118, 192, 263, 331, 407]
+        y_coor_hor = [45, 118, 192, 263, 331, 407]
 
         # vertical
-        x_coor_vert = [43, 112, 183, 255, 326, 400]
+        x_coor_vert = [43, 112, 183, 257, 326, 400]
         y_coor_vert = [80, 153, 226, 295, 371]
 
         # show field
@@ -183,7 +183,7 @@ class RushHour(object):
                     car = plt.imread(f"data2/RushHourImages/Car{vehicle.id}.png")
                 else:
                     car = plt.imread(f"data2/RushHourImages/Truck{vehicle.id}.png")
-                    y += 40
+                    x += 40
 
             # vertical
             if vehicle.orientation == 'V':
@@ -202,7 +202,7 @@ class RushHour(object):
             ax.add_artist(ab)
 
         plt.show(block=False)
-        plt.pause(0.0001)
+        plt.pause(0.000001)
         plt.close()
 
         # plt.show()

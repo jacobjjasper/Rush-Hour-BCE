@@ -51,7 +51,7 @@ def depth_first(game):
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
-        game.show_field()
+        # game.show_field2()
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
@@ -96,10 +96,10 @@ def breadth_first(game):
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
-        # game.show_field()
+        game.show_field2(vehicles)
 
         # get childs
-        child_fields = game.get_child_fields_every_step(vehicles)
+        child_fields = game.get_child_fields_whole_step(vehicles)
 
         moves += 1
         # print(moves)

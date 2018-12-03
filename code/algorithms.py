@@ -78,6 +78,7 @@ def breadth_first(game):
     # deque for fast appends and pops
     queue = deque()
     moves = 0
+    states = 0
 
     vehicles = list(game.vehicles.values())
 
@@ -96,12 +97,13 @@ def breadth_first(game):
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
-        game.show_field2(vehicles)
+        # game.show_field2(vehicles)
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
 
         moves += 1
+        states += 1
         # print(moves)
 
         # check if field is in archive and add to queue
@@ -110,24 +112,24 @@ def breadth_first(game):
                 queue.append(field)
                 queue.append(moves)
 
-    return moves
+    return moves, states
 
 
-def piority(game):
+def breadth_first_priority(game):
     """ Breadth-First with priority """
 
     # to proberen:
     # deque for fast appends and pops
     queue = PriorityQueue()
     moves = 0
+    states = 0
 
-    initial_vehicles = list(game.vehicles.values())
+    vehicles = list(game.vehicles.values())
 
     # append field and moves to queue
-    queue.push([moves, initial_vehicles], 0)
+    queue.push([moves, vehicles], 0)
 
-    while not queue.isempty():
-    # while not game.won():
+    while not game.won(vehicles):
 
         # get first (highest priority) item from queue
         moves, vehicles = queue.get_prio()
@@ -136,23 +138,16 @@ def piority(game):
         game.fill_field(vehicles)
         # game.show_field()
 
-        if game.won():
-            return moves
-
         # get childs
-        child_fields = game.get_child_fields_1_step(vehicles)
+        child_fields = game.get_child_fields_whole_step(vehicles)
 
         moves += 1
-
-        print(moves)
+        states += 1
 
         # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
                 priority = moves + game.check_block(field)
                 queue.push([moves, field], priority)
-        # if moves == 2:
-        #     return True
 
-        # return moves
-    return "QUEUE EMPTY"
+    return moves, states

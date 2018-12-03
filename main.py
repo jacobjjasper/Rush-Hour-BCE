@@ -108,7 +108,13 @@ class Main():
 
     def call_breadth_first(self):
         rush = RushHour(self.board)
-        print(f"Moves: {algorithms.breadth_first(rush)}")
+        moves, states = algorithms.breadth_first(rush)
+        print(f"Moves: {moves}, States: {states}")
+
+    def call_breadth_first_priority(self):
+        rush = RushHour(self.board)
+        moves, states = algorithms.breadth_first_priority(rush)
+        print(f"Moves: {moves}, States: {states}")
 
 if __name__ == "__main__":
     main = Main(3)
@@ -121,3 +127,4 @@ if __name__ == "__main__":
     # main.call_random(1)
     # main.call_depth_first()
     main.call_breadth_first()
+    main.call_breadth_first_priority()

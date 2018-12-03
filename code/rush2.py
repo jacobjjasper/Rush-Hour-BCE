@@ -524,23 +524,30 @@ class RushHour(object):
 
         # if red car is on x = 4, the game is finished
         # return 0 means priority = 0, i.e. the highest priority
-        if my_car.x == 5:
+        if my_car.x == self.size - 2:
             return 0
+        #
+        # # start at prio = 1 or (prio = 0??) when game is not yet finished
+        # blocking_vehicles = 1
+        # for vehicle in vehicles:
+        #     # check for blocking vehicle
+        #     # can only be vertically oriented, x must be greater than the red car's position
+        #     # y must be smaller than or equal to the red car's y position, and y + length must
+        #     # be greater than the red car's y position (car on y = 2 gives 2 + 2 = 4, but does
+        #     # not block the read car). Therefore, y + length must be greater than the red
+        #     # car's y coordinate.
+        #     if vehicle.orientation == 'V' and vehicle.x >= (my_car.x + my_car.length) and vehicle.y == my_car.y and (vehicle.y + vehicle.length) > my_car.y:
+        #         # print()
+        #         # print(my_car.x, my_car.y)
+        #         # print(vehicle.id, vehicle.orientation, vehicle.x, vehicle.y)
+        #         # print()
+        #         blocking_vehicles += 1
 
-        # start at prio = 1 or (prio = 0??) when game is not yet finished
-        blocking_vehicles = 1
-        for vehicle in vehicles:
-            # check for blocking vehicle
-            # can only be vertically oriented, x must be greater than the red car's position
-            # y must be smaller than or equal to the red car's y position, and y + length must
-            # be greater than the red car's y position (car on y = 2 gives 2 + 2 = 4, but does
-            # not block the read car). Therefore, y + length must be greater than the red
-            # car's y coordinate.
-            if vehicle.orientation == 'V' and vehicle.x >= (my_car.x + my_car.length) and vehicle.y <= my_car.y and (vehicle.y + vehicle.length) > my_car.y:
-                # print()
-                # print(my_car.x, my_car.y)
-                # print(vehicle.id, vehicle.orientation, vehicle.x, vehicle.y)
-                # print()
+
+        blocking_vehicles = 0
+        blocks_to_exit = self.size - (my_car.x + 2)
+        for i in range(blocks_to_exit):
+            if not self.field[my_car.y][my_car.x + 2 + i] == 0:
                 blocking_vehicles += 1
 
         return blocking_vehicles

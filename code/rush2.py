@@ -212,6 +212,10 @@ class RushHour(object):
         """
         Game is won
         """
+        # for i in range(self.size):
+        #     if self.field[self.size//2 + 1][i] == 0 or 1:
+        #
+        #
         # first vehicle is always the red car
         return vehicles[0].x == self.size - 2
 
@@ -380,7 +384,6 @@ class RushHour(object):
         return child_fields
 
 
-
     def get_child_fields_every_step(self, vehicles):
         """ Comments """
 
@@ -473,8 +476,6 @@ class RushHour(object):
         return child_fields
 
 
-
-
     def is_unique(self, field):
         """
         Return true if field is not in archive, calls hash function
@@ -488,6 +489,7 @@ class RushHour(object):
 
         # if it has been added, the field is unique
         return len(self.archive) > old_length
+
 
     def create_hash(self, vehicles):
         """ Creates a unique respresentation of field """

@@ -212,10 +212,7 @@ class RushHour(object):
         """
         Game is won
         """
-        # for i in range(self.size):
-        #     if self.field[self.size//2 + 1][i] == 0 or 1:
-        #
-        #
+        
         # first vehicle is always the red car
         return vehicles[0].x == self.size - 2
 

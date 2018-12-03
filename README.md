@@ -27,10 +27,15 @@ The following games will be played. The data files of these games are in the fol
 
 
 ## Files
+This repository is devides into code, data, results and main.py. For our latest versions, we used the data2 file and code/rush2.py. The data folder holds all the game data (loading in Rush Hour boards) and some images for visualisations. The results file contains csv-files with data from the random-algorithm and some general information about the state space of the problem, fastest solutions and other outcomes of our exploration. The code folder is made up of:
+* algorithms.py - all algorithms
+* rush.py - old version of rush2.py
+* rush2.py - general RushHour class, holds most of the functions
+* vehicle.py - class Vehicle to represent a car or truck on the board
 
 
 ## How to start Rush Hour
-Run main.py
+From main.py, all code can be executed. Whithin code/algorithms.py and code/rush2.py, code can be uncommented to, for example, run visualisations. 
 
 
 ## Students

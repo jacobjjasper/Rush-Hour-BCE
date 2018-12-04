@@ -117,7 +117,7 @@ class Main():
         print(f"Moves: {moves}, States: {states}")
 
 if __name__ == "__main__":
-    main = Main(3)
+    main = Main(5)
     # print(list(main.rush.vehicles.values()))
     # main.rush.show_field2(list(main.rush.vehicles.values()))
     # for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
@@ -127,4 +127,4 @@ if __name__ == "__main__":
     # main.call_random(1)
     # main.call_depth_first()
     main.call_breadth_first()
-    main.call_breadth_first_priority()
+    # main.call_breadth_first_priority()

@@ -212,7 +212,7 @@ class RushHour(object):
         """
         Game is won
         """
-        
+
         # first vehicle is always the red car
         return vehicles[0].x == self.size - 2
 
@@ -509,12 +509,14 @@ class RushHour(object):
         return field
 
 
-    def check_block(self, vehicles):
+    def cars_for_exit(self, vehicles):
         """
         Checks whether a car is blocking the red car.
         Heuristic: fewer cars between the red car and the exit makes for a
         higher priority.
         """
+
+        self.fill_field(vehicles)
 
         # get red car's x
         my_car = vehicles[0]
@@ -523,23 +525,6 @@ class RushHour(object):
         # return 0 means priority = 0, i.e. the highest priority
         if my_car.x == self.size - 2:
             return 0
-        #
-        # # start at prio = 1 or (prio = 0??) when game is not yet finished
-        # blocking_vehicles = 1
-        # for vehicle in vehicles:
-        #     # check for blocking vehicle
-        #     # can only be vertically oriented, x must be greater than the red car's position
-        #     # y must be smaller than or equal to the red car's y position, and y + length must
-        #     # be greater than the red car's y position (car on y = 2 gives 2 + 2 = 4, but does
-        #     # not block the read car). Therefore, y + length must be greater than the red
-        #     # car's y coordinate.
-        #     if vehicle.orientation == 'V' and vehicle.x >= (my_car.x + my_car.length) and vehicle.y == my_car.y and (vehicle.y + vehicle.length) > my_car.y:
-        #         # print()
-        #         # print(my_car.x, my_car.y)
-        #         # print(vehicle.id, vehicle.orientation, vehicle.x, vehicle.y)
-        #         # print()
-        #         blocking_vehicles += 1
-
 
         blocking_vehicles = 0
         blocks_to_exit = self.size - (my_car.x + 2)
@@ -549,10 +534,91 @@ class RushHour(object):
 
         return blocking_vehicles
 
+    def cars_in_traffic(self, vehicles):
+        self.fill_field(vehicles)
 
+        prio = 0
+
+        if vehicles[0].x == self.size - 2:
+            return prio
+
+        # check for first vehicle blocking
+        i = 1
+        while self.field[vehicles[0].y][vehicles[0].x + 1 + i] == 0:
+            i += 1
+
+            # return 0 if no vehicles blocking red car
+            if vehicles[0].x + 1 + i == self.size:
+                return 0
+
+        # get first vehicle blocking exit
+        vehicle = self.field[vehicles[0].y][vehicles[0].x + 1 + i]
+        prio += 1
+
+        archive = []
+        archive.append(vehicle.id)
+
+        # get vehicles that block current vehicle
+        blocking_traffic = self.check_traffic(vehicle)
+
+        while not len(blocking_traffic) == 0:
+
+            # check blocking_traffic
+            vehicle = blocking_traffic.pop(0)
+
+            # if vehicle is checked, go to next
+            if vehicle.id in archive:
+                continue
+            else:
+                archive.append(vehicle.id)
+                prio += 1
+
+
+
+            list = self.check_traffic(vehicle)
+            if len(list) == 0:
+                break
+            blocking_traffic.extend(list)
+
+
+        return prio
+
+
+    def check_traffic(self, vehicle):
+        x = vehicle.x
+        y = vehicle.y
+        length = vehicle.length
+
+        blocking_traffic = []
+
+        if vehicle.orientation == 'V':
+
+            # check below if other vehicle and if not edge
+            if not y + length == self.size:
+                if not self.field[y + length][x] == 0:
+                    blocking_traffic.append(self.field[y + length][x])
+
+            # check above
+            if not y == 0:
+                if not self.field[y - 1][x] == 0:
+                    blocking_traffic.append(self.field[y - 1][x])
+
+        # if vehicle is horizontal
+        else:
+            # check right
+            if not x + length == self.size:
+                if not self.field[y][x + length] == 0:
+                    blocking_traffic.append(self.field[y][x + length])
+
+            # check left
+            if not x == 0:
+                if not self.field[y][x - 1] == 0:
+                    blocking_traffic.append(self.field[y][x - 1])
+
+        return blocking_traffic
 
 class PriorityQueue:
-
+    """ Class for priority queue """
     def __init__(self):
         self.queue = []
         self.index = 0

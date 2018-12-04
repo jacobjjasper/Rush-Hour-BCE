@@ -147,7 +147,9 @@ def breadth_first_priority(game):
         # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
-                priority = moves + game.check_block(field)
+                priority = moves + game.cars_in_traffic(field)
                 queue.push([moves, field], priority)
+
+
 
     return moves, states

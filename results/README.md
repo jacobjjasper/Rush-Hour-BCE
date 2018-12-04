@@ -28,7 +28,12 @@ after about 50 (game 4) or 26 layers (game 5), the queue seems to be empty and
 the algorithm has not returned a solution.
 
 Game 5, call_breadth_first, RushHour, breadth_first (without priority queue;
-best solution possible), Moves: 23, States: 2708602, time: +/- 23 min
+best solution possible), Moves: 23, States: 2.708.602, time: +/- 23 min
+with priority (cars_in_traffic): Moves: 24, States: 52.835, runtime +/- 2 min
+
+Game 6, call_breadth_first without priority queue, so best solution:
+Moves: 19, States: 13.480.365, runtime +/- 2.5 hours
+with priority (cars_in_traffic): Moves: 19, States: 990.143, runtime +/- 10 min
 
 
 ||Game 1|Game 2|Game 3|

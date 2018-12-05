@@ -54,12 +54,14 @@ python3 main.py 1 random 1000 500
 ```
 python3 main.py 1 breadth_first
 ```
-
-Run Breadth First algorithm to find a short solution faster
+<br/>Run Breadth First algorithm to find a short solution faster
 ```
-python3 main.py 7 breadth_first_priority
+python3 main.py 1 breadth_first_priority
 ```
-
+<br/>
+```
+python3 main.py 1 
+```
 
 ## Students
 * Jacob Jasper

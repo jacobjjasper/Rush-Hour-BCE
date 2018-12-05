@@ -36,7 +36,26 @@ This repository is devides into code, data, results and main.py. For our latest 
 
 
 ## How to start Rush Hour
-From main.py, all code can be executed. Whithin code/algorithms.py and code/rush2.py, code can be uncommented to, for example, run visualisations. 
+
+Show game
+```
+python3 main.py 1 show
+``` 
+
+Run game random 1000 times with bound starting at 500 (bound is optional)
+```
+python3 main.py 1 random 1000 500
+```
+
+Run Breadth First algorithm to find shortest solution
+```
+python3 main.py 1 breadth_first
+```
+
+Run Breadth First algorithm to find a short solution faster
+```
+python3 main.py 7 breadth_first_priority
+```
 
 
 ## Students

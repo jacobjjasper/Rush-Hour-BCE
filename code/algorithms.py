@@ -17,7 +17,7 @@ def random(game, bound):
         # get random child field and fill game
         vehicles = secrets.choice(child_fields)
         game.fill_field(vehicles)
-        game.show_field2(vehicles)
+        # game.show_field2(vehicles)
 
         # increment moves
         moves += 1
@@ -37,40 +37,47 @@ def depth_first(game):
 
     stack = []
     moves = 0
-    states = 0
+    bound = 17
+    winnings = []
 
     vehicles = list(game.vehicles.values())
 
     stack.append(vehicles)
     stack.append(moves)
 
-    while not game.won(vehicles):
+    while not len(stack) == 0:
 
         # get last item in stack
         moves = stack.pop()
         vehicles = stack.pop()
 
-        # fill game.field with vehicles
-        game.fill_field(vehicles)
-        # game.show_field2()
+        if moves > bound:
+            continue
 
-        # get childs
-        child_fields = game.get_child_fields_whole_step(vehicles)
+        if game.won(vehicles):
+            bound = moves
+            winnings.append(moves)
+            print(moves,len(stack))
 
-        moves += 1
-        states += 1
-        print(moves, states)
+        # only make child fields if not won
+        else:
 
-        # check if field is in archive and add to stack
-        for field in child_fields:
-            if game.is_unique(field) and moves < 50:
+            # fill game.field with vehicles
+            game.fill_field(vehicles)
+            # game.show_field2()
+
+            # get childs
+            child_fields = game.get_child_fields_whole_step(vehicles)
+
+            # give these child move + 1
+            moves += 1
+
+            # check if field is in archive and lower than bound
+            for field in child_fields:
                 stack.append(field)
                 stack.append(moves)
 
-        if moves == 1000:
-            break
-
-    return moves
+    return winnings
 
 def breadth_first(game):
     """

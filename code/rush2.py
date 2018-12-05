@@ -201,11 +201,11 @@ class RushHour(object):
             ab = AnnotationBbox(imagebox, xy, frameon=False)
             ax.add_artist(ab)
 
-        plt.show(block=False)
-        plt.pause(0.000001)
-        plt.close()
+        # plt.show(block=False)
+        # plt.pause(0.000001)
+        # plt.close()
 
-        # plt.show()
+        plt.show()
 
 
     def won(self, vehicles):

@@ -25,13 +25,11 @@ class Main():
         self.results_csv = f"results/random_bb_whole_step_game{board}.csv"
 
 
-    def call_random(self, number):
+    def call_random(self, number, bound):
         """
         Runs random algorithm for {number} of times
         Plots all (including previous) results
         """
-
-        bound = 100
 
         # makes new game every time
         for i in range(number):
@@ -41,17 +39,17 @@ class Main():
             moves, runtime = algorithms.random(rush, bound)
             bound = moves
             print(moves)
-        #
-        #     # add values to csv file
-        #     with open(self.results_csv, 'a') as outfile:
-        #         writer = csv.writer(outfile)
-        #         writer.writerow([moves, runtime])
-        #
-        # # plot histogram
-        # moves_info = self.hist_plot(self.results_csv, 'Random')
-        #
-        # # print results
-        # [print(f"{key}: {value}") for key, value in moves_info.items()]
+
+            # add values to csv file
+            with open(self.results_csv, 'a') as outfile:
+                writer = csv.writer(outfile)
+                writer.writerow([moves, runtime])
+
+        # plot histogram
+        moves_info = self.hist_plot(self.results_csv, 'Random')
+
+        # print results
+        [print(f"{key}: {value}") for key, value in moves_info.items()]
 
     def hist_plot(self, infile, algorithm):
 
@@ -104,7 +102,8 @@ class Main():
         rush = RushHour(self.board)
 
         # run algorithm
-        print(f"Moves: {algorithms.depth_first(rush)}")
+        winnings = algorithms.depth_first(rush)
+        print(f"Moves: {min(winnings)} (best of {len(winnings)} wins)")
 
     def call_breadth_first(self):
         rush = RushHour(self.board)
@@ -117,14 +116,26 @@ class Main():
         print(f"Moves: {moves}, States: {states}")
 
 if __name__ == "__main__":
-    main = Main(4)
-    # print(list(main.rush.vehicles.values()))
-    # main.rush.show_field2(list(main.rush.vehicles.values()))
-    # for field in main.rush.get_child_fields_every_step(list(main.rush.vehicles.values())):
-    #     main.rush.fill_field(field)
-    #     main.rush.show_field()
+    game = sys.argv[1]
+    algorithm = sys.argv[2]
+    if algorithm == "random":
+        runs = int(sys.argv[3])
+        if len(sys.argv[1:]) == 4:
+            bound = int(sys.argv[4])
+        else:
+            bound = 0
 
-    # main.call_random(1)
-    # main.call_depth_first()
-    main.call_breadth_first()
-    # main.call_breadth_first_priority()
+    # initiaze game
+    main = Main(game)
+
+    # call algorithm via Main
+    if algorithm == "show":
+        main.rush.show_field()
+    elif algorithm == "random":
+        main.call_random(runs, bound)
+    elif algorithm == "depth_first":
+        main.call_depth_first()
+    elif algorithm == "breadth_first":
+        main.call_breadth_first()
+    elif algorithm == "breadth_first_priority":
+        main.call_breadth_first_priority()

@@ -508,7 +508,6 @@ class RushHour(object):
 
         return field
 
-
     def cars_for_exit(self, vehicles):
         """
         Checks whether a car is blocking the red car.

@@ -37,13 +37,14 @@ def depth_first(game):
 
     stack = []
     moves = 0
+    states = 0
 
-    initial_vehicles = list(game.vehicles.values())
+    vehicles = list(game.vehicles.values())
 
-    stack.append(initial_vehicles)
+    stack.append(vehicles)
     stack.append(moves)
 
-    while not game.won():
+    while not game.won(vehicles):
 
         # get last item in stack
         moves = stack.pop()
@@ -57,11 +58,12 @@ def depth_first(game):
         child_fields = game.get_child_fields_whole_step(vehicles)
 
         moves += 1
-        print(moves)
+        states += 1
+        print(moves, states)
 
         # check if field is in archive and add to stack
         for field in child_fields:
-            if game.is_unique(field):
+            if game.is_unique(field) and moves < 50:
                 stack.append(field)
                 stack.append(moves)
 
@@ -104,7 +106,7 @@ def breadth_first(game):
 
         moves += 1
         states += 1
-        # print(moves)
+        print(moves, states)
 
         # check if field is in archive and add to queue
         for field in child_fields:
@@ -143,6 +145,7 @@ def breadth_first_priority(game):
 
         moves += 1
         states += 1
+        print(moves, states)
 
         # check if field is in archive and add to queue
         for field in child_fields:

@@ -13,7 +13,7 @@ fact, the vehicles are not allowed to overlap, so the actual state space will be
 smaller than the function suggests. To level off this upper bound, especially for
 the larger fields, we calculated new state spaces, taking into account that vehicles
 in the same row or column block each other in every state. The table below shows
-this upper bound of our state space for each game. 
+this upper bound of our state space for each game.
 
   The **objective function** has an upper bound and a lower bound. We estimate the
 lower bound to be ... and the upper bound to be ... .  
@@ -26,6 +26,18 @@ between the red car and the exit makes for a higher priority.
   However, as of the fourth puzzle, there seems to be a bug in our algorithm:
 after about 50 (game 4) or 26 layers (game 5), the queue seems to be empty and
 the algorithm has not returned a solution.
+
+Game 4, breadth_first: Moves: 28, States: 102987, runtime +/- 1 min
+breadth_first (no priority) every step: Moves: 28, States: 260697 -> same solution, twice as many states
+with priority: Moves: 37, States: 53321, time +/- 2x as fast, but worse solution
+
+Game 5, call_breadth_first, RushHour, breadth_first (without priority queue;
+best solution possible), Moves: 23, States: 2.708.602, time: +/- 23 min
+with priority (cars_in_traffic): Moves: 24, States: 52.835, runtime +/- 2 min
+
+Game 6, call_breadth_first without priority queue, so best solution:
+Moves: 19, States: 13.480.365, runtime +/- 2.5 hours
+with priority (cars_in_traffic): Moves: 19, States: 990.143, runtime +/- 10 min (15x as fast and same solution!)
 
 
 ||Game 1|Game 2|Game 3|

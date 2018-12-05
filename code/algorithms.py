@@ -152,7 +152,7 @@ def breadth_first_priority(game):
 
         moves += 1
         states += 1
-        print(moves, states)
+        print(moves)
 
         # check if field is in archive and add to queue
         for field in child_fields:

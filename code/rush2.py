@@ -482,7 +482,7 @@ class RushHour(object):
         old_length = len(self.archive)
 
         # add hash value of field to archive
-        self.archive.add(self.create_hash(field))
+        self.archive.add(self.create_hash_hex(field))
 
         # if it has been added, the field is unique
         return len(self.archive) > old_length
@@ -507,6 +507,31 @@ class RushHour(object):
                 field += y * pow(10, i)
 
         return field
+
+    def create_hash_hex(self, vehicles):
+        """ Creates a unique respresentation of field """
+
+        field = ""
+
+        for i, vehicle in enumerate(vehicles):
+            if vehicle.orientation == 'H':
+
+                x = vehicle.x
+                if x == 10:
+                    x = "a"
+                elif x == 11:
+                    x = "b"
+                field += str(x)
+            else:
+                y = vehicle.y
+                if y == 10:
+                    y = "a"
+                elif y == 11:
+                    y = "b"
+                field += str(y)
+
+        return field
+
 
     def cars_for_exit(self, vehicles):
         """
@@ -615,6 +640,10 @@ class RushHour(object):
                     blocking_traffic.append(self.field[y][x - 1])
 
         return blocking_traffic
+
+    def both(self, vehicles):
+        return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
+
 
 class PriorityQueue:
     """ Class for priority queue """

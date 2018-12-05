@@ -36,18 +36,21 @@ This repository is devides into code, data, results and main.py. For our latest 
 
 
 ## How to start Rush Hour
+You can run the game as follows.
+```
+python3 main.py <game_number> <algorithm> <optionals>
+```
 
+### Shortkeys
 Show game
 ```
 python3 main.py 1 show
 ``` 
-
-Run game random 1000 times with bound starting at 500 (bound is optional)
+<br/>Run game random 1000 times with bound starting at 500 (bound is optional)
 ```
 python3 main.py 1 random 1000 500
 ```
-
-Run Breadth First algorithm to find shortest solution
+<br/>Run Breadth First algorithm to find shortest solution
 ```
 python3 main.py 1 breadth_first
 ```

@@ -674,6 +674,70 @@ class RushHour(object):
     def both(self, vehicles):
         return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
 
+    def move(self, id, move):
+        """
+        Move vehicle
+        """
+        vehicle = self.vehicles[id]
+
+        # if move is to the right or down
+        if move > 0:
+
+            # if vehicle is placed horizontally
+            if vehicle.orientation == 'H' :
+
+                # check for every block
+                for i in range(move):
+
+                    # if places in matrix are not 0
+                    if self.field[vehicle.y][vehicle.x + vehicle.length - 1 + i] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.x += move
+
+            elif vehicle.orientation == 'V':
+                for i in range(move):
+                    if self.field[vehicle.y + vehicle.length - 1 + i][vehicle.x] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.y += move
+
+        # if move is to the left or up
+        if move < 0:
+
+            # if vehicle is placed horizontally
+            if vehicle.orientation == 'H':
+
+                # check for every block
+                for i in range(0, move, -1):
+
+                    # if places in matrix are not 0
+                    if self.field[self.size - vehicle.y][vehicle.x + i - 1] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.x += move
+
+            elif vehicle.orientation == 'V':
+                for i in range(0, move, -1):
+                    if self.field[vehicle.y + i)][vehicle.x] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.y += move
+
+
+
+        # fill field with moved vehicle
+        for vehicle in self.vehicles.values():
+            self.load_vehicle(vehicle)
+
 
 class PriorityQueue:
     """ Class for priority queue """

@@ -1,7 +1,7 @@
 # Rush Hour BCE :car:
 Heuristics problem Rush Hour game
 
-Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Car and trucks block the road. Vehicles can only be moved in within their orientation. The goal of this project is to solve Rush Hour boards wit h one or more algorithms, while trying to determine the shortest possible solution.
+Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Car and trucks block the road. Vehicles can only be moved in within their orientation. The goal of this project is to solve Rush Hour boards with one or more algorithms, while trying to determine the shortest possible solution.
 
 
 
@@ -59,10 +59,12 @@ python3 main.py 1 breadth_first
 ```
 python3 main.py 1 breadth_first_priority
 ```
+<br/>Show best solution with visualization (options: games 1-6)
+```
+python3 main.py 1 play
+```
 <br/>
-```
-python3 main.py 1
-```
+
 
 ## Results
 The results can be found inside the **results** folder.

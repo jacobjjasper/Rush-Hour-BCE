@@ -230,9 +230,9 @@ class RushHour(object):
             ax.add_artist(ab)
 
         # show one field or close plot to show multiple continuously
-        if type:
+        if type == True:
             plt.show(block=False)
-            plt.pause(0.0001)
+            plt.pause(0.001)
             plt.close()
         else:
             plt.show()
@@ -674,6 +674,7 @@ class RushHour(object):
     def both(self, vehicles):
         return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
 
+<<<<<<< HEAD
     # def move(self, id, move):
     #     """
     #     Move vehicle
@@ -737,6 +738,125 @@ class RushHour(object):
     #     # fill field with moved vehicle
     #     for vehicle in self.vehicles.values():
     #         self.load_vehicle(vehicle)
+=======
+    def play(self, game):
+        """
+        Show visualization of game being won (hardcoded)
+        """
+        if game == "1":
+            self.move(6, -4)
+            self.move(4, -1)
+            self.move(8, 3)
+            self.move(2, -3)
+            self.move(7, -2)
+            self.move(8, -2)
+            self.move(9, -2)
+            self.move(4, 4)
+            self.move(9, 2)
+            self.move(8, 2)
+            self.move(2, 1)
+            self.move(6, 4)
+            self.move(2, -1)
+            self.move(7, -1)
+            self.move(8, -3)
+            self.move(9, -3)
+            self.move(3, -4)
+            self.move(8, 3)
+            self.move(9, 3)
+            self.move(7, 3)
+            self.move(2, 3)
+            self.move(8, -3)
+            self.move(3, 1)
+            self.move(6, -4)
+            self.move(3, -1)
+            self.move(8, 3)
+            self.move(2, -3)
+            self.move(8, -2)
+            self.move(9, -2)
+            self.move(4, -4)
+            self.move(5, -4)
+            self.move(8, 2)
+            self.move(9, 2)
+            self.move(10, 3)
+            self.move(2, 4)
+
+            # leave red vehicle in place to show game is actually won
+            for i in range(8):
+                self.move(2, 0)
+
+
+
+
+        elif game == "2":
+            self.move(3, - 2)
+            self.move(4, - 2)
+            self.move(5, - 1)
+            self.move(6, - 1)
+            self.move(9, - 2)
+            self.move(10, - 1)
+            self.move(8, 2)
+            self.move(2, - 1)
+            self.move(7, 1)
+            self.move(12, - 2)
+            self.move(11, - 2)
+            self.move(13, - 4)
+            self.move(14, - 4)
+            self.move(12, 2)
+            self.move(8, - 1)
+            self.move(10, 3)
+            self.move(2, 3)
+            for i in range(8):
+                self.move(2, 0)
+
+        elif game == "3":
+            self.move(6, - 1)
+            self.move(4, - 1)
+            self.move(3, - 2)
+            self.move(13, - 2)
+            self.move(14, - 3)
+            self.move(7, 2)
+            self.move(11, 1)
+            self.move(5, 3)
+            self.move(11, - 1)
+            self.move(8, - 1)
+            self.move(7, - 3)
+            self.move(11, 1)
+            self.move(5, - 2)
+            self.move(14, 3)
+            self.move(13, 2)
+            self.move(5, 2)
+            self.move(2, 3)
+            self.move(3, 2)
+            self.move(9, - 1)
+            self.move(7, - 1)
+            self.move(2, 1)
+            for i in range(8):
+                self.move(2, 0)
+
+
+
+
+    def move(self, id, move):
+        """
+        Move vehicle
+        """
+        vehicle = self.vehicles[id]
+
+        # if vehicle is placed horizontally
+        if vehicle.orientation == 'H' :
+
+            # move vehicle
+            self.vehicles[id].x += move
+
+        elif vehicle.orientation == 'V':
+            self.vehicles[id].y += move
+
+
+        # fill field and show move quick
+        self.fill_field(list(self.vehicles.values()))
+        self.show_field2(list(self.vehicles.values()), True)
+
+>>>>>>> 33d54531464126df62fcd54add6192d2364c915f
 
 
 class PriorityQueue:

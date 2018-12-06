@@ -118,21 +118,24 @@ class Main():
 if __name__ == "__main__":
     game = sys.argv[1]
     algorithm = sys.argv[2]
-    if algorithm == "random":
-        show = sys.argv[3]
-        runs = int(sys.argv[4])
-        if len(sys.argv[1:]) == 5:
-            bound = int(sys.argv[5])
-        else:
-            bound = 0
 
     # initiaze game
     main = Main(game)
 
     # call algorithm via Main
     if algorithm == "show":
+        # main.rush.show_field()
         main.rush.show_field2(list(main.rush.vehicles.values()), False)
+    elif algorithm == "play":
+        main.rush.show_field2(list(main.rush.vehicles.values()), True)
+        main.rush.play(game)
     elif algorithm == "random":
+        show = sys.argv[3]
+        runs = int(sys.argv[4])
+        if len(sys.argv[1:]) == 5:
+            bound = int(sys.argv[5])
+        else:
+            bound = 0
         main.call_random(show, runs, bound)
     elif algorithm == "depth_first":
         main.call_depth_first()

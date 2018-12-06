@@ -25,18 +25,18 @@ class Main():
         self.results_csv = f"results/random_bb_whole_step_game{board}.csv"
 
 
-    def call_random(self, number, bound):
+    def call_random(self, show, runs, bound):
         """
         Runs random algorithm for {number} of times
         Plots all (including previous) results
         """
 
         # makes new game every time
-        for i in range(number):
+        for i in range(runs):
             rush = RushHour(self.board)
 
             # run algorithm and get return values
-            moves, runtime = algorithms.random(rush, bound)
+            moves, runtime = algorithms.random(rush, show, bound)
             bound = moves
         #     print(moves)
         #
@@ -119,9 +119,10 @@ if __name__ == "__main__":
     game = sys.argv[1]
     algorithm = sys.argv[2]
     if algorithm == "random":
-        runs = int(sys.argv[3])
-        if len(sys.argv[1:]) == 4:
-            bound = int(sys.argv[4])
+        show = sys.argv[3]
+        runs = int(sys.argv[4])
+        if len(sys.argv[1:]) == 5:
+            bound = int(sys.argv[5])
         else:
             bound = 0
 
@@ -130,9 +131,9 @@ if __name__ == "__main__":
 
     # call algorithm via Main
     if algorithm == "show":
-        main.rush.show_field()
+        main.rush.show_field2(list(main.rush.vehicles.values()), False)
     elif algorithm == "random":
-        main.call_random(runs, bound)
+        main.call_random(show, runs, bound)
     elif algorithm == "depth_first":
         main.call_depth_first()
     elif algorithm == "breadth_first":

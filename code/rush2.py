@@ -154,58 +154,88 @@ class RushHour(object):
         # plt.close()
         plt.show()
 
-    def show_field2(self, vehicles):
+    def show_field2(self, vehicles, type):
+        """
+        Show vehicles in Rush Hour board
+        Type is a boolean (T = continuous, F = static)
+        """
 
-        # horizontal
-        x_coor_hor = [78, 151, 222, 294, 366]
-        y_coor_hor = [45, 118, 192, 263, 331, 407]
+        # get starting pixels x = 0, y = 0 on field image
+        start_x = 78
+        start_y = 45
 
-        # vertical
-        x_coor_vert = [43, 112, 183, 257, 326, 400]
-        y_coor_vert = [80, 153, 226, 295, 371]
+        # block pixel width is slightly different per field size
+        if self.size == 6:
+            block_width = 72
+        elif self.size == 9:
+            block_width = 68
+        elif self.size == 12:
+            block_width = 68.5
 
-        # show field
-        field = plt.imread('data2/RushHourImages/RushHour.jpg')
+        # get field without vehicles
+        field = plt.imread(f"data2/RushHourImages/RushHour{self.size}.jpg")
 
+        # show field with subplots to park the vehicles
         fig, ax = plt.subplots()
         plt.imshow(field)
         plt.axis('off')
 
+        # iterate through list of vehicles
         for vehicle in vehicles:
             x = vehicle.x
             y = vehicle.y
 
             # horizontal
             if vehicle.orientation == 'H':
-                x = x_coor_hor[x]
-                y = y_coor_hor[y]
+
+                # give x and y their pixel coordinates
+                x = start_x + (x * block_width)
+                y = start_y + (y * block_width)
+
+                # get car or truck image
                 if vehicle.length == 2:
                     car = plt.imread(f"data2/RushHourImages/Car{vehicle.id}.png")
                 else:
                     car = plt.imread(f"data2/RushHourImages/Truck{vehicle.id}.png")
+
+                    # the image coordinate is his middle, which changes with the length of the car
                     x += 40
 
             # vertical
             if vehicle.orientation == 'V':
-                x = x_coor_vert[x]
-                y = y_coor_vert[y]
+
+                # swap x and y starting coordinates
+                x = start_y + (x * block_width)
+                y = start_x + (y * block_width)
+
+                # get image the same way, but rotated
                 if vehicle.length == 2:
                     car = plt.imread(f"data2/RushHourImages/Car-rotated{vehicle.id}.png")
                 else:
                     car = plt.imread(f"data2/RushHourImages/Truck-rotated{vehicle.id}.png")
                     y += 40
 
-            imagebox = OffsetImage(car, zoom=0.6)
+            # change the size of the vehicle images, depending on field size
+            if self.size == 6:
+                imagebox = OffsetImage(car, zoom=0.6)
+            elif self.size == 9:
+                imagebox = OffsetImage(car, zoom=0.4)
+            elif self.size == 12:
+                imagebox = OffsetImage(car, zoom=0.3)
+
+            # place frame on vehicle to place on coordinate (set off frame after)
             imagebox.image.axes = ax
             xy = (x, y)
             ab = AnnotationBbox(imagebox, xy, frameon=False)
             ax.add_artist(ab)
 
-        # plt.show(block=False)
-        # plt.pause(0.000001)
-        # plt.close()
-
-        plt.show()
+        # show one field or close plot to show multiple continuously
+        if type:
+            plt.show(block=False)
+            plt.pause(0.0001)
+            plt.close()
+        else:
+            plt.show()
 
 
     def won(self, vehicles):
@@ -643,6 +673,70 @@ class RushHour(object):
 
     def both(self, vehicles):
         return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
+
+    def move(self, id, move):
+        """
+        Move vehicle
+        """
+        vehicle = self.vehicles[id]
+
+        # if move is to the right or down
+        if move > 0:
+
+            # if vehicle is placed horizontally
+            if vehicle.orientation == 'H' :
+
+                # check for every block
+                for i in range(move):
+
+                    # if places in matrix are not 0
+                    if self.field[vehicle.y][vehicle.x + vehicle.length - 1 + i] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.x += move
+
+            elif vehicle.orientation == 'V':
+                for i in range(move):
+                    if self.field[vehicle.y + vehicle.length - 1 + i][vehicle.x] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.y += move
+
+        # if move is to the left or up
+        if move < 0:
+
+            # if vehicle is placed horizontally
+            if vehicle.orientation == 'H':
+
+                # check for every block
+                for i in range(0, move, -1):
+
+                    # if places in matrix are not 0
+                    if self.field[self.size - vehicle.y][vehicle.x + i - 1] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.x += move
+
+            elif vehicle.orientation == 'V':
+                for i in range(0, move, -1):
+                    if self.field[vehicle.y + i)][vehicle.x] != 0:
+                        print("can't move")
+                        return
+
+                # move vehicle
+                vehicle.y += move
+
+
+
+        # fill field with moved vehicle
+        for vehicle in self.vehicles.values():
+            self.load_vehicle(vehicle)
 
 
 class PriorityQueue:

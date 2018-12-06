@@ -3,7 +3,7 @@ import time
 import secrets
 from collections import deque
 
-def random(game, bound):
+def random(game, show, bound):
     """ Comments """
     start = time.clock()
 
@@ -17,7 +17,10 @@ def random(game, bound):
         # get random child field and fill game
         vehicles = secrets.choice(child_fields)
         game.fill_field(vehicles)
-        # game.show_field2(vehicles)
+
+        # show game
+        if show:
+            game.show_field2(vehicles, True)
 
         # increment moves
         moves += 1
@@ -107,7 +110,7 @@ def breadth_first(game):
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
-        # game.show_field2(vehicles)
+        # game.show_field2(vehicles, True)
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
@@ -146,7 +149,7 @@ def breadth_first_priority(game):
 
         # fill game.field with vehicles
         game.fill_field(vehicles)
-        # game.show_field()
+        # game.show_field2(vehicles, True)
 
         # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)

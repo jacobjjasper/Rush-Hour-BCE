@@ -30,7 +30,8 @@ def random(game, show, bound):
         # get new childs
         child_fields = game.get_child_fields_whole_step(vehicles)
 
-    print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
+    # print(f"Solved with {moves} moves in {round(time.clock() - start, 2)} seconds")
+    print(moves)
     return moves, (time.clock() - start)
 
 def depth_first(game):
@@ -160,7 +161,7 @@ def breadth_first_priority(game):
         # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
-                priority = moves + game.cars_in_traffic(field)
+                priority = moves + game.cars_for_exit(field)
                 queue.push([moves, field], priority)
 
 

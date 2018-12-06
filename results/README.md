@@ -26,21 +26,21 @@ a random algorithm; a breath-first algorithm; and a depth-first algorithm. To im
 a heuristic, we applied a priority queue to the breath-first algorithm: fewer cars
 between the red car and the exit makes for a higher priority.
 
-Game 4, breadth_first: Moves: 28, States: 102987, runtime +/- 1 min
-breadth_first (no priority) every step: Moves: 28, States: 260697 -> same solution, twice as many states
-with priority: Moves: 37, States: 53321, time +/- 2x as fast, but worse solution
+As we could not find a way to calculate the upper and lower bound of the objective function of the game Rush Hour
+as a whole is, we decided to establish the upper and lower bound of the objective function when our heuristics are
+used. This rendered the following results:
 
-Game 5, call_breadth_first, RushHour, breadth_first (without priority queue;
-best solution possible), Moves: 23, States: 2.708.602, time: +/- 23 min
-with priority (cars_in_traffic): Moves: 24, States: 52.835, runtime +/- 2 min
+In our first heuristic, a malus point is given for each car blocking the red car's way to the exit. As the length
+of the red car is 2, the highest amount of vehicles between the red car and the exit is equal to the width of the board minus 2.
+This is how we established the upper bound of the objective function for heuristic 1: 4 for a 6x6 game, 7 for a 9x9 game, and 10 for a
+12x12 game. The ideal scenario would behaving no vehicles blocking the red car from exiting.
+Thus, the lower bound of the objective function for this heuristic is always 0.
 
-Game 6, call_breadth_first without priority queue, so best solution:
-Moves: 19, States: 13.480.365, runtime +/- 2.5 hours
-with priority (cars_in_traffic): Moves: 19, States: 990.143, runtime +/- 10 min (15x as fast and same solution!)
-
-Game 7
-Breadth first
-
+In our second heuristic, we looked at the blockage caused by vehicles. A more detailed description can be found below, in the
+section on comparing algorithms and heuristics. One point is awarded for each vehicle that could not move. Thus, the minimum would,
+again, be 0; in this case, the red car would be able to exit. The maximum amount of malus points depends on the amount of cars
+on the board. It is highly unlikely that every car is blocked, but the worst case scenario is that only one car can move. In this
+case, the amount of malus points given to this board would be the number of cars minus one: every car is blocked, except for one.
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|
@@ -93,8 +93,8 @@ To find the lowest amount of steps to the solution, we used a breadth-first sear
 
 To minimise the amount of checked states, we implemented two different heuristics. Firstly, the **cars-to-exit** heuristic, and secondly the **cars-in-traffic** heuristic.
 
-The **cars-to-exit** heuristic checks how many cars are blocking the red car's route to the exit. Every car renders one malus point; fewer points would therefore suggest that a board is closer to the solution.
+The **cars-to-exit** heuristic checks how many cars are blocking the red car's route to the exit. Every car renders one malus point; fewer points would therefore suggest that a board is closer to the solution. In almost every case, this heuristic found a solution of as many steps as the breadth first without any heuristics. However, it had to check significantly fewer states to get there.  
 
-The **cars-in-traffic** heuristic starts off at the red car. It checks whether the red car can move toward the exit. If not, it checks whether the first vehicle blocking the way can move. If not, it checks whether the vehicle blocking that vehicle can move, and so on. The length of this 'traffic jam' determines the amount of malus points given to a board. Again, fewer points would suggest that the board is closer to the solution.
+The **cars-in-traffic** heuristic starts off at the red car. It checks whether the red car can move toward the exit. If not, it checks whether the first vehicle blocking the way can move. If not, it checks whether the vehicle blocking that vehicle can move, and so on. The length of this 'traffic jam' determines the amount of malus points given to a board. Again, fewer points would suggest that the board is closer to the solution. This algorithm
 
- Thirdly, we used depth-first search to find a solution. When executed on the smaller boards, the algorithm rendered a solution. 
+Thirdly, we used depth-first search to find a solution. When executed on the smaller boards, the algorithm rendered a solution, yet it subsequently needed more steps to complete the puzzle than the breadth first option.

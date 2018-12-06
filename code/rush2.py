@@ -230,9 +230,9 @@ class RushHour(object):
             ax.add_artist(ab)
 
         # show one field or close plot to show multiple continuously
-        if type:
+        if type == True:
             plt.show(block=False)
-            plt.pause(0.0001)
+            plt.pause(0.001)
             plt.close()
         else:
             plt.show()
@@ -674,69 +674,123 @@ class RushHour(object):
     def both(self, vehicles):
         return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
 
+    def play(self, game):
+        """
+        Show visualization of game being won (hardcoded)
+        """
+        if game == "1":
+            self.move(6, -4)
+            self.move(4, -1)
+            self.move(8, 3)
+            self.move(2, -3)
+            self.move(7, -2)
+            self.move(8, -2)
+            self.move(9, -2)
+            self.move(4, 4)
+            self.move(9, 2)
+            self.move(8, 2)
+            self.move(2, 1)
+            self.move(6, 4)
+            self.move(2, -1)
+            self.move(7, -1)
+            self.move(8, -3)
+            self.move(9, -3)
+            self.move(3, -4)
+            self.move(8, 3)
+            self.move(9, 3)
+            self.move(7, 3)
+            self.move(2, 3)
+            self.move(8, -3)
+            self.move(3, 1)
+            self.move(6, -4)
+            self.move(3, -1)
+            self.move(8, 3)
+            self.move(2, -3)
+            self.move(8, -2)
+            self.move(9, -2)
+            self.move(4, -4)
+            self.move(5, -4)
+            self.move(8, 2)
+            self.move(9, 2)
+            self.move(10, 3)
+            self.move(2, 4)
+
+            # leave red vehicle in place to show game is actually won
+            for i in range(8):
+                self.move(2, 0)
+
+
+
+
+        elif game == "2":
+            self.move(3, - 2)
+            self.move(4, - 2)
+            self.move(5, - 1)
+            self.move(6, - 1)
+            self.move(9, - 2)
+            self.move(10, - 1)
+            self.move(8, 2)
+            self.move(2, - 1)
+            self.move(7, 1)
+            self.move(12, - 2)
+            self.move(11, - 2)
+            self.move(13, - 4)
+            self.move(14, - 4)
+            self.move(12, 2)
+            self.move(8, - 1)
+            self.move(10, 3)
+            self.move(2, 3)
+            for i in range(8):
+                self.move(2, 0)
+
+        elif game == "3":
+            self.move(6, - 1)
+            self.move(4, - 1)
+            self.move(3, - 2)
+            self.move(13, - 2)
+            self.move(14, - 3)
+            self.move(7, 2)
+            self.move(11, 1)
+            self.move(5, 3)
+            self.move(11, - 1)
+            self.move(8, - 1)
+            self.move(7, - 3)
+            self.move(11, 1)
+            self.move(5, - 2)
+            self.move(14, 3)
+            self.move(13, 2)
+            self.move(5, 2)
+            self.move(2, 3)
+            self.move(3, 2)
+            self.move(9, - 1)
+            self.move(7, - 1)
+            self.move(2, 1)
+            for i in range(8):
+                self.move(2, 0)
+
+
+
+
     def move(self, id, move):
         """
         Move vehicle
         """
         vehicle = self.vehicles[id]
 
-        # if move is to the right or down
-        if move > 0:
+        # if vehicle is placed horizontally
+        if vehicle.orientation == 'H' :
 
-            # if vehicle is placed horizontally
-            if vehicle.orientation == 'H' :
+            # move vehicle
+            self.vehicles[id].x += move
 
-                # check for every block
-                for i in range(move):
-
-                    # if places in matrix are not 0
-                    if self.field[vehicle.y][vehicle.x + vehicle.length - 1 + i] != 0:
-                        print("can't move")
-                        return
-
-                # move vehicle
-                vehicle.x += move
-
-            elif vehicle.orientation == 'V':
-                for i in range(move):
-                    if self.field[vehicle.y + vehicle.length - 1 + i][vehicle.x] != 0:
-                        print("can't move")
-                        return
-
-                # move vehicle
-                vehicle.y += move
-
-        # if move is to the left or up
-        if move < 0:
-
-            # if vehicle is placed horizontally
-            if vehicle.orientation == 'H':
-
-                # check for every block
-                for i in range(0, move, -1):
-
-                    # if places in matrix are not 0
-                    if self.field[self.size - vehicle.y][vehicle.x + i - 1] != 0:
-                        print("can't move")
-                        return
-
-                # move vehicle
-                vehicle.x += move
-
-            elif vehicle.orientation == 'V':
-                for i in range(0, move, -1):
-                    if self.field[vehicle.y + i)][vehicle.x] != 0:
-                        print("can't move")
-                        return
-
-                # move vehicle
-                vehicle.y += move
+        elif vehicle.orientation == 'V':
+            self.vehicles[id].y += move
 
 
+        # fill field and show move quick
+        self.fill_field(list(self.vehicles.values()))
+        self.show_field2(list(self.vehicles.values()), True)
 
-        # fill field with moved vehicle
-        for vehicle in self.vehicles.values():
-            self.load_vehicle(vehicle)
 
 
 class PriorityQueue:

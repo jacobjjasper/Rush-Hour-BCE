@@ -59,10 +59,12 @@ python3 main.py 1 breadth_first
 ```
 python3 main.py 1 breadth_first_priority
 ```
+<br/>Show best solution with visualization (options: games 1-6)
+```
+python3 main.py 1 play
+```
 <br/>
-```
-python3 main.py 1
-```
+
 
 ## Results
 The results can be found inside the **results** folder.

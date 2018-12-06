@@ -21,14 +21,14 @@ The following games will be played. The data files of these games are in the fol
   * The upper-left corner of the game field get's coordinate (0,0)
 
 
-##### 6x6
-<img title = "Game 1" src="http://heuristieken.nl/wiki/images/9/95/Rushhour6x6_1.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/a/aa/Rushhour6x6_2.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/c/c7/Rushhour6x6_3.jpg" width="150" style="max-width:100%;">
+##### 6x6 (games 1, 2, and 3)
+<img title = "Game 1" src="http://heuristieken.nl/wiki/images/9/95/Rushhour6x6_1.jpg" width="150" style="max-width:100%;"> <img title = "Game 2" src="http://heuristieken.nl/wiki/images/a/aa/Rushhour6x6_2.jpg" width="150" style="max-width:100%;"> <img title = "Game 2" src="http://heuristieken.nl/wiki/images/c/c7/Rushhour6x6_3.jpg" width="150" style="max-width:100%;">
 
-##### 9x9
-<img src="http://heuristieken.nl/wiki/images/9/96/Rushhour9x9_1.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/1/1e/Rushhour9x9_2.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/9/95/Rushhour9x9_3.jpg" width="150" style="max-width:100%;">
+##### 9x9 (games 4, 5, and 6)
+<img title = "Game 4" src="http://heuristieken.nl/wiki/images/9/96/Rushhour9x9_1.jpg" width="150" style="max-width:100%;"> <img title = "Game 5" src="http://heuristieken.nl/wiki/images/1/1e/Rushhour9x9_2.jpg" width="150" style="max-width:100%;"> <img title = "Game 6" src="http://heuristieken.nl/wiki/images/9/95/Rushhour9x9_3.jpg" width="150" style="max-width:100%;">
 
-##### 12x12
-<img src="http://heuristieken.nl/wiki/images/2/26/Rushhour12x12_1.jpg" width="150" style="max-width:100%;">
+##### 12x12 (game 7)
+<img title = "Game 7" src="http://heuristieken.nl/wiki/images/2/26/Rushhour12x12_1.jpg" width="150" style="max-width:100%;">
 
 
 ## Files
@@ -68,7 +68,7 @@ python3 main.py 1
 ```
 
 ## Results
-The results can be found inside the **results** folder. 
+The results can be found inside the **results** folder.
 
 ## Students
 * Jacob Jasper

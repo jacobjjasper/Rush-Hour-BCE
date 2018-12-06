@@ -38,18 +38,18 @@ class Main():
             # run algorithm and get return values
             moves, runtime = algorithms.random(rush, bound)
             bound = moves
-            print(moves)
-
-            # add values to csv file
-            with open(self.results_csv, 'a') as outfile:
-                writer = csv.writer(outfile)
-                writer.writerow([moves, runtime])
-
-        # plot histogram
-        moves_info = self.hist_plot(self.results_csv, 'Random')
-
-        # print results
-        [print(f"{key}: {value}") for key, value in moves_info.items()]
+        #     print(moves)
+        #
+        #     # add values to csv file
+        #     with open(self.results_csv, 'a') as outfile:
+        #         writer = csv.writer(outfile)
+        #         writer.writerow([moves, runtime])
+        #
+        # # plot histogram
+        # moves_info = self.hist_plot(self.results_csv, 'Random')
+        #
+        # # print results
+        # [print(f"{key}: {value}") for key, value in moves_info.items()]
 
     def hist_plot(self, infile, algorithm):
 

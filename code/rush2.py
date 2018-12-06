@@ -168,7 +168,7 @@ class RushHour(object):
         if self.size == 6:
             block_width = 72
         elif self.size == 9:
-            block_width = 68
+            block_width = 69
         elif self.size == 12:
             block_width = 68.5
 
@@ -768,7 +768,91 @@ class RushHour(object):
             for i in range(8):
                 self.move(2, 0)
 
+        elif game == "4":
+            self.move(15, 2)
+            self.move(21, -1)
+            self.move(22, -1)
+            self.move(23, -1)
+            self.move(18, 1)
+            self.move(13, 1)
+            self.move(3, 1)
+            self.move(5, -1)
+            self.move(6, -1)
+            self.move(8, -3)
+            self.move(7, 5)
+            self.move(9, -1)
+            self.move(10, -2)
+            self.move(8, 4)
+            self.move(6, 1)
+            self.move(5, 5)
+            self.move(6, -1)
+            self.move(4, 4)
+            self.move(3, -1)
+            self.move(11, -2)
+            self.move(2, -1)
+            self.move(16, -5)
+            self.move(14, 1)
+            self.move(19, -1)
+            self.move(20, -1)
+            self.move(17, 1)
+            self.move(12, 1)
+            self.move(2, 7)
+            for i in range(8):
+                self.move(2, 0)
 
+        elif game == "5":
+            self.move(9, -3)
+            self.move(7, 1)
+            self.move(3, 1)
+            self.move(13, -5)
+            self.move(21, -5)
+            self.move(12, -2)
+            self.move(7, 2)
+            self.move(8, -3)
+            self.move(22, -2)
+            self.move(19, -2)
+            self.move(23, -2)
+            self.move(14, 2)
+            self.move(15, -1)
+            self.move(24, -7)
+            self.move(15, 1)
+            self.move(14, -2)
+            self.move(20, -3)
+            self.move(16, 2)
+            self.move(2, -2)
+            self.move(10, 2)
+            self.move(11, -3)
+            self.move(6, 2)
+            self.move(4, -1)
+            self.move(18, -4)
+            self.move(17, 1)
+            self.move(10, 3)
+            self.move(2, 3)
+            for i in range(8):
+                self.move(2, 0)
+
+        elif game == "6":
+            self.move(27, 1)
+            self.move(19, 1)
+            self.move(20, 1)
+            self.move(17, 2)
+            self.move(16, 1)
+            self.move(3, -1)
+            self.move(21, -1)
+            self.move(7, -2)
+            self.move(22, -2)
+            self.move(20, 1)
+            self.move(4, -1)
+            self.move(10, -2)
+            self.move(5, 1)
+            self.move(20, 3)
+            self.move(5, -1)
+            self.move(10, 3)
+            self.move(17, 1)
+            self.move(19, -1)
+            self.move(2, 7)
+            for i in range(8):
+                self.move(2, 0)
 
 
     def move(self, id, move):

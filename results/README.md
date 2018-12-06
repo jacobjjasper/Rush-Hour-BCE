@@ -32,55 +32,64 @@ used. This rendered the following results:
 
 In our first heuristic, a malus point is given for each car blocking the red car's way to the exit. As the length
 of the red car is 2, the highest amount of vehicles between the red car and the exit is equal to the width of the board minus 2.
-This is how we established the upper bound of the objective function for heuristic 1: 4 for a 6x6 game, 7 for a 9x9 game, and 10 for a
-12x12 game. The ideal scenario would behaving no vehicles blocking the red car from exiting.
+This is how we established the upper bound of the objective function for heuristic 1: 4 for a 6x6 game, 7 for a 9x9 game, and 10 for a 12x12 game. The ideal scenario would be having no vehicles blocking the red car from exiting.
 Thus, the lower bound of the objective function for this heuristic is always 0.
 
 In our second heuristic, we looked at the blockage caused by vehicles. A more detailed description can be found below, in the
-section on comparing algorithms and heuristics. One point is awarded for each vehicle that could not move. Thus, the minimum would,
-again, be 0; in this case, the red car would be able to exit. The maximum amount of malus points depends on the amount of cars
-on the board. It is highly unlikely that every car is blocked, but the worst case scenario is that only one car can move. In this
-case, the amount of malus points given to this board would be the number of cars minus one: every car is blocked, except for one.
+section on comparing algorithms and heuristics. One point is awarded for each vehicle that could not move. Thus, the minimum would, again, be 0; in this case, the red car would be able to exit. The maximum amount of malus points depends on the amount of cars on the board. It is highly unlikely that every car is blocked, but the worst case scenario is that only one car can move. In this case, the amount of malus points given to this board would be the number of cars minus one: every car is blocked, except for one.
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|
 |_State Space_|Lower: 34|Lower: 16|Lower: 22|
 ||Upper: 1.000.000|Upper: 45.562.500|Upper: 9.112.500|
-|_Objective Function_|Lower: 1|Lower: 2|Lower: 3|
-||Upper: |Upper: |Upper: |
+|_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
+||Upper: 4|Upper: 4|Upper: 4|
+|_Objective function cars-in-traffic|Lower: 0|Lower: 0|Lower: 0|
+||Upper: 8|Upper: 12|Upper: 12|
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
-||max: 32516|max: 5058|max: 14649|
 ||min: 189|min: 28|min: 45|
-||mean: 4469.48|mean: 977.75||mean: 2284.88|
-||median: 3407.0|median: 741.5|median: 1677.0|
-||stddev: 3733.6|stddev: 793.94|stddev: 2022.18|
 |_Breadth-First_|34 moves|16 moves|22 moves|
-|_Breath-First Priority Queue_|34 moves|16 moves|23 moves|
+| _states:_|4.239|939|528|
+|_BF cars-to-exit_|34 moves|16 moves|23 moves|
+| _states:_|3.748|621|411|
+|_BF cars-in-traffic_|34 moves|16 moves|23 moves|
+| _states:_|3.716|414|274|
 |_Depth-First_|474 moves|901 moves|127 moves|
-
 
 ||Game 4|Game 5|Game 6|
 |:---|:---| :---| :---|
 |_State Space_|Lower: |Lower: |Lower: |
 ||Upper: 1,72E13|Upper: 8,43E18|Upper: 1,65E19|
-|_Objective Function_|Lower: 2|Lower: 1|Lower: 2|
-||Upper: |Upper: |Upper: |
+|_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
+||Upper: 7|Upper: 7|Upper: 7|
+|_Objective function cars-in-traffic|Lower: 0|Lower: 0|Lower: 0|
+||Upper: 22|Upper: 23|Upper: 25|
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 172|min: 92|min: 93|
-|_Breadth-First_| -- | -- | -- |
-|_Breath-First Priority Queue_| -- | -- | -- |
+|_Breadth-First_|28 moves|23 moves|19 moves|
+| _states:_|102.988|2.708.602|13.480.365|
+|_BF cars-to-exit_|28 moves|23 moves|19 moves|
+| _states:_|58.605|2.002.915|2.762.199|
+|_BF cars-in-traffic_|37 moves|24 moves|19 moves|
+| _states:_|53.322|52.863|990.144|
 |_Depth-First_| -- | -- | -- |
 
 ||Game 7|
 |:---|:---|
 |_State Space_|Lower: |
 ||Upper:1,32E36|
-|_Objective Function_|Lower: 2|
-||Upper: |
+|_Objective function cars-to-exit_|Lower: 0|
+||Upper: 10|
+|_Objective function cars-in-traffic|Lower: 0|
+||Upper: 43|
 |_Random Solver_|total runs: 30.000|
 ||min: 634|
-|_Breadth-First_| -- |
-|_Breath-First Priority Queue_| -- |
+|_Breadth-First_|>14 moves|
+| _states:_|> 12.472.669|
+|_BF cars-to-exit_| -- |
+| _states:_| -- |
+|_BF cars-in-traffic_| -- |
+| _states:_| -- |
 |_Depth-First_| -- |
 
 

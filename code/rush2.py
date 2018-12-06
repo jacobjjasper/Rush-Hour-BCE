@@ -876,7 +876,6 @@ class RushHour(object):
         self.show_field2(list(self.vehicles.values()), True)
 
 
-
 class PriorityQueue:
     """ Class for priority queue """
     def __init__(self):

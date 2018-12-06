@@ -1,11 +1,8 @@
 # Rush Hour BCE :car:
 Heuristics problem Rush Hour game
 
-<<<<<<< HEAD
-Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Car and trucks block the road. Vehicles can only be moved in within their orientation. The goal of this project is to solve Rush Hour bords with one or more algorithms, while trying to determine the shortest possible solution.
-=======
-Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Car and trucks block the road. Vehicles can only be moved in within their orientation. The goal of this project is to solve Rush Hour boards wit h one or more algorithms, while trying to determine the shortest possible solution.
->>>>>>> de41b214c052aefd49fb102fc85bd028a7434ea1
+Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Car and trucks block the road. Vehicles can only be moved in within their orientation. The goal of this project is to solve Rush Hour boards with one or more algorithms, while trying to determine the shortest possible solution.
+
 
 
 ## Data (game boards)
@@ -21,14 +18,14 @@ The following games will be played. The data files of these games are in the fol
   * The upper-left corner of the game field get's coordinate (0,0)
 
 
-##### 6x6
-<img title = "Game 1" src="http://heuristieken.nl/wiki/images/9/95/Rushhour6x6_1.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/a/aa/Rushhour6x6_2.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/c/c7/Rushhour6x6_3.jpg" width="150" style="max-width:100%;">
+##### 6x6 (games 1, 2, and 3)
+<img title = "Game 1" src="http://heuristieken.nl/wiki/images/9/95/Rushhour6x6_1.jpg" width="150" style="max-width:100%;"> <img title = "Game 2" src="http://heuristieken.nl/wiki/images/a/aa/Rushhour6x6_2.jpg" width="150" style="max-width:100%;"> <img title = "Game 3" src="http://heuristieken.nl/wiki/images/c/c7/Rushhour6x6_3.jpg" width="150" style="max-width:100%;">
 
-##### 9x9
-<img src="http://heuristieken.nl/wiki/images/9/96/Rushhour9x9_1.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/1/1e/Rushhour9x9_2.jpg" width="150" style="max-width:100%;"> <img src="http://heuristieken.nl/wiki/images/9/95/Rushhour9x9_3.jpg" width="150" style="max-width:100%;">
+##### 9x9 (games 4, 5, and 6)
+<img title = "Game 4" src="http://heuristieken.nl/wiki/images/9/96/Rushhour9x9_1.jpg" width="150" style="max-width:100%;"> <img title = "Game 5" src="http://heuristieken.nl/wiki/images/1/1e/Rushhour9x9_2.jpg" width="150" style="max-width:100%;"> <img title = "Game 6" src="http://heuristieken.nl/wiki/images/9/95/Rushhour9x9_3.jpg" width="150" style="max-width:100%;">
 
-##### 12x12
-<img src="http://heuristieken.nl/wiki/images/2/26/Rushhour12x12_1.jpg" width="150" style="max-width:100%;">
+##### 12x12 (game 7)
+<img title = "Game 7" src="http://heuristieken.nl/wiki/images/2/26/Rushhour12x12_1.jpg" width="150" style="max-width:100%;">
 
 
 ## Files
@@ -62,13 +59,15 @@ python3 main.py 1 breadth_first
 ```
 python3 main.py 1 breadth_first_priority
 ```
+<br/>Show best solution with visualization (options: games 1-6)
+```
+python3 main.py 1 play
+```
 <br/>
-```
-python3 main.py 1
-```
+
 
 ## Results
-The results can be found inside the **results** folder. 
+The results can be found inside the **results** folder.
 
 ## Students
 * Jacob Jasper

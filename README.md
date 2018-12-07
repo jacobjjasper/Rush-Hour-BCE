@@ -41,6 +41,11 @@ You can run the game as follows. Insert game number 1 to 7, corresponding to the
 ```
 python3 main.py <game_number> <algorithm> <optionals>
 ```
+To install requirements from requirements.txt, run
+```
+pip install -r requirements.txt
+```
+
 
 ### Command lines
 Show game

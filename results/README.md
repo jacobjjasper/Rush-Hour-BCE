@@ -26,7 +26,7 @@ The table below shows this upper bound of our state space for each game.
 ||Game 7|
 |:---|:---|
 |_State Space_|Lower: |
-||Upper:1,32E36|
+||Upper: 1,32E36|
 
 
 #### Objective function
@@ -134,7 +134,7 @@ When a game is more complicated, the state space tends to increase. As a breadth
 
   In the graph below, the comparison between heuristics can be seen. Plotted on the y-axis is the number of checked states on a logaritmic scale. From the graph can be infered that the heuristics effectively narrows the scope of our breadth-first search. However, as implementing the heuristics does not always render the same solution as our no-heuristic search, the scope could be a little too effectivly narrowed. 
   
-![Heuristics comparison](heuristics_graph/heuristics_compare.png)
+![Heuristics comparison](heuristics_graph/heuristics_graph.png)
 
 
 

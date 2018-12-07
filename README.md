@@ -42,7 +42,7 @@ You can run the game as follows.
 python3 main.py <game_number> <algorithm> <optionals>
 ```
 
-### Shortkeys
+### Command lines
 Show game
 ```
 python3 main.py 1 show

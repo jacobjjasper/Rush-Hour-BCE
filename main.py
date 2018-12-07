@@ -115,6 +115,11 @@ class Main():
         moves, states = algorithms.best_first(rush, heuristic)
         print(f"Moves: {moves}, States: {states}")
 
+    def call_breadth_first_2(self):
+        rush = RushHour(self.board)
+        moves, states = algorithms.breadth_first_2(rush)
+        print(f"Moves: {moves}, States: {states}")
+
 if __name__ == "__main__":
     game = sys.argv[1]
     algorithm = sys.argv[2]
@@ -143,3 +148,5 @@ if __name__ == "__main__":
     elif algorithm == "best_first":
         heuristic = sys.argv[3]
         main.call_best_first(heuristic)
+    elif algorithm == "breadth_first_2":
+        main.call_breadth_first_2()

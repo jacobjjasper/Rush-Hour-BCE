@@ -854,12 +854,52 @@ class RushHour(object):
             for i in range(8):
                 self.move(2, 0)
 
+        elif game == "7":
+            self.move(24, 1)
+            self.move(20, -1)
+            self.move(28, 1)
+            self.move(13, 3)
+            self.move(4, 3)
+            self.move(9, -3)
+            self.move(2, -1)
+            self.move(14, -1)
+            self.move(19, -1)
+            self.move(10, -1)
+            self.move(12, 2)
+            self.move(16, -3)
+            self.move(15, -1)
+            self.move(22, 4)
+            self.move(19, 1)
+            self.move(14, 1)
+            self.move(2, 1)
+            self.move(9, 3)
+            self.move(4, -3)
+            self.move(13, -3)
+            self.move(23, 1)
+            self.move(20, 1)
+            self.move(27, -6)
+            self.move(23, -1)
+            self.move(20, -1)
+            self.move(38, -3)
+            self.move(39, -1)
+            self.move(43, -1)
+            self.move(28, 2)
+            self.move(13, 5)
+            self.move(24, -1)
+            self.move(4, 3)
+            self.move(9, -2)
+            self.move(11, -1)
+            self.move(18, -2)
+            self.move(2, 8)
+            for i in range(8):
+                self.move(2, 0)
 
     def move(self, id, move):
         """
         Move vehicle
         """
         vehicle = self.vehicles[id]
+        print(vehicle.id)
 
         # if vehicle is placed horizontally
         if vehicle.orientation == 'H' :

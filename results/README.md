@@ -1,7 +1,7 @@
 # Results
 ## Calculating the state space and the bounds of the objective function
 #### State space
-To calculate the upper bound of our **state space**, we used the following formula:  
+To calculate the upper bound of our state space, we used the following formula:  
 
   _upper bound = (field size - 1)^cars_ * _(field size - 2)^trucks_  
 
@@ -9,9 +9,13 @@ To calculate the upper bound of our **state space**, we used the following formu
 field. A truck has a length of 3, so it cannot move more than 2 steps less than
 the size of the field.
 
-However, the resulting upper bound is an overestimation. To calculate the state space of the game, we allowed the vehicles to overlap. In fact, the vehicles are not allowed to overlap, so the actual state space will be smaller than the function suggests. To level off this upper bound, especially for the larger fields, we calculated new state spaces, taking into account that vehicles in the same row or column block each other in every state. 
+However, the resulting upper bound is an overestimation. To calculate the state space of the game, we allowed the vehicles to overlap. In fact, the vehicles are not allowed to overlap, so the actual state space will be smaller than the function suggests. To level off this upper bound, especially for the larger fields, we calculated new state spaces, taking into account that vehicles in the same row or column block each other. Using this constraint, we can calculate a new upper bound of our state space with the following formula:
 
-The table below shows this upper bound of our state space for each game.
+_upper_bound = (field size - 1)^free cars_ * _(field size - 2)^free trucks_ * _(other options)_
+
+where 'other options' is to be filled as such: if two cars are situated on the same row on a 6x6 board, 'other options' is (6 - 1 - 2)^2. In other words, there are two cars who can move over 6 (field size) minus one (taking in account their own length) minus two (the other car's space). 
+
+The table below shows this upper bound of our state space for each game. We found it hard to establish a viable lower bound for the state space of each individual game. To avoid setting the lower bound at 0, we established the lower bound of each game by running a breadth-first search algorithm. The rendered outcome would be the lower bound of our game, as this is the least amount of moves needed to get to the solution.
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|
@@ -20,12 +24,12 @@ The table below shows this upper bound of our state space for each game.
 
 ||Game 4|Game 5|Game 6|
 |:---|:---| :---| :---|
-|_State Space_|Lower: |Lower: |Lower: |
+|_State Space_|Lower: 28|Lower: 23|Lower: 19|
 ||Upper: 1,72E13|Upper: 8,43E18|Upper: 1,65E19|
 
 ||Game 7|
 |:---|:---|
-|_State Space_|Lower: |
+|_State Space_|Lower: >14|
 ||Upper: 1,32E36|
 
 
@@ -37,10 +41,10 @@ used. This rendered the following results:
 In our first heuristic, a malus point is given for each car blocking the red car's way to the exit. As the length
 of the red car is 2, the highest amount of vehicles between the red car and the exit is equal to the width of the board minus 2.
 This is how we established the upper bound of the objective function for heuristic 1: 4 for a 6x6 game, 7 for a 9x9 game, and 10 for a 12x12 game. The ideal scenario would be having no vehicles blocking the red car from exiting.
-Thus, the lower bound of the objective function for this heuristic is always 0.
+Thus, the lower bound of the objective function for this heuristic is always 0. Both bounds can be reached relatively easily, but neither can be passed due to them being a function of the board's size, which stays fixed. 
 
 In our second heuristic, we looked at the blockage caused by vehicles. A more detailed description can be found below, in the
-section on comparing algorithms and heuristics. One point is awarded for each vehicle that could not move. Thus, the minimum would, again, be 0; in this case, the red car would be able to exit. The maximum amount of malus points depends on the amount of cars on the board. It is highly unlikely that every car is blocked, but the worst case scenario is that only one car can move. In this case, the amount of malus points given to this board would be the number of cars minus one: every car is blocked, except for one.
+section on comparing algorithms and heuristics. One point is awarded for each vehicle that could not move. Thus, the minimum would, again, be 0; in this case, the red car would be able to exit. The maximum amount of malus points depends on the amount of cars on the board. It is highly unlikely that every car is blocked, but the worst case scenario is that only one car can move. In this case, the amount of malus points given to this board would be the number of cars minus one: every car is blocked, except for one. The lower bound can be reached if a game is solvable. The upper bound can be reached, but cannot be passed; otherwise, the game would be unplayable. 
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|

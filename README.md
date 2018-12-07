@@ -1,7 +1,7 @@
 # Rush Hour BCE :car:
-Heuristics problem Rush Hour game
+#### Heuristics problem Rush Hour game
 
-Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Car and trucks block the road. Vehicles can only be moved in within their orientation. The goal of this project is to solve Rush Hour boards with one or more algorithms, while trying to determine the shortest possible solution.
+Rush Hour looks like an easy game, but can be quite hard. The goal is to move the red car to the exit of the puzzle board. Cars and trucks block the road. Vehicles can only be moved along their orientation. The goal of this project is to solve Rush Hour boards with one or more algorithms, while trying to determine the shortest possible solution.
 
 
 
@@ -15,7 +15,7 @@ The following games will be played. The data files of these games are in the fol
   * X-coordinate (leftest)
   * Y-coordinate (upmost)
   * 'H' or 'V' (for horizontal or vertical positioning)
-  * The upper-left corner of the game field get's coordinate (0,0)
+  * The upper-left corner of the game field gets coordinate(0,0)
 
 
 ##### 6x6 (games 1, 2, and 3)
@@ -29,7 +29,7 @@ The following games will be played. The data files of these games are in the fol
 
 
 ## Files
-This repository is divided into code, data, results and main.py. For our latest versions, we used the data2 file and code/rush2.py. The data folder holds all the game data (loading in Rush Hour boards) and some images for visualisations. The results file contains csv-files with data from the random-algorithm and some general information about the state space of the problem, fastest solutions and other outcomes of our exploration. The code folder is made up of:
+This repository is divided into [code](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/code), [data2](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/data2), [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) and main.py. For our latest versions, we used the data2 file and code/rush2.py. The data folder holds all the game data (loading in Rush Hour boards) and some images for visualisations. The results file contains csv-files with data from the random-algorithm and some general information about the state space of the problem, fastest solutions and other outcomes of our exploration. The code folder is made up of:
 * algorithms.py - all algorithms
 * rush.py - old version of rush2.py
 * rush2.py - general RushHour class, holds most of the functions

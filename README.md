@@ -82,7 +82,7 @@ A second difficulty when solving a game of Rush Hour, is that there is no known 
 
 When comparing the number of states visited while looking for the solution, it seems as though, for our solver, certain games are more difficult to solve than others: for instance, our breadth-first, no-heuristic solver found a solution of 28 steps for Game 4 and checked approximately 100.000 states to get there. However, for Game 6 (which is also a 9x9 game), 19 steps were needed, yet our solver had to check over 13 million states to find a solution. These findings beg the question: why is Game 6 so much harder than Game 4? Or, ultimately: what makes a Rush Hour board hard to solve? 
 
-Define harder to solve: more steps or more possible steps?
+The difficulty of a Rush Hour board is dependent on at least two factors: the amount of possibilities (state space) and the amount of steps to the solution. For example: two games can be solved in 19 steps, though one could have a larger state space which makes it harder for the player to choose which vehicles to move. Of course, the hardness of the game could also depend on the strategy and intuition of the player, but for an algorithm these factors together define the difficulty of the game.
 
 ## Students
 * Jacob Jasper

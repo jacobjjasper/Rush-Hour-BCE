@@ -18,14 +18,6 @@ this upper bound of our state space for each game.
 
 
 ##### Objective function
-  The **objective function** has an upper bound and a lower bound. We estimate the
-lower bound to be ... and the upper bound to be ... .  
-
-  Furthermore, we solved the first three games with three different algorithms:
-a random algorithm; a breath-first algorithm; and a depth-first algorithm. To implement
-a heuristic, we applied a priority queue to the breath-first algorithm: fewer cars
-between the red car and the exit makes for a higher priority.
-
 As we could not find a way to calculate the upper and lower bound of the objective function of the game Rush Hour
 as a whole is, we decided to establish the upper and lower bound of the objective function when our heuristics are
 used. This rendered the following results:

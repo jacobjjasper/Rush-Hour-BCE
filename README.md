@@ -5,7 +5,7 @@ Rush Hour looks like an easy game, but can be quite hard. The goal is to move th
 
 
 
-## Data (game boards)
+## Data
 The following games will be played. The data files of these games are in the folder 'data2' and contain:
 * The game board size (e.g. 6, 9, or 12) on the first line
 * The red car on the second line
@@ -42,14 +42,22 @@ You can run the game as follows.
 python3 main.py <game_number> <algorithm> <optionals>
 ```
 
-### Shortkeys
+### Command lines
 Show game
 ```
 python3 main.py 1 show
 ```
-<br/>Run game random 1000 times with bound starting at 500 (bound is optional)
+<br/>Show solution with visualization
 ```
-python3 main.py 1 random 1000 500
+python3 main.py 1 play
+```
+<br/>Show random Branch & Bound line graph
+```
+python3 main.py 1 random False 0
+```
+<br/>Run game random 1000 times with bound starting at 500 (bound is optional), Boolean is for showing the field
+```
+python3 main.py 1 random False 1000 500
 ```
 <br/>Run Breadth First algorithm to find shortest solution
 ```
@@ -59,15 +67,19 @@ python3 main.py 1 breadth_first
 ```
 python3 main.py 1 breadth_first_priority
 ```
-<br/>Show best solution with visualization (options: games 1-6)
-```
-python3 main.py 1 play
-```
 <br/>
 
 
 ## Results
-The results can be found inside the **results** folder.
+The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder.
+
+## Challenges
+The first challenge when trying to build a Rush Hour solver is the immense size the game's state space can attain. In the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder, one can find a more detailed description of our state space. In short, the state space of Game 1 is in the order of magnitude of 1.000.000, whereas the state space of Game 7 is in the order of magnitude of 10E44. Therefore, exploring the entire state space seems to be a sheer impossible job. 
+A second difficulty when solving a game of Rush Hour, is that there is no known 'end state' to work towards; thus, when assessing a state, one can almost never assert how close to the solution that board is situated. Moreover, after a move, a board (state A) can seem to be further away from the solution than its predecessor (state B), but after a next move, its successor (state C) can be a lot closer to the solution than said predecessor (state A). Therefore, we experienced great difficulty in determining whether a heuristic would be admissive. 
+
+When comparing the number of states visited while looking for the solution, it seems as though, for our solver, certain games are more difficult to solve than others: for instance, our breadth-first, no-heuristic solver found a solution of 28 steps for Game 4 and checked approximately 100.000 states to get there. However, for Game 6 (which is also a 9x9 game), 19 steps were needed, yet our solver had to check over 13 million states to find a solution. These findings beg the question: why is Game 6 so much harder than Game 4? Or, ultimately: what makes a Rush Hour board hard to solve? 
+
+Define harder to solve: more steps or more possible steps?
 
 ## Students
 * Jacob Jasper

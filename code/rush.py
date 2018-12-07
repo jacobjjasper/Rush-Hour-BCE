@@ -674,6 +674,18 @@ class RushHour(object):
     def both(self, vehicles):
         return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
 
+    def heuristic_game7(self, vehicles):
+        self.fill_field(vehicles)
+
+        empty_spots = [[11, 3],[10, 4], [11, 4], [6, 5], [7, 5], [8, 5], [9, 5],
+                       [8, 6], [8, 7], [10, 8], [7, 9], [7, 10] ,[8, 10]]
+
+        for coordinate in empty_spots:
+            if not self.field[coordinate[1]][coordinate[0]] == 0:
+                return 100
+
+        return 0
+
     def play(self, game):
         """
         Show visualization of game being won (hardcoded)
@@ -899,7 +911,7 @@ class RushHour(object):
         Move vehicle
         """
         vehicle = self.vehicles[id]
-        print(vehicle.id)
+
 
         # if vehicle is placed horizontally
         if vehicle.orientation == 'H' :

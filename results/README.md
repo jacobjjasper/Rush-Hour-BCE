@@ -131,6 +131,7 @@ When a game is more complicated, the state space tends to increase. As a breadth
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
 |_Depth-First_| -- |
 
+Game 7, a 12x12 board, seems unsolvable up until this point using our heuristics. Fourteen layers into running a breadth-first solver (no-heuristic), we reached the maximum of our computers' working memory. We tried to implement the smarter way of storing our archives as described in the general README. However, our implementation was unsuccessful, as the algorithm did not render a result before running out of memory.
 
   First, we will compare the length of the found solutions. In Games 1, 2, 4 and 6, cars-to-exit rendered found a solution of the same length as found by the breadth-first no-heuristic solver. For Game 5, however, cars-to-exit needed one step more than the breadth-first algorithm. Cars-in-traffic found the same solutions as our breadth-first no-heuristic solver for Games 1, 3, 5 and 6. Game 4 was solved in many more steps than our breadth-first no-heuristic solver needed. Therefore, we could conclude that the heuristics both seem to work, but are not yet admissible.
 

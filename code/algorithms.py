@@ -99,8 +99,6 @@ def breadth_first(game):
     queue.append(vehicles)
     queue.append(moves)
 
-
-
     while not game.won(vehicles):
 
         # get first item from queue
@@ -120,10 +118,13 @@ def breadth_first(game):
         print(moves, states)
 
         # check if field is in archive and add to queue
+        # ADDED: moves in is_unique(). Delete also in function when we don't use
+        # the archive trick
         for field in child_fields:
-            if game.is_unique(field):
+            if game.is_unique(field, moves):
                 queue.append(field)
                 queue.append(moves)
+        game.update_archive(moves)
 
     return moves, states
 

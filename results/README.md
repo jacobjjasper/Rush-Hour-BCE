@@ -26,7 +26,7 @@ The table below shows this upper bound of our state space for each game.
 ||Game 7|
 |:---|:---|
 |_State Space_|Lower: |
-||Upper:1,32E36|
+||Upper: 1,32E36|
 
 
 #### Objective function

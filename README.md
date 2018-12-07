@@ -72,6 +72,7 @@ python3 main.py 1 best_first cars_to_exit
 python3 main.py 1 best_first cars_in_traffic
 ```
 <br/>
+
 ## Results
 The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder contains a readme with explanations.
 

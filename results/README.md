@@ -59,7 +59,7 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 172|min: 92|min: 93|
 |_Breadth-First_|28 moves|23 moves|19 moves|
-| _states:_|102.988|2.708.602|13.480.365|
+|   _states:_|102.988|2.708.602|13.480.365|
 |_BF cars-to-exit_|28 moves|23 moves|19 moves|
 | _states:_|58.605|2.002.915|2.762.199|
 |_BF cars-in-traffic_|37 moves|24 moves|19 moves|

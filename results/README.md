@@ -1,6 +1,6 @@
 # Results
 ## Calculating the state space and the bounds of the objective function
-##### State space
+#### State space
 To calculate the upper bound of our **state space**, we used the following formula:  
 
   _upper bound = (field size - 1)^cars_ * _(field size - 2)^trucks_  
@@ -9,15 +9,27 @@ To calculate the upper bound of our **state space**, we used the following formu
 field. A truck has a length of 3, so it cannot move more than 2 steps less than
 the size of the field.
 
-  To calculate the state space of the game, we allowed the vehicles to overlap. In
-fact, the vehicles are not allowed to overlap, so the actual state space will be
-smaller than the function suggests. To level off this upper bound, especially for
-the larger fields, we calculated new state spaces, taking into account that vehicles
-in the same row or column block each other in every state. The table below shows
-this upper bound of our state space for each game.
+However, the resulting upper bound is an overestimation. To calculate the state space of the game, we allowed the vehicles to overlap. In fact, the vehicles are not allowed to overlap, so the actual state space will be smaller than the function suggests. To level off this upper bound, especially for the larger fields, we calculated new state spaces, taking into account that vehicles in the same row or column block each other in every state. 
+
+The table below shows this upper bound of our state space for each game.
+
+||Game 1|Game 2|Game 3|
+|---| :--- | :--- | :---|
+|_State Space_|Lower: 34|Lower: 16|Lower: 22|
+||Upper: 1.000.000|Upper: 45.562.500|Upper: 9.112.500|
+
+||Game 4|Game 5|Game 6|
+|:---|:---| :---| :---|
+|_State Space_|Lower: |Lower: |Lower: |
+||Upper: 1,72E13|Upper: 8,43E18|Upper: 1,65E19|
+
+||Game 7|
+|:---|:---|
+|_State Space_|Lower: |
+||Upper:1,32E36|
 
 
-##### Objective function
+#### Objective function
 As we could not find a way to calculate the upper and lower bound of the objective function of the game Rush Hour
 as a whole is, we decided to establish the upper and lower bound of the objective function when our heuristics are
 used. This rendered the following results:
@@ -32,8 +44,6 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|
-|_State Space_|Lower: 34|Lower: 16|Lower: 22|
-||Upper: 1.000.000|Upper: 45.562.500|Upper: 9.112.500|
 |_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 4|Upper: 4|Upper: 4|
 |_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
@@ -41,8 +51,6 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 
 ||Game 4|Game 5|Game 6|
 |:---|:---| :---| :---|
-|_State Space_|Lower: |Lower: |Lower: |
-||Upper: 1,72E13|Upper: 8,43E18|Upper: 1,65E19|
 |_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 7|Upper: 7|Upper: 7|
 |_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
@@ -50,8 +58,6 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 
 ||Game 7|
 |:---|:---|
-|_State Space_|Lower: |
-||Upper:1,32E36|
 |_Objective function cars-to-exit_|Lower: 0|
 ||Upper: 10|
 |_Objective function cars-in-traffic_|Lower: 0|
@@ -73,11 +79,14 @@ The **cars-in-traffic** heuristic starts off at the red car. It checks whether t
 
 Thirdly, we used depth-first search to find a solution. When executed on the smaller boards, the algorithm rendered a solution, yet it subsequently needed more steps to complete the puzzle than the breadth first option.
 
+
 #### Random branch-and-bound versus breadth-first
 To get a sense of the size of our problem and its solutions, we ran a random solver with a branch-and-bound paradigm on our seven gameboards. We used these solutions to measure the relative quality of our breadth-first solver. We reasoned, that our breadth-first solver must return a solution of fewer steps (or as many) as the random solver, and never more than the random solver. Indeed, all our breadth-first solutions were shorter than the solutions rendered by the random algorithm. Therefore, we concluded that the breadth-first solver was working properly. 
 
+
 #### Breadth-first versus depth-first
 Secondly, we implemented a depth-first solver. However, the solutions returned from this algorithm were significantly longer than the solutions rendered by our depth-first solver. **Therefore, we decided to no longer use the depth-first algorithm. We considered to implement a priority queue in our depth-first solver, but later decided not to use this option. We reasoned, that** 
+
 
 #### No heuristic, cars-to-exit, cars-in-traffic
 When a game is more complicated, the state space tends to increase. As a breadth-first search algorithm without a heuristic sets off to search the entire state space, things could get very extensive very quickly. To constrain the scope of our breadth-first solver, we implemented two heuristics which are described in more detail above: cars-to-exit and cars-in-traffic. To compare the outcomes of the implementation of the two heuristics, we have to consider two factors: the length of the solution and the number of states checked to reach said solution. As breadth-first search without a heuristic explores the entire state space, it will render the shortest solution possible. Therefore, a good heuristic will render the same solution, but will have to check fewer states to get there. In the tables below, the solutions and the amount of checked states per game and per heuristic are shown.

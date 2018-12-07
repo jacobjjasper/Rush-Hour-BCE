@@ -11,7 +11,7 @@ import statistics as stat
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import algorithms
-from rush2 import RushHour
+from rush import RushHour
 
 
 

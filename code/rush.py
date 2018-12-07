@@ -602,7 +602,7 @@ class RushHour(object):
         return field
 
 
-    def cars_for_exit(self, vehicles):
+    def cars_to_exit(self, vehicles):
         """
         Checks whether a car is blocking the red car.
         Heuristic: fewer cars between the red car and the exit makes for a
@@ -712,6 +712,18 @@ class RushHour(object):
 
     def both(self, vehicles):
         return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
+
+    def heuristic_game7(self, vehicles):
+        self.fill_field(vehicles)
+
+        empty_spots = [[11, 3],[10, 4], [11, 4], [6, 5], [7, 5], [8, 5], [9, 5],
+                       [8, 6], [8, 7], [10, 8], [7, 9], [7, 10] ,[8, 10]]
+
+        for coordinate in empty_spots:
+            if not self.field[coordinate[1]][coordinate[0]] == 0:
+                return 100
+
+        return 0
 
     def play(self, game):
         """

@@ -110,9 +110,9 @@ class Main():
         moves, states = algorithms.breadth_first(rush)
         print(f"Moves: {moves}, States: {states}")
 
-    def call_breadth_first_priority(self):
+    def call_best_first(self, heuristic):
         rush = RushHour(self.board)
-        moves, states = algorithms.breadth_first_priority(rush)
+        moves, states = algorithms.best_first(rush, heuristic)
         print(f"Moves: {moves}, States: {states}")
 
 if __name__ == "__main__":
@@ -124,8 +124,7 @@ if __name__ == "__main__":
 
     # call algorithm via Main
     if algorithm == "show":
-        main.rush.show_field()
-        # main.rush.show_field2(list(main.rush.vehicles.values()), False)
+        main.rush.show_field2(list(main.rush.vehicles.values()), False)
     elif algorithm == "play":
         main.rush.show_field2(list(main.rush.vehicles.values()), True)
         main.rush.play(game)
@@ -141,5 +140,6 @@ if __name__ == "__main__":
         main.call_depth_first()
     elif algorithm == "breadth_first":
         main.call_breadth_first()
-    elif algorithm == "breadth_first_priority":
-        main.call_breadth_first_priority()
+    elif algorithm == "best_first":
+        heuristic = sys.argv[3]
+        main.call_best_first(heuristic)

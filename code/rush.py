@@ -173,7 +173,7 @@ class RushHour(object):
             block_width = 68.5
 
         # get field without vehicles
-        field = plt.imread(f"data2/RushHourImages/RushHour{self.size}.jpg")
+        field = plt.imread(f"data/RushHourImages/RushHour{self.size}.jpg")
 
         # show field with subplots to park the vehicles
         fig, ax = plt.subplots()

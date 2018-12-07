@@ -905,7 +905,7 @@ class RushHour(object):
         if vehicle.orientation == 'H' :
 
             # move vehicle
-                self.vehicles[id].x += move
+            self.vehicles[id].x += move
 
         elif vehicle.orientation == 'V':
             self.vehicles[id].y += move

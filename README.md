@@ -85,8 +85,8 @@ When comparing the number of states visited while looking for the solution, it s
 The difficulty of a Rush Hour board is dependent on at least two factors: the amount of possibilities (state space) and the amount of steps to the solution. For example: two games can be solved in 19 steps, though one could have a larger state space which makes it harder for the player to choose which vehicles to move. Of course, the hardness of the game could also depend on the strategy and intuition of the player, but for an algorithm these factors together might define the difficulty of the game.
 
 ## Students
-* Jacob Jasper
+* Jacob Jasper (10650385)
 * Tobias Maätita (10730109)
-* Fried Schölvinck 
+* Fried Schölvinck (10729267)
 
 University of Amsterdam, Heuristieken

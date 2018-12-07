@@ -47,9 +47,17 @@ Show game
 ```
 python3 main.py 1 show
 ```
-<br/>Run game random 1000 times with bound starting at 500 (bound is optional)
+<br/>Show solution with visualization
 ```
-python3 main.py 1 random 1000 500
+python3 main.py 1 play
+```
+<br/>Show random Branch & Bound line graph
+```
+python3 main.py 1 random False 0
+```
+<br/>Run game random 1000 times with bound starting at 500 (bound is optional), Boolean is for showing the field
+```
+python3 main.py 1 random False 1000 500
 ```
 <br/>Run Breadth First algorithm to find shortest solution
 ```
@@ -58,10 +66,6 @@ python3 main.py 1 breadth_first
 <br/>Run Breadth First algorithm to find a short solution faster
 ```
 python3 main.py 1 breadth_first_priority
-```
-<br/>Show best solution with visualization (options: games 1-6)
-```
-python3 main.py 1 play
 ```
 <br/>
 

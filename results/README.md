@@ -41,11 +41,11 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 189|min: 28|min: 45|
 |_Breadth-First_|34 moves|16 moves|22 moves|
-|&nbsp;&nbsp;_states_|4.239|939|528|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|4.239|939|528|
 |_BF cars-to-exit_|34 moves|16 moves|23 moves|
-|&nbsp;&nbsp;_states_|3.748|621|411|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.748|621|411|
 |_BF cars-in-traffic_|34 moves|16 moves|23 moves|
-|&nbsp;&nbsp;_states_|3.716|414|274|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.716|414|274|
 |_Depth-First_|474 moves|901 moves|127 moves|
 
 ||Game 4|Game 5|Game 6|
@@ -59,11 +59,11 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 172|min: 92|min: 93|
 |_Breadth-First_|28 moves|23 moves|19 moves|
-|&nbsp;&nbsp;_states_|102.988|2.708.602|13.480.365|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|102.988|2.708.602|13.480.365|
 |_BF cars-to-exit_|28 moves|23 moves|19 moves|
-|&nbsp;&nbsp;_states_|58.605|2.002.915|2.762.199|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|58.605|2.002.915|2.762.199|
 |_BF cars-in-traffic_|37 moves|24 moves|19 moves|
-|&nbsp;&nbsp;_states_|53.322|52.863|990.144|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|53.322|52.863|990.144|
 |_Depth-First_| -- | -- | -- |
 
 ||Game 7|
@@ -77,11 +77,11 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 |_Random Solver_|total runs: 30.000|
 ||min: 634|
 |_Breadth-First_|>14 moves|
-|&nbsp;&nbsp;_states_|> 12.472.669|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|> 12.472.669|
 |_BF cars-to-exit_| -- |
-|&nbsp;&nbsp;_states_| -- |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
 |_BF cars-in-traffic_| -- |
-|&nbsp;&nbsp;_states_| -- |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
 |_Depth-First_| -- |
 
 

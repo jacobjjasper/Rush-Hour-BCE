@@ -899,7 +899,7 @@ class RushHour(object):
         Move vehicle
         """
         vehicle = self.vehicles[id]
-        print(vehicle.id)
+        
 
         # if vehicle is placed horizontally
         if vehicle.orientation == 'H' :

@@ -194,9 +194,9 @@ class RushHour(object):
 
                 # get car or truck image
                 if vehicle.length == 2:
-                    car = plt.imread(f"data2/RushHourImages/Car{vehicle.id}.png")
+                    car = plt.imread(f"data/RushHourImages/Car{vehicle.id}.png")
                 else:
-                    car = plt.imread(f"data2/RushHourImages/Truck{vehicle.id}.png")
+                    car = plt.imread(f"data/RushHourImages/Truck{vehicle.id}.png")
 
                     # the image coordinate is his middle, which changes with the length of the car
                     x += 40
@@ -210,9 +210,9 @@ class RushHour(object):
 
                 # get image the same way, but rotated
                 if vehicle.length == 2:
-                    car = plt.imread(f"data2/RushHourImages/Car-rotated{vehicle.id}.png")
+                    car = plt.imread(f"data/RushHourImages/Car-rotated{vehicle.id}.png")
                 else:
-                    car = plt.imread(f"data2/RushHourImages/Truck-rotated{vehicle.id}.png")
+                    car = plt.imread(f"data/RushHourImages/Truck-rotated{vehicle.id}.png")
                     y += 40
 
             # change the size of the vehicle images, depending on field size

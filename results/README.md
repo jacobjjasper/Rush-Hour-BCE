@@ -13,7 +13,7 @@ However, the resulting upper bound is an overestimation. To calculate the state 
 
 _upper_bound = (field size - 1)^free cars_ * _(field size - 2)^free trucks_ * _(other options)_
 
-where 'other options' is to be filled as such: if two cars are situated on the same row on a 6x6 board, 'other options' is (6 - 1 - 2)^2. In other words, there are two cars who can move over 6 (field size) minus one (taking in account their own length) minus two (the other car's space). 
+where 'other options' is to be filled as such: if two cars are situated on the same row on a 6x6 board, 'other options' is (6 - 1 - 2)^2. In other words, there are two cars who can move over 6 (field size) minus one (taking in account their own length) minus two (the other car's space). Adding another option means adding a new multiplication to the function. In [statespace.txt](https://github.com/jacobjjasper/Rush-Hour-BCE/blob/master/results/statespace), we calculated the upper bound using this function.
 
 The table below shows this upper bound of our state space for each game. We found it hard to establish a viable lower bound for the state space of each individual game. To avoid setting the lower bound at 0, we established the lower bound of each game by running a breadth-first search algorithm. The rendered outcome would be the lower bound of our game, as this is the least amount of moves needed to get to the solution.
 

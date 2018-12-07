@@ -37,7 +37,7 @@ This repository is divided into code, data, results and main.py. For our latest 
 
 
 ## How to start Rush Hour
-You can run the game as follows.
+You can run the game as follows. Insert game number 1 to 7, corresponding to the images above. 
 ```
 python3 main.py <game_number> <algorithm> <optionals>
 ```
@@ -71,7 +71,7 @@ python3 main.py 1 breadth_first_priority
 
 
 ## Results
-The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder.
+The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder contains a readme with explanations.
 
 ## Challenges
 The first challenge when trying to build a Rush Hour solver is the immense size the game's state space can attain. In the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder, one can find a more detailed description of our state space. In short, the state space of Game 1 is in the order of magnitude of 1.000.000, whereas the state space of Game 7 is in the order of magnitude of 10E44. Therefore, exploring the entire state space seems to be a sheer impossible job. 

@@ -29,7 +29,7 @@ The following games will be played. The data files of these games are in the fol
 
 
 ## Files
-This repository is divided into [code](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/code), [data](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/data), [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) and main.py. For our latest versions, we used the data2 file and code/rush2.py. The data folder holds all the game data (loading in Rush Hour boards) and some images for visualisations. The results file contains csv-files with data from the random-algorithm and some general information about the state space of the problem, fastest solutions and other outcomes of our exploration. The code folder is made up of:
+This repository is divided into [code](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/code), [data](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/data), [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) and [main.py](https://github.com/jacobjjasper/Rush-Hour-BCE/blob/master/main.py). The data folder holds all the game data (loading in Rush Hour boards) and some images for visualisations. The results file contains csv-files with data from the random-algorithm and some general information about the state space of the problem, fastest solutions and other outcomes of our exploration. The code folder is made up of:
 * algorithms.py - all algorithms
 * rush.py - old version of rush2.py
 * rush2.py - general RushHour class, holds most of the functions
@@ -77,16 +77,16 @@ python3 main.py 1 best_first cars_in_traffic
 The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder contains a readme with explanations.
 
 ## Challenges
-The first challenge when trying to build a Rush Hour solver is the immense size the game's state space can attain. In the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder, one can find a more detailed description of our state space. In short, the state space of Game 1 is in the order of magnitude of 1.000.000, whereas the state space of Game 7 is in the order of magnitude of 10E44. Therefore, exploring the entire state space seems to be a sheer impossible job. 
+The first challenge when trying to build a Rush Hour solver is the immense size the game's state space can attain. In the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder, one can find a more detailed description of our state space. In short, the state space of Game 1 is in the order of magnitude of 1.000.000, whereas the state space of Game 7 is in the order of magnitude of 10E44. To prevent checking certain states twice, we need to keep track of all the states that have been visited. Therefore, exploring the entire state space seems to be a sheer impossible job: to find a solution, it is imperative that it be found before the computer uses all of its (working) memory. We considered saving memory by only storing the previous and the current layers (using breadth first). Our reasoning behind this was, that a 'grandparent board' can only be reached from the current board by passing through a 'parent board'. At first, we were weary to use this paradigm. We feared that a loop would still be possible when the loop existed of, for example, four fields. However, we have tried to use the paradigm, reasoning that we could still end up in an extensive loop, but the chances of this happening were quite slim.
 A second difficulty when solving a game of Rush Hour, is that there is no known 'end state' to work towards; thus, when assessing a state, one can almost never assert how close to the solution that board is situated. Moreover, after a move, a board (state A) can seem to be further away from the solution than its predecessor (state B), but after a next move, its successor (state C) can be a lot closer to the solution than said predecessor (state A). Therefore, we experienced great difficulty in determining whether a heuristic would be admissive. 
 
 When comparing the number of states visited while looking for the solution, it seems as though, for our solver, certain games are more difficult to solve than others: for instance, our breadth-first, no-heuristic solver found a solution of 28 steps for Game 4 and checked approximately 100.000 states to get there. However, for Game 6 (which is also a 9x9 game), 19 steps were needed, yet our solver had to check over 13 million states to find a solution. These findings beg the question: why is Game 6 so much harder than Game 4? Or, ultimately: what makes a Rush Hour board hard to solve? 
 
-The difficulty of a Rush Hour board is dependent on at least two factors: the amount of possibilities (state space) and the amount of steps to the solution. For example: two games can be solved in 19 steps, though one could have a larger state space which makes it harder for the player to choose which vehicles to move. Of course, the hardness of the game could also depend on the strategy and intuition of the player, but for an algorithm these factors together define the difficulty of the game.
+The difficulty of a Rush Hour board is dependent on at least two factors: the amount of possibilities (state space) and the amount of steps to the solution. For example: two games can be solved in 19 steps, though one could have a larger state space which makes it harder for the player to choose which vehicles to move. Of course, the hardness of the game could also depend on the strategy and intuition of the player, but for an algorithm these factors together might define the difficulty of the game.
 
 ## Students
 * Jacob Jasper
-* Tobias Maätita
-* Fried Schölvinck
+* Tobias Maätita (10730109)
+* Fried Schölvinck 
 
 University of Amsterdam, Heuristieken

@@ -63,12 +63,15 @@ python3 main.py 1 random False 1000 500
 ```
 python3 main.py 1 breadth_first
 ```
-<br/>Run Breadth First algorithm to find a short solution faster
+<br/>Run Best First algorithm to apply heuristic cars_to_exit
 ```
-python3 main.py 1 breadth_first_priority
+python3 main.py 1 best_first cars_to_exit
+```
+<br/>Run Breadth First algorithm to apply heuristic cars_in_traffic
+```
+python3 main.py 1 best_first cars_in_traffic
 ```
 <br/>
-
 
 ## Results
 The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder contains a readme with explanations.

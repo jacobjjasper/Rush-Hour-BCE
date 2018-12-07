@@ -18,14 +18,6 @@ this upper bound of our state space for each game.
 
 
 ##### Objective function
-  The **objective function** has an upper bound and a lower bound. We estimate the
-lower bound to be ... and the upper bound to be ... .  
-
-  Furthermore, we solved the first three games with three different algorithms:
-a random algorithm; a breath-first algorithm; and a depth-first algorithm. To implement
-a heuristic, we applied a priority queue to the breath-first algorithm: fewer cars
-between the red car and the exit makes for a higher priority.
-
 As we could not find a way to calculate the upper and lower bound of the objective function of the game Rush Hour
 as a whole is, we decided to establish the upper and lower bound of the objective function when our heuristics are
 used. This rendered the following results:
@@ -44,16 +36,16 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 1.000.000|Upper: 45.562.500|Upper: 9.112.500|
 |_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 4|Upper: 4|Upper: 4|
-|_Objective function cars-in-traffic|Lower: 0|Lower: 0|Lower: 0|
+|_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 8|Upper: 12|Upper: 12|
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 189|min: 28|min: 45|
 |_Breadth-First_|34 moves|16 moves|22 moves|
-| _states:_|4.239|939|528|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|4.239|939|528|
 |_BF cars-to-exit_|34 moves|16 moves|23 moves|
-| _states:_|3.748|621|411|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.748|621|411|
 |_BF cars-in-traffic_|34 moves|16 moves|23 moves|
-| _states:_|3.716|414|274|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.716|414|274|
 |_Depth-First_|474 moves|901 moves|127 moves|
 
 ||Game 4|Game 5|Game 6|
@@ -62,16 +54,16 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 1,72E13|Upper: 8,43E18|Upper: 1,65E19|
 |_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 7|Upper: 7|Upper: 7|
-|_Objective function cars-in-traffic|Lower: 0|Lower: 0|Lower: 0|
+|_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 22|Upper: 23|Upper: 25|
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 172|min: 92|min: 93|
 |_Breadth-First_|28 moves|23 moves|19 moves|
-| _states:_|102.988|2.708.602|13.480.365|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|102.988|2.708.602|13.480.365|
 |_BF cars-to-exit_|28 moves|23 moves|19 moves|
-| _states:_|58.605|2.002.915|2.762.199|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|58.605|2.002.915|2.762.199|
 |_BF cars-in-traffic_|37 moves|24 moves|19 moves|
-| _states:_|53.322|52.863|990.144|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|53.322|52.863|990.144|
 |_Depth-First_| -- | -- | -- |
 
 ||Game 7|
@@ -80,16 +72,16 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper:1,32E36|
 |_Objective function cars-to-exit_|Lower: 0|
 ||Upper: 10|
-|_Objective function cars-in-traffic|Lower: 0|
+|_Objective function cars-in-traffic_|Lower: 0|
 ||Upper: 43|
 |_Random Solver_|total runs: 30.000|
 ||min: 634|
 |_Breadth-First_|>14 moves|
-| _states:_|> 12.472.669|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|> 12.472.669|
 |_BF cars-to-exit_| -- |
-| _states:_| -- |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
 |_BF cars-in-traffic_| -- |
-| _states:_| -- |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
 |_Depth-First_| -- |
 
 

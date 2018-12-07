@@ -124,8 +124,7 @@ if __name__ == "__main__":
 
     # call algorithm via Main
     if algorithm == "show":
-        main.rush.show_field()
-        # main.rush.show_field2(list(main.rush.vehicles.values()), False)
+        main.rush.show_field2(list(main.rush.vehicles.values()), False)
     elif algorithm == "play":
         main.rush.show_field2(list(main.rush.vehicles.values()), True)
         main.rush.play(game)

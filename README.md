@@ -70,7 +70,7 @@ python3 main.py 1 play
 The results can be found inside the **results** folder.
 
 ## Challenges
-Solving regular boards of size 6x6 is pretty easy. Although there could be 'beginner', 'intermediate' and 'advanced' boards, our breadth first algorithm would find the shortest amount of steps in no time. 
+Solving regular boards of size 6x6 is pretty easy. Although there could be 'beginner', 'intermediate' and 'advanced' boards, our breadth first algorithm would find the shortest amount of steps in no-time. 
 
 Why are some boards harder to solve than others?
 Define harder to solve: more steps or more possible steps?

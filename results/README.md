@@ -63,7 +63,7 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 |_Objective function cars-in-traffic_|Lower: 0|
 ||Upper: 43|
 
-
+  
 ## Comparing algorithms and heuristics
 To solve the Rush Hour puzzles, we used three different algorithms. First, to get a grasp
 of the size of our problem, we used a random solver. Later on, we also implemented
@@ -90,9 +90,6 @@ Secondly, we implemented a depth-first solver. However, the solutions returned f
 
 #### No heuristic, cars-to-exit, cars-in-traffic
 When a game is more complicated, the state space tends to increase. As a breadth-first search algorithm without a heuristic sets off to search the entire state space, things could get very extensive very quickly. To constrain the scope of our breadth-first solver, we implemented two heuristics which are described in more detail above: cars-to-exit and cars-in-traffic. To compare the outcomes of the implementation of the two heuristics, we have to consider two factors: the length of the solution and the number of states checked to reach said solution. As breadth-first search without a heuristic explores the entire state space, it will render the shortest solution possible. Therefore, a good heuristic will render the same solution, but will have to check fewer states to get there. In the tables below, the solutions and the amount of checked states per game and per heuristic are shown.
-First, we will compare the length of the found solutions. In Games 1, 2, 4 and 6, cars-to-exit rendered found a solution of the same length as found by the breadth-first no-heuristic solver. For Game 5, however, cars-to-exit needed one step more than the breadth-first algorithm. Cars-in-traffic found the same solutions as our breadth-first no-heuristic solver for Games 1, 3, 5 and 6. Game 4 was solved in many more steps than our breadth-first no-heuristic solver needed. Therefore, we could conclude that the heuristics both seem to work, but are not yet admissible. 
-Secondly, we will compare the number of states checked to get to the solution. Using our cars-to-exit heuristic, the solver checked significantly fewer states compared to the solver when using no heuristic. Moreover, using our cars-in-traffic heuristic, the solver checked significantly fewer states compared to the sovler using the cars-to-exit heuristic. Therefore, we could conclude that the heuristics both seem to work; however, one needs to keep in mind that using the heuristics, we do not always find the shortest solution, yet. 
-In the graph below, the comparison between heuristics can be seen. Plotted on the y-axis is the number of checked states on a logaritmic scale. From the graph can be infered that the heuristics effectively narrows the scope of our breadth-first search. However, as implementing the heuristics does not always render the same solution as our no-heuristic search, the scope could be a little too effectivly narrowed. 
 
 ||Game 1|Game 2|Game 3|
 |---| :--- | :--- | :---|
@@ -122,7 +119,7 @@ In the graph below, the comparison between heuristics can be seen. Plotted on th
 |:---|:---|
 |_Random Solver_|total runs: 30.000|
 ||min: 634|
-|_Breadth-First_|>14 moves|
+|_Breadth-First_|> 14 moves|
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|> 12.472.669|
 |_BF cars-to-exit_| -- |
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
@@ -131,10 +128,11 @@ In the graph below, the comparison between heuristics can be seen. Plotted on th
 |_Depth-First_| -- |
 
 
+  First, we will compare the length of the found solutions. In Games 1, 2, 4 and 6, cars-to-exit rendered found a solution of the same length as found by the breadth-first no-heuristic solver. For Game 5, however, cars-to-exit needed one step more than the breadth-first algorithm. Cars-in-traffic found the same solutions as our breadth-first no-heuristic solver for Games 1, 3, 5 and 6. Game 4 was solved in many more steps than our breadth-first no-heuristic solver needed. Therefore, we could conclude that the heuristics both seem to work, but are not yet admissible.
 
+  Secondly, we will compare the number of states checked to get to the solution. Using our cars-to-exit heuristic, the solver checked significantly fewer states compared to the solver when using no heuristic. Moreover, using our cars-in-traffic heuristic, the solver checked significantly fewer states compared to the sovler using the cars-to-exit heuristic. Therefore, we could conclude that the heuristics both seem to work; however, one needs to keep in mind that using the heuristics, we do not always find the shortest solution, yet. 
 
-
-
+  In the graph below, the comparison between heuristics can be seen. Plotted on the y-axis is the number of checked states on a logaritmic scale. From the graph can be infered that the heuristics effectively narrows the scope of our breadth-first search. However, as implementing the heuristics does not always render the same solution as our no-heuristic search, the scope could be a little too effectivly narrowed. 
 
 
 

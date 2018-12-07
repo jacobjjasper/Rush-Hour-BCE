@@ -100,7 +100,7 @@ When a game is more complicated, the state space tends to increase. As a breadth
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 189|min: 28 moves|min: 45 moves|
 |_Breadth-First_|34 moves|16 moves|22 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|4.239|939|528|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|4.238|938|527|
 |_BF cars-to-exit_|34 moves|16 moves|23 moves|
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.748|621|411|
 |_BF cars-in-traffic_|34 moves|16 moves|23 moves|
@@ -112,7 +112,7 @@ When a game is more complicated, the state space tends to increase. As a breadth
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 172 moves|min: 92 moves|min: 93 moves|
 |_Breadth-First_|28 moves|23 moves|19 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|102.988|2.708.602|13.480.365|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|102.987|2.708.602|13.480.365|
 |_BF cars-to-exit_|28 moves|23 moves|19 moves|
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|58.605|2.002.915|2.762.199|
 |_BF cars-in-traffic_|37 moves|24 moves|19 moves|
@@ -123,8 +123,8 @@ When a game is more complicated, the state space tends to increase. As a breadth
 |:---|:---|
 |_Random Solver_|total runs: 30.000|
 ||min: 634 moves|
-|_Breadth-First_|> 14 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|> 12.472.669|
+|_Breadth-First_| >14 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| >12.472.669|
 |_BF cars-to-exit_| -- |
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
 |_BF cars-in-traffic_| -- |

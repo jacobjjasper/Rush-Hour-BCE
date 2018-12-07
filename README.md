@@ -5,7 +5,7 @@ Rush Hour looks like an easy game, but can be quite hard. The goal is to move th
 
 
 
-## Data (game boards)
+## Data
 The following games will be played. The data files of these games are in the folder 'data2' and contain:
 * The game board size (e.g. 6, 9, or 12) on the first line
 * The red car on the second line
@@ -68,6 +68,12 @@ python3 main.py 1 play
 
 ## Results
 The results can be found inside the **results** folder.
+
+## Challenges
+Solving regular boards of size 6x6 is pretty easy. Although there could be 'beginner', 'intermediate' and 'advanced' boards, our breadth first algorithm would find the shortest amount of steps in no-time. 
+
+Why are some boards harder to solve than others?
+Define harder to solve: more steps or more possible steps?
 
 ## Students
 * Jacob Jasper

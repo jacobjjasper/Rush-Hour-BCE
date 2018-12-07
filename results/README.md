@@ -36,7 +36,7 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 1.000.000|Upper: 45.562.500|Upper: 9.112.500|
 |_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 4|Upper: 4|Upper: 4|
-|_Objective function cars-in-traffic|Lower: 0|Lower: 0|Lower: 0|
+|_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 8|Upper: 12|Upper: 12|
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 189|min: 28|min: 45|
@@ -54,7 +54,7 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 1,72E13|Upper: 8,43E18|Upper: 1,65E19|
 |_Objective function cars-to-exit_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 7|Upper: 7|Upper: 7|
-|_Objective function cars-in-traffic|Lower: 0|Lower: 0|Lower: 0|
+|_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 22|Upper: 23|Upper: 25|
 |_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
 ||min: 172|min: 92|min: 93|
@@ -72,7 +72,7 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper:1,32E36|
 |_Objective function cars-to-exit_|Lower: 0|
 ||Upper: 10|
-|_Objective function cars-in-traffic|Lower: 0|
+|_Objective function cars-in-traffic_|Lower: 0|
 ||Upper: 43|
 |_Random Solver_|total runs: 30.000|
 ||min: 634|

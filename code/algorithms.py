@@ -128,8 +128,8 @@ def breadth_first(game):
     return moves, states
 
 
-def breadth_first_priority(game):
-    """ Breadth-First with priority """
+def best_first(game, heuristic):
+    """ Best-First with priority """
 
     # to proberen:
     # deque for fast appends and pops
@@ -161,7 +161,11 @@ def breadth_first_priority(game):
         # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
-                priority = moves + game.cars_for_exit(field)
+                if heuristic == "cars_to_exit":
+                    priority = moves + game.cars_to_exit(field)
+                elif heuristic == "cars_in_traffic":
+                    priority = moves + game.cars_in_traffic(field)
+
                 queue.push([moves, field], priority)
 
 

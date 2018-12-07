@@ -563,7 +563,7 @@ class RushHour(object):
         return field
 
 
-    def cars_for_exit(self, vehicles):
+    def cars_to_exit(self, vehicles):
         """
         Checks whether a car is blocking the red car.
         Heuristic: fewer cars between the red car and the exit makes for a

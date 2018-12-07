@@ -85,7 +85,7 @@ To get a sense of the size of our problem and its solutions, we ran a random sol
 
 
 #### Breadth-first versus depth-first
-Secondly, we implemented a depth-first solver. However, the solutions returned from this algorithm were significantly longer than the solutions rendered by our depth-first solver. **Therefore, we decided to no longer use the depth-first algorithm. We considered to implement a priority queue in our depth-first solver, but later decided not to use this option. We reasoned, that** 
+Secondly, we implemented a depth-first solver. However, the solutions returned from this algorithm were significantly longer than the solutions rendered by our depth-first solver. Therefore, we decided to no longer use the depth-first algorithm. We considered to implement a priority queue in our depth-first solver, but later decided not to use this option. We reasoned, that a depth-first search would check too many states in the bigger games; random with branch and bound rendered better results than the depth-first search. 
 
 
 #### No heuristic, cars-to-exit, cars-in-traffic

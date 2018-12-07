@@ -67,12 +67,14 @@ python3 main.py 1 play
 
 
 ## Results
-The results can be found inside the [Results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder.
+The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder.
 
 ## Challenges
-Solving regular boards of size 6x6 is pretty easy. Although there could be 'beginner', 'intermediate' and 'advanced' boards, our breadth first algorithm would find the shortest amount of steps in no-time. 
+The first challenge when trying to build a Rush Hour solver is the immense size the game's state space can attain. In the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder, one can find a more detailed description of our state space. In short, the state space of Game 1 is in the order of magnitude of 1.000.000, whereas the state space of Game 7 is in the order of magnitude of 10E44. Therefore, exploring the entire state space seems to be a sheer impossible job. 
+A second difficulty when solving a game of Rush Hour, is that there is no known 'end state' to work towards; thus, when assessing a state, one can almost never assert how close to the solution that board is situated. Moreover, after a move, a board (state A) can seem to be further away from the solution than its predecessor (state B), but after a next move, its successor (state C) can be a lot closer to the solution than said predecessor (state A). Therefore, we experienced great difficulty in determining whether a heuristic would be admissive. 
 
-Why are some boards harder to solve than others?
+When comparing the number of states visited while looking for the solution, it seems as though, for our solver, certain games are more difficult to solve than others: for instance, our breadth-first, no-heuristic solver found a solution of 28 steps for Game 4 and checked approximately 100.000 states to get there. However, for Game 6 (which is also a 9x9 game), 19 steps were needed, yet our solver had to check over 13 million states to find a solution. These findings beg the question: why is Game 6 so much harder than Game 4? Or, ultimately: what makes a Rush Hour board hard to solve? 
+
 Define harder to solve: more steps or more possible steps?
 
 ## Students

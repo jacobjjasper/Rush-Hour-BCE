@@ -38,15 +38,6 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 4|Upper: 4|Upper: 4|
 |_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 8|Upper: 12|Upper: 12|
-|_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
-||min: 189|min: 28|min: 45|
-|_Breadth-First_|34 moves|16 moves|22 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|4.239|939|528|
-|_BF cars-to-exit_|34 moves|16 moves|23 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.748|621|411|
-|_BF cars-in-traffic_|34 moves|16 moves|23 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.716|414|274|
-|_Depth-First_|474 moves|901 moves|127 moves|
 
 ||Game 4|Game 5|Game 6|
 |:---|:---| :---| :---|
@@ -56,15 +47,6 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 7|Upper: 7|Upper: 7|
 |_Objective function cars-in-traffic_|Lower: 0|Lower: 0|Lower: 0|
 ||Upper: 22|Upper: 23|Upper: 25|
-|_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
-||min: 172|min: 92|min: 93|
-|_Breadth-First_|28 moves|23 moves|19 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|102.988|2.708.602|13.480.365|
-|_BF cars-to-exit_|28 moves|23 moves|19 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|58.605|2.002.915|2.762.199|
-|_BF cars-in-traffic_|37 moves|24 moves|19 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|53.322|52.863|990.144|
-|_Depth-First_| -- | -- | -- |
 
 ||Game 7|
 |:---|:---|
@@ -74,15 +56,6 @@ section on comparing algorithms and heuristics. One point is awarded for each ve
 ||Upper: 10|
 |_Objective function cars-in-traffic_|Lower: 0|
 ||Upper: 43|
-|_Random Solver_|total runs: 30.000|
-||min: 634|
-|_Breadth-First_|>14 moves|
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|> 12.472.669|
-|_BF cars-to-exit_| -- |
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
-|_BF cars-in-traffic_| -- |
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
-|_Depth-First_| -- |
 
 
 ## Comparing algorithms and heuristics
@@ -96,6 +69,63 @@ To minimise the amount of checked states, we implemented two different heuristic
 
 The **cars-to-exit** heuristic checks how many cars are blocking the red car's route to the exit. Every car renders one malus point; fewer points would therefore suggest that a board is closer to the solution. In almost every case, this heuristic found a solution of as many steps as the breadth first without any heuristics. However, it had to check significantly fewer states to get there.  
 
-The **cars-in-traffic** heuristic starts off at the red car. It checks whether the red car can move toward the exit. If not, it checks whether the first vehicle blocking the way can move. If not, it checks whether the vehicle blocking that vehicle can move, and so on. The length of this 'traffic jam' determines the amount of malus points given to a board. Again, fewer points would suggest that the board is closer to the solution. This algorithm
+The **cars-in-traffic** heuristic starts off at the red car. It checks whether the red car can move toward the exit. If not, it checks whether the first vehicle blocking the way can move. If not, it checks whether the vehicle blocking that vehicle can move, and so on. The length of this 'traffic jam' determines the amount of malus points given to a board. Again, fewer points would suggest that the board is closer to the solution. 
 
 Thirdly, we used depth-first search to find a solution. When executed on the smaller boards, the algorithm rendered a solution, yet it subsequently needed more steps to complete the puzzle than the breadth first option.
+
+#### Random branch-and-bound versus breadth-first
+To get a sense of the size of our problem and its solutions, we ran a random solver with a branch-and-bound paradigm on our seven gameboards. We used these solutions to measure the relative quality of our breadth-first solver. We reasoned, that our breadth-first solver must return a solution of fewer steps (or as many) as the random solver, and never more than the random solver. Indeed, all our breadth-first solutions were shorter than the solutions rendered by the random algorithm. Therefore, we concluded that the breadth-first solver was working properly. 
+
+#### Breadth-first versus depth-first
+Secondly, we implemented a depth-first solver. However, the solutions returned from this algorithm were significantly longer than the solutions rendered by our depth-first solver. **Therefore, we decided to no longer use the depth-first algorithm. We considered to implement a priority queue in our depth-first solver, but later decided not to use this option. We reasoned, that** 
+
+#### No heuristic, cars-to-exit, cars-in-traffic
+When a game is more complicated, the state space tends to increase. As a breadth-first search algorithm without a heuristic sets off to search the entire state space, things could get very extensive very quickly. To constrain the scope of our breadth-first solver, we implemented two heuristics which are described in more detail above: cars-to-exit and cars-in-traffic. To compare the outcomes of the implementation of the two heuristics, we have to consider two factors: the length of the solution and the number of states checked to reach said solution. As breadth-first search without a heuristic explores the entire state space, it will render the shortest solution possible. Therefore, a good heuristic will render the same solution, but will have to check fewer states to get there. In the tables below, the solutions and the amount of checked states per game and per heuristic are shown.
+First, we will compare the length of the found solutions. In Games 1, 2, 4 and 6, cars-to-exit rendered found a solution of the same length as found by the breadth-first no-heuristic solver. For Game 5, however, cars-to-exit needed one step more than the breadth-first algorithm. Cars-in-traffic found the same solutions as our breadth-first no-heuristic solver for Games 1, 3, 5 and 6. Game 4 was solved in many more steps than our breadth-first no-heuristic solver needed. Therefore, we could conclude that the heuristics both seem to work, but are not yet admissible. 
+Secondly, we will compare the number of states checked to get to the solution. Using our cars-to-exit heuristic, the solver checked significantly fewer states compared to the solver when using no heuristic. Moreover, using our cars-in-traffic heuristic, the solver checked significantly fewer states compared to the sovler using the cars-to-exit heuristic. Therefore, we could conclude that the heuristics both seem to work; however, one needs to keep in mind that using the heuristics, we do not always find the shortest solution, yet. 
+In the graph below, the comparison between heuristics can be seen. Plotted on the y-axis is the number of checked states on a logaritmic scale. From the graph can be infered that the heuristics effectively narrows the scope of our breadth-first search. However, as implementing the heuristics does not always render the same solution as our no-heuristic search, the scope could be a little too effectivly narrowed. 
+
+||Game 1|Game 2|Game 3|
+|---| :--- | :--- | :---|
+|_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
+||min: 189|min: 28|min: 45|
+|_Breadth-First_|34 moves|16 moves|22 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|4.239|939|528|
+|_BF cars-to-exit_|34 moves|16 moves|23 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.748|621|411|
+|_BF cars-in-traffic_|34 moves|16 moves|23 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|3.716|414|274|
+|_Depth-First_|474 moves|901 moves|127 moves|
+
+||Game 4|Game 5|Game 6|
+|:---|:---| :---| :---|
+|_Random Solver_|total runs: 30.000|total runs: 30.000|total runs: 30.000|
+||min: 172|min: 92|min: 93|
+|_Breadth-First_|28 moves|23 moves|19 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|102.988|2.708.602|13.480.365|
+|_BF cars-to-exit_|28 moves|23 moves|19 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|58.605|2.002.915|2.762.199|
+|_BF cars-in-traffic_|37 moves|24 moves|19 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|53.322|52.863|990.144|
+|_Depth-First_| -- | -- | -- |
+
+||Game 7|
+|:---|:---|
+|_Random Solver_|total runs: 30.000|
+||min: 634|
+|_Breadth-First_|>14 moves|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_|> 12.472.669|
+|_BF cars-to-exit_| -- |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
+|_BF cars-in-traffic_| -- |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_states_| -- |
+|_Depth-First_| -- |
+
+
+
+
+
+
+
+
+

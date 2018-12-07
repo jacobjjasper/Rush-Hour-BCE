@@ -14,8 +14,15 @@ class RushHour(object):
         self.make_first_field(board)
 
         # make field archive and add hash of initial field to the set
+        # self.archive = set()
+        # self.archive.add(self.create_hash(list(self.vehicles.values())))
+
+        # make field archive and add hash of initial field to the set
+        self.all_archives = {}
         self.archive = set()
         self.archive.add(self.create_hash(list(self.vehicles.values())))
+        self.all_archives[0] = set([0])
+        self.all_archives[1] = self.archive
 
 
     def make_first_field(self, field):
@@ -503,20 +510,52 @@ class RushHour(object):
         return child_fields
 
 
-    def is_unique(self, field):
+        # get rid of moves if we don't use the archive trick
+    def is_unique(self, field, moves):
         """
         Return true if field is not in archive, calls hash function
         """
 
-        # remember old length of archive (type: set)
-        old_length = len(self.archive)
+        # check whether there already is an archive for this layer. If not,
+        #  add a new set and add the hash to it
+        if not moves in [key for key, value in self.all_archives.items()]:
+            self.all_archives[moves] = set()
+            old_length_curr = 0
+            old_length_prev = len(self.all_archives[moves - 1])
+            self.all_archives[moves].add(self.create_hash(field))
+            self.all_archives[moves - 1].add(self.create_hash(field))
 
-        # add hash value of field to archive
-        self.archive.add(self.create_hash_hex(field))
+        else:
+            # remember old length of layer archive (type: set)
+            old_length_curr = len(self.all_archives[moves])
+            old_length_prev = len(self.all_archives[moves - 1])
+
+            self.all_archives[moves].add(self.create_hash(field))
+            self.all_archives[moves - 1].add(self.create_hash(field))
+
+        # # remember old length of archive (type: set)
+        # old_length = len(self.archive)
+        #
+        # # add hash value of field to archive
+        # self.archive.add(self.create_hash_hex(field))
+        #
+        # # if it has been added, the field is unique
+        # return len(self.archive) > old_length
 
         # if it has been added, the field is unique
-        return len(self.archive) > old_length
+        return len(self.all_archives[moves]) > old_length_curr or len(self.all_archives[moves - 1]) > old_length_prev
 
+
+    def update_archive(self, moves):
+
+        if moves > 1:
+            self.all_archives[moves - 2] = 0
+
+        # print(self.all_archives[moves-1])
+        else:
+            self.all_archives[moves - 1] = 0
+
+        return True
 
     def create_hash(self, vehicles):
         """ Creates a unique respresentation of field """

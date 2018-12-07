@@ -67,7 +67,7 @@ python3 main.py 1 play
 
 
 ## Results
-The results can be found inside the **results** folder.
+The results can be found inside the [Results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder.
 
 ## Challenges
 Solving regular boards of size 6x6 is pretty easy. Although there could be 'beginner', 'intermediate' and 'advanced' boards, our breadth first algorithm would find the shortest amount of steps in no-time. 

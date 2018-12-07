@@ -79,7 +79,7 @@ python3 main.py 1 best_first cars_in_traffic
 <br/>
 
 ## Results
-The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder contains a readme with explanations.
+The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder also contains a readme with our explorations and analyses of our results. 
 
 ## Challenges
 The first challenge when trying to build a Rush Hour solver is the immense size the game's state space can attain. In the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder, one can find a more detailed description of our state space. In short, the state space of Game 1 is in the order of magnitude of 1.000.000, whereas the state space of Game 7 is in the order of magnitude of 10E44. To prevent checking certain states twice, we need to keep track of all the states that have been visited. Therefore, exploring the entire state space seems to be a sheer impossible job: to find a solution, it is imperative that it be found before the computer uses all of its (working) memory. We considered saving memory by only storing the previous and the current layers (using breadth first). Our reasoning behind this was, that a 'grandparent board' can only be reached from the current board by passing through a 'parent board'. At first, we were weary to use this paradigm. We feared that a loop would still be possible when the loop existed of, for example, four fields. However, we have tried to use the paradigm, reasoning that we could still end up in an extensive loop, but the chances of this happening were quite slim.

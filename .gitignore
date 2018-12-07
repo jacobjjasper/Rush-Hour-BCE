@@ -1,3 +1,4 @@
 # ignore files
 .DS_Store
 aantekeningen.txt
+__pycache__

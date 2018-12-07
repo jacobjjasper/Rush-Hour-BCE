@@ -22,7 +22,7 @@ class Main():
         self.board = f"data2/game{board}.txt"
         self.rush = RushHour(f"data2/game{board}.txt")
         # self.results_csv = f"results/random_1_step_game{board}.csv"
-        self.results_csv = f"results/random_bb_whole_step_game{board}.csv"
+        self.results_csv = f"results/random_bb_whole_step_results/csv_data/random_bb_whole_step_game{board}.csv"
 
 
     def call_random(self, show, runs, bound):

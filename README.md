@@ -76,7 +76,11 @@ python3 main.py 1 best_first cars_to_exit
 ```
 python3 main.py 1 best_first cars_in_traffic
 ```
-<br/>
+<br<br/>Run Breadth First 2 algorithm, which deletes the archive and only checks the parent node
+```
+python3 main.py 1 breadth_first_2
+```
+<br/>/>
 
 ## Results
 The results can be found in the [results](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/results) folder. The folder also contains a readme with our explorations and analyses of our results. 

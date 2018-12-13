@@ -78,7 +78,7 @@ python3 main.py 1 best_first cars_in_traffic
 ```
 <br/>Run Breadth First 2 algorithm, which deletes the archive and only checks the parent node
 ```
-python3 main.py 1 breadth_first_2
+python3 main.py 1 breadth_first_small_archive
 ```
 <br/>
 

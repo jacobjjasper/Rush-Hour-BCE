@@ -1,9 +1,9 @@
 """
 Module containing Breadth First algorithm which only holds the previous
-generation as archive. 
+generation as archive.
 """
 
-from rush import RushHour, PriorityQueue
+from rush import RushHour
 from collections import deque
 
 

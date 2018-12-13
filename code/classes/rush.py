@@ -1,9 +1,8 @@
-""" Module containing the RushHour object. """
+""" Module containing the RushHour class. """
 from vehicle import Vehicle
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
-import heapq
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 
@@ -12,6 +11,7 @@ class RushHour(object):
 
     Attributes:
     board -- directory in data folder of the game to be solved
+    archive -- set of fields that have already been checked
 
     Methods:
     make_first_field -- make initial field
@@ -479,7 +479,7 @@ class RushHour(object):
         self.fill_field(vehicles)
         blocking_vehicles = 0
 
-        if won(vehicles):
+        if self.won(vehicles):
             return blocking_vehicles
 
         blocks_to_exit = self.size - (vehicles[0].x + 2)
@@ -508,7 +508,7 @@ class RushHour(object):
         self.fill_field(vehicles)
         prio = 0
 
-        if won(vehicles):
+        if self.won(vehicles):
             return prio
 
         # get first vehicle blocking exit
@@ -814,20 +814,3 @@ class RushHour(object):
             self.vehicles[id].y += move
         self.fill_field(list(self.vehicles.values()))
         self.show_field(list(self.vehicles.values()), True)
-
-
-class PriorityQueue:
-    """ Class for priority queue """
-    def __init__(self):
-        self.queue = []
-        self.index = 0
-
-    def push(self, board, priority):
-        heapq.heappush(self.queue, (priority, self.index, board))
-        self.index += 1
-
-    def get_prio(self):
-        return heapq.heappop(self.queue)[-1]
-
-    def isempty(self):
-        return len(self.queue) == 0

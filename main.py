@@ -1,23 +1,42 @@
-"""
-File containing.
-"""
-
+""" Module containing the Main class for starting various Rush Hour solvers. """
 import os, sys, csv
+import numpy as np
+import statistics as stat
+import matplotlib.pyplot as plt
 
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "classes"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
 
-import numpy as np
-import statistics as stat
-import matplotlib.pyplot as plt
-import depth_first, breadth_first, breadth_first_small_archive, random
+import depth_first, breadth_first, breadth_first_small_archive, best_first, random
 from rush import RushHour
 
+
 class Main():
+    """ Main class for starting various Rush Hour solvers.
+
+    Attributes:
+    board_no -- game number, needed in show_plot function
+    board -- directory in data folder of the game to be solved
+    rush -- RushHour object of the game to be solved
+    results_csv -- directory to a csv-file in the results folder where the
+                   results of the random solver will be registered.
+
+    Methods:
+    call_random -- call random solver using a bound (optional). Results will be
+                   written to a csv-file in the results folder.
+    show_plot -- helper function for call_random. Show the plot belonging to the
+                 random game called.
+    call_depth_first -- call depth first solver for Rush Hour game.
+    call_breadth_first -- call breadth first solver for Rush Hour game.
+    call best_first -- call best first solver for Rush Hour game.
+    call_breadth_first_small_archive -- call breadth first solver for Rush Hour
+                                        game with small archive
+    """
 
     def __init__(self, board):
+        self.board_no = board
         self.board = f"data/game{board}.txt"
         self.rush = RushHour(f"data/game{board}.txt")
         self.results_csv = f"results/random_bb_whole_step_results/csv_data/random_bb_whole_step_game{board}.csv"
@@ -44,12 +63,12 @@ class Main():
                 writer.writerow([moves, runtime])
 
         # plot histogram
-        moves_info = self.hist_plot(self.results_csv, 'Random')
+        moves_info = self.show_plot(self.results_csv, 'Random')
 
         # print results
         [print(f"{key}: {value}") for key, value in moves_info.items()]
 
-    def hist_plot(self, infile, algorithm):
+    def show_plot(self, infile, algorithm):
 
         algorithm = algorithm
 
@@ -67,22 +86,13 @@ class Main():
             # information
             moves_info = {}
             moves_info['total runs'] = len(moves)
-            moves_info['max'] = max(moves)
             moves_info['min'] = min(moves)
-            moves_info['mean'] = round(np.mean(moves), 2)
-            moves_info['median'] = np.median(moves)
-            moves_info['stddev'] = round(np.std(moves), 2)
 
             # histogram
             plt.style.use('ggplot')
             plt.rcParams["axes.edgecolor"] = "0.15"
             plt.rcParams["axes.linewidth"]  = 1.25
             plt.grid(b = True, axis = 'y', zorder = 0)
-            # plt.hist(moves, bins = 50, rwidth = 1, zorder = 3,edgecolor='black', linewidth=1.2)
-
-            # log scale
-            # plt.hist(moves, bins=np.logspace(1, round(np.log10(moves_info['max'])), 70), rwidth = 0.85, zorder = 3)
-            # plt.gca().set_xscale("log")
 
             plt.plot(moves)
 
@@ -111,7 +121,7 @@ class Main():
         moves, states = best_first.best_first(rush, heuristic)
         print(f"Moves: {moves}, States: {states}")
 
-    def call_breadth_first_2(self):
+    def call_breadth_first_small_archive(self):
         rush = RushHour(self.board)
         moves, states = algorithms.breadth_first_small_archive(rush)
         print(f"Moves: {moves}, States: {states}")
@@ -125,9 +135,9 @@ if __name__ == "__main__":
 
     # call algorithm via Main
     if algorithm == "show":
-        main.rush.show_field2(list(main.rush.vehicles.values()), False)
+        main.rush.show_field(list(main.rush.vehicles.values()), False)
     elif algorithm == "play":
-        main.rush.show_field2(list(main.rush.vehicles.values()), True)
+        main.rush.show_field(list(main.rush.vehicles.values()), True)
         main.rush.play(game)
     elif algorithm == "random":
         show = sys.argv[3]
@@ -144,5 +154,5 @@ if __name__ == "__main__":
     elif algorithm == "best_first":
         heuristic = sys.argv[3]
         main.call_best_first(heuristic)
-    elif algorithm == "breadth_first_2":
-        main.call_breadth_first_2()
+    elif algorithm == "breadth_first_small_archive":
+        main.call_breadth_first_small_archive()

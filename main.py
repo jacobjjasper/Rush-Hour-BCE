@@ -11,6 +11,10 @@ import statistics as stat
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import algorithms
+import depth_first
+import breadth_first
+import random
+import breadth_first_small_archive
 from rush import RushHour
 
 
@@ -21,7 +25,6 @@ class Main():
         self.board_no = board
         self.board = f"data/game{board}.txt"
         self.rush = RushHour(f"data/game{board}.txt")
-        # self.results_csv = f"results/random_1_step_game{board}.csv"
         self.results_csv = f"results/random_bb_whole_step_results/csv_data/random_bb_whole_step_game{board}.csv"
 
 
@@ -36,7 +39,7 @@ class Main():
             rush = RushHour(self.board)
 
             # run algorithm and get return values
-            moves, runtime = algorithms.random(rush, show, bound)
+            moves, runtime = random.random(rush, show, bound)
             bound = moves
             print(moves)
 
@@ -97,22 +100,20 @@ class Main():
             return moves_info
 
     def call_depth_first(self):
+        """ Run Depth First algorithm """
 
-        # makes new game every time
         rush = RushHour(self.board)
-
-        # run algorithm
-        winnings = algorithms.depth_first(rush)
+        winnings = depth_first.depth_first(rush)
         print(f"Moves: {min(winnings)} (best of {len(winnings)} wins)")
 
     def call_breadth_first(self):
         rush = RushHour(self.board)
-        moves, states = algorithms.breadth_first(rush)
+        moves, states = breadth_first.breadth_first(rush)
         print(f"Moves: {moves}, States: {states}")
 
     def call_best_first(self, heuristic):
         rush = RushHour(self.board)
-        moves, states = algorithms.best_first(rush, heuristic)
+        moves, states = best_first.best_first(rush, heuristic)
         print(f"Moves: {moves}, States: {states}")
 
     def call_breadth_first_2(self):

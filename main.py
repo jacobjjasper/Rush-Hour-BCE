@@ -113,7 +113,7 @@ class Main():
 
     def call_breadth_first_2(self):
         rush = RushHour(self.board)
-        moves, states = algorithms.breadth_first_2(rush)
+        moves, states = algorithms.breadth_first_small_archive(rush)
         print(f"Moves: {moves}, States: {states}")
 
 if __name__ == "__main__":

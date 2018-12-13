@@ -1,19 +1,19 @@
-"""
-File containing Depth First algorithm.
-"""
-
+""" Module containing Depth First algorithm to solve Rush Hour. Contains a
+function depth_first, which solves a Rush Hour game using depth first search."""
 from rush import RushHour
 
+
 def depth_first(game):
-    """
-    Last in first out
+    """ Depth First algorithm until game is won. Last in first out.
+
+    Keyword arguments:
+    game -- RushHour object
     """
 
     stack = []
     moves = 0
-    bound = 17
+    bound = 1
     winnings = []
-
     vehicles = list(game.vehicles.values())
 
     stack.append(vehicles)

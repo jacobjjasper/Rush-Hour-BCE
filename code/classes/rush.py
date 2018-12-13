@@ -1,173 +1,126 @@
+""" Module containing the RushHour object. """
 from vehicle import Vehicle
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
 import copy
 import heapq
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
+
 class RushHour(object):
+    """ Rush Hour class for loading and playing Rush Hour.
+
+    Attributes:
+    board -- directory in data folder of the game to be solved
+
+    Methods:
+    make_first_field -- make initial field
+    fill_field -- fill a field with vehicles
+    load_vehicle -- helper function for fill_field
+    show_field -- visualise the board
+    won -- check whether game is won
+    get_child_fields_1_step -- get child fields, moving vehicles one coordinate
+    get_child_fields_every_step -- get child fields, moving vehicles to every
+                                   possible coordinate
+    get_child_fields_whole_step -- get child fields, moving vehicles to the
+                                   furthest possible coordinate
+    is_unique -- check whether a field configuration has already been made
+    create_hash -- helper function for is_unique
+    create_hash_hex -- helper function for is_unique
+    cars_to_exit -- heuristic checking the number of vehicles blocking the red car
+    cars_in_traffic -- heuristic checking the number of vehicles to be moved in order
+                       to move the red car
+    check_traffic -- helper function for cars_in_traffic
+    play -- hardcoded solution for games 1 to 7
+    move -- helper function for play
     """
-    Rush Hour class for loading and playing Rush Hour
-    """
+
+
     def __init__(self, board):
         self.make_first_field(board)
-
-        # make field archive and add hash of initial field to the set
         self.archive = set()
         self.archive.add(self.create_hash(list(self.vehicles.values())))
 
-        # make field archive and add hash of initial field to the set (for small archive paradigm)
-        # self.all_archives = {}
-        # self.archive = set()
-        # self.archive.add(self.create_hash_hex(list(self.vehicles.values())))
-        # self.all_archives[0] = set([0])
-        # self.all_archives[1] = self.archive
-
 
     def make_first_field(self, field):
-        """
-        Creates list of all vehicles from file and calls load_vehicle()
+        """ Create initial field from text file. Parse the text file to get the
+        field size and each vehicle's properties. Also, initialise the field
+        to be filled.
+
+        Keyword arguments:
+        field -- directory in data folder of the game to be solved
         """
 
-        # create empty array of all vehicles
         self.vehicles = {}
 
-        # open text file with rush hour field
         with open(field) as file:
             reader = file.readlines()
-
-            # get field size
             self.size = int(reader[0])
             reader.pop(0)
-
-            # build field with list comprehension
             self.field = [[0 for i in range(self.size)] for n in range(self.size)]
 
-            # get every line in file
             for id, line in enumerate(reader, 2):
-
-                # strip from \n
                 line = line.strip()
-
                 if self.size > 10:
                     line = line.split()
-
                 type = line[0]
                 x = int(line[1])
                 y = int(line[2])
                 orientation = line[3]
-
-                # make either car or truck, else print error
                 if type == "C":
                     new = Vehicle(id, x, y, orientation, 2)
                 elif type == "T":
                     new = Vehicle(id, x, y, orientation, 3)
                 else:
                     print(line)
-
-                # append object to list of vehicles
                 self.vehicles[id] = new
 
-        # call fill_field function on list of vehicles
         self.fill_field(list(self.vehicles.values()))
 
+
     def fill_field(self, vehicles):
-        """
-        Fills field with list of vehicles
+        """ Fill field with vehicle objects. First, empty the current field.
+        Then, call load_vehicle to fill the field with vehicle objects.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
         """
 
-        # empty current field
         for index, y in enumerate(self.field):
             for i, x in enumerate(y):
                     self.field[index][i] = 0
 
-        # fill current field
         for vehicle in vehicles:
             self.load_vehicle(vehicle)
 
-        return True
 
     def load_vehicle(self, vehicle):
-        """
-        Loads one vehicle in matrix
-        """
+        """ Load one vehicle objects into the field matrix.
 
-        # get attributes from vehicle object
-        vehicle_length = vehicle.length
-        x = vehicle.x
-        y = vehicle.y
-        id = vehicle.id
-        orientation = vehicle.orientation
-
-        # horizontal
-        if orientation.upper() == 'H':
-
-            # if vehicle is of size 2, fill 2 spots
-            for i in range(vehicle_length):
-
-                # vehicle id on filled spot
-                self.field[y][x + i] = vehicle
-
-        # vertical
-        if orientation.upper() == 'V':
-            for i in range(vehicle_length):
-                self.field[y + i][x] = vehicle
-
-    def show_field(self):
-        """
-        All matplotlib details for showing the Rush Hour board
-        """
-        # copy field to new variable
-        print_field = copy.deepcopy(self.field)
-
-
-        # change objects into their integers for printing
-        for index, y in enumerate(print_field):
-            for i, x in enumerate(y):
-                if not isinstance(x, int):
-                    print_field[index][i] = x.id
-
-        # add ones around field
-        print_field = np.pad(print_field, ((1,1),(1,1)), 'constant', constant_values=1)
-
-        # add exit
-        exit_row = self.size - (self.size // 2 + 1) + 1
-        print_field[exit_row][-1] = 0
-
-        # create colormap: 0 = white, 1 = black, 2(myCar) = red
-        all_colors = ['w', 'k', 'r',
-                      'green', 'yellow', 'blue', 'orange', 'purple', 'cyan',
-                      'magenta', 'lime', 'pink', 'teal', 'brown', 'maroon',
-                      'olive', 'navy', 'grey',
-                      'g', 'y', 'b', 'orange', 'purple', 'cyan', 'magenta',
-                      'lime', 'pink', 'teal', 'brown', 'maroon',
-                      'olive', 'navy', 'grey',
-                      'g', 'y', 'b', 'orange', 'purple', 'cyan', 'magenta',
-                      'lime', 'pink', 'teal', 'brown', 'maroon',
-                      'olive', 'navy', 'grey']
-
-        colors = all_colors[0:len(self.vehicles) + 2]
-        cmap = ListedColormap(colors)
-
-        plt.matshow(print_field, cmap=cmap)
-        col_labels = range(self.size)
-        row_labels = range(self.size)
-        plt.xticks(range(1, self.size + 1), row_labels)
-        plt.gca().xaxis.tick_bottom()
-        plt.yticks(range(1, self.size + 1), col_labels)
-        # plt.show(block=False)
-        # plt.pause(0.0001)
-        # plt.close()
-        plt.show()
-
-    def show_field2(self, vehicles, type):
-        """
-        Show vehicles in Rush Hour board
-        Type is a boolean (T = continuous, F = static)
+        Keyword arguments:
+        vehicle -- vehicle object to be loaded into the field
         """
 
-        # get starting pixels x = 0, y = 0 on field image
+        if vehicle.orientation.upper() == 'H':
+            for i in range(vehicle.length):
+                self.field[vehicle.y][vehicle.x + i] = vehicle
+
+        if vehicle.orientation.upper() == 'V':
+            for i in range(vehicle.length):
+                self.field[vehicle.y + i][vehicle.x] = vehicle
+
+
+    def show_field(self, vehicles, type):
+        """ Show vehicles on Rush Hour board. Retreive background and vehicles
+        images from data folder and place vehicles on their coordinates corresponding
+        to pixels on the image/plot. Can show 6x6, 9x9 and 12x12 fields.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects to be shown
+        type -- boolean (True = continuous representation, False = static representation)
+        """
+
+        # starting pixels x = 0, y = 0 on field image
         start_x = 78
         start_y = 45
 
@@ -179,50 +132,32 @@ class RushHour(object):
         elif self.size == 12:
             block_width = 68.5
 
-        # get field without vehicles
         field = plt.imread(f"data/RushHourImages/RushHour{self.size}.jpg")
-
-        # show field with subplots to park the vehicles
         fig, ax = plt.subplots()
         plt.imshow(field)
         plt.axis('off')
 
-        # iterate through list of vehicles
         for vehicle in vehicles:
-            x = vehicle.x
-            y = vehicle.y
-
-            # horizontal
             if vehicle.orientation == 'H':
-
-                # give x and y their pixel coordinates
-                x = start_x + (x * block_width)
-                y = start_y + (y * block_width)
-
-                # get car or truck image
+                x = start_x + (vehicle.x * block_width)
+                y = start_y + (vehicle.y * block_width)
                 if vehicle.length == 2:
                     car = plt.imread(f"data/RushHourImages/Car{vehicle.id}.png")
                 else:
                     car = plt.imread(f"data/RushHourImages/Truck{vehicle.id}.png")
 
-                    # the image coordinate is his middle, which changes with the length of the car
+                    # truck: the image coordinate is his middle, which changes with the length of the car
                     x += 40
 
-            # vertical
             if vehicle.orientation == 'V':
-
-                # swap x and y starting coordinates
-                x = start_y + (x * block_width)
-                y = start_x + (y * block_width)
-
-                # get image the same way, but rotated
+                x = start_y + (vehicle.x * block_width)
+                y = start_x + (vehicle.y * block_width)
                 if vehicle.length == 2:
                     car = plt.imread(f"data/RushHourImages/Car-rotated{vehicle.id}.png")
                 else:
                     car = plt.imread(f"data/RushHourImages/Truck-rotated{vehicle.id}.png")
                     y += 40
 
-            # change the size of the vehicle images, depending on field size
             if self.size == 6:
                 imagebox = OffsetImage(car, zoom=0.6)
             elif self.size == 9:
@@ -230,13 +165,11 @@ class RushHour(object):
             elif self.size == 12:
                 imagebox = OffsetImage(car, zoom=0.3)
 
-            # place frame on vehicle to place on coordinate (set off frame after)
             imagebox.image.axes = ax
             xy = (x, y)
             ab = AnnotationBbox(imagebox, xy, frameon=False)
             ax.add_artist(ab)
 
-        # show one field or close plot to show multiple continuously
         if type == True:
             plt.show(block=False)
             plt.pause(0.001)
@@ -246,172 +179,64 @@ class RushHour(object):
 
 
     def won(self, vehicles):
-        """
-        Game is won
+        """ Check whether the game is won. Check whether the red car is situated
+        in front of the exit. Return a boolean True when won, else False.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
         """
 
-        # first vehicle is always the red car
         return vehicles[0].x == self.size - 2
 
 
     def get_child_fields_1_step(self, vehicles):
-        """ Comments """
+        """ Get child fields, moving vehicles one coordinate. The function is
+        dependent on self.field being filled by the fill_field function. Return
+        a list containing lists of possible vehicle configurations.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
+        """
 
         child_fields = []
-
         for vehicle in vehicles:
-
-            x = vehicle.x
-            y = vehicle.y
-
-            # if vehicle is horizontal
             if vehicle.orientation == 'H':
 
-                # if vehicle is not on left edge
-                if x != 0:
-
-                    # if not blocked by other vehicle
-                    if self.field[y][x - 1] == 0:
-
-                        # copy parent field
+                # move left
+                if vehicle.x != 0:
+                    if self.field[vehicle.y][vehicle.x - 1] == 0:
                         new_vehicles = vehicles.copy()
-
-                        # create new vehicle
-                        new_vehicle = Vehicle(vehicle.id, x - 1, y, vehicle.orientation, vehicle.length)
-
-                        # exchange old with new vehicle, -2 because first vehicle id is 2
-                        new_vehicles[vehicle.id - 2] = new_vehicle
-
-                        # add to child_fields
-                        child_fields.append(new_vehicles)
-
-                # if vehicle is not on right edge
-                if x + vehicle.length != self.size:
-
-                    # if not blocked by other vehicle
-                    if self.field[y][x + vehicle.length] == 0:
-                        new_vehicles = vehicles.copy()
-                        new_vehicle = Vehicle(vehicle.id, x + 1, y, vehicle.orientation, vehicle.length)
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x - 1, vehicle.y,
+                                              vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
-            # if vehicle is vertical
+                # move right
+                if vehicle.x + vehicle.length != self.size:
+                    if self.field[vehicle.y][vehicle.x + vehicle.length] == 0:
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x + 1, vehicle.y,
+                                              vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
             if vehicle.orientation == 'V':
 
-                # if vehicle is not on upper edge
-                if y != 0:
-
-                    # if not blocked by other vehicle, move up
-                    if self.field[y - 1][x] == 0:
+                # move up
+                if vehicle.y != 0:
+                    if self.field[vehicle.y - 1][vehicle.x] == 0:
                         new_vehicles = vehicles.copy()
-                        new_vehicle = Vehicle(vehicle.id, x, y - 1, vehicle.orientation, vehicle.length)
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y - 1,
+                                              vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
-                # if vehicle is not on lower edge
+                # move down
                 if y + vehicle.length != self.size:
-
-                    # if not blocked by other vehicle, move down
-                    if self.field[y + vehicle.length][x] == 0:
+                    if self.field[vehicle.y + vehicle.length][vehicle.x] == 0:
                         new_vehicles = vehicles.copy()
-                        new_vehicle = Vehicle(vehicle.id, x, y + 1, vehicle.orientation, vehicle.length)
-                        new_vehicles[vehicle.id - 2] = new_vehicle
-                        child_fields.append(new_vehicles)
-
-        return child_fields
-
-
-    def get_child_fields_whole_step(self, vehicles):
-        """ Comments """
-
-        child_fields = []
-
-        for vehicle in vehicles:
-
-            x = vehicle.x
-            y = vehicle.y
-
-            # if vehicle is horizontal
-            if vehicle.orientation == 'H':
-
-                # if vehicle is not on left edge
-                if x != 0:
-
-                    # if not blocked by other vehicle, move left
-                    if self.field[y][x - 1] == 0:
-
-                        # check how many next blocks in field are 0
-                        i = 0
-                        while self.field[y][x - 1 - i] == 0:
-                            i += 1
-
-                            # break if next is not the edge
-                            if x - i == 0:
-                                break
-
-                        # get parent field
-                        new_vehicles = vehicles.copy()
-
-                        # create new vehicle
-                        new_vehicle = Vehicle(vehicle.id, x - i, y, vehicle.orientation, vehicle.length)
-
-                        # exchange old with new vehicle
-                        new_vehicles[vehicle.id - 2] = new_vehicle
-
-                        # add to child_fields
-                        child_fields.append(new_vehicles)
-
-                # if vehicle is not on right edge
-                if x + vehicle.length != self.size:
-
-                    # if not blocked by other vehicle, move right
-                    if self.field[y][x + vehicle.length] == 0:
-
-                        i = 0
-                        while self.field[y][x + vehicle.length + i] == 0:
-                            i += 1
-                            if x + vehicle.length + i == self.size:
-                                break
-
-                        new_vehicles = vehicles.copy()
-                        new_vehicle = Vehicle(vehicle.id, x + i, y, vehicle.orientation, vehicle.length)
-                        new_vehicles[vehicle.id - 2] = new_vehicle
-                        child_fields.append(new_vehicles)
-
-            # if vehicle is vertical
-            if vehicle.orientation == 'V':
-
-                # if vehicle is not on upper edge
-                if y != 0:
-
-                    # if not blocked by other vehicle, move up
-                    if self.field[y - 1][x] == 0:
-
-                        i = 0
-                        while self.field[y - 1 - i][x] == 0:
-                            i += 1
-                            if y - i == 0:
-                                break
-
-                        new_vehicles = vehicles.copy()
-                        new_vehicle = Vehicle(vehicle.id, x, y - i, vehicle.orientation, vehicle.length)
-                        new_vehicles[vehicle.id - 2] = new_vehicle
-                        child_fields.append(new_vehicles)
-
-                # if vehicle is not on lower edge
-                if y + vehicle.length != self.size:
-
-                    # if not blocked by other vehicle, move down
-                    if self.field[y + vehicle.length][x] == 0:
-
-                        i = 0
-                        while self.field[y + vehicle.length + i][x] == 0:
-                            i += 1
-                            if y + vehicle.length + i == self.size:
-                                break
-
-                        new_vehicles = vehicles.copy()
-                        new_vehicle = Vehicle(vehicle.id, x, y + i, vehicle.orientation, vehicle.length)
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y + 1,
+                                              vehicle.orientation, vehicle.length)
                         new_vehicles[vehicle.id - 2] = new_vehicle
                         child_fields.append(new_vehicles)
 
@@ -419,90 +244,73 @@ class RushHour(object):
 
 
     def get_child_fields_every_step(self, vehicles):
-        """ Comments """
+        """ Get child fields, moving vehicles to every possible coordinate.
+        The function is dependent on self.field being filled by the fill_field function.
+        Return a list containing lists of possible vehicle configurations.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
+        """
 
         child_fields = []
-
         for vehicle in vehicles:
 
-            x = vehicle.x
-            y = vehicle.y
-
-            # if vehicle is horizontal
             if vehicle.orientation == 'H':
 
-                # if vehicle is not on left edge
-                if x != 0:
-
-                        # check how many next blocks in field are 0
+                # move left
+                if vehicle.x != 0:
                         i = 1
-                        while self.field[y][x - i] == 0:
-
-                            # get parent field
+                        while self.field[vehicle.y][vehicle.x - i] == 0:
                             new_vehicles = vehicles.copy()
-
-                            # create new vehicle
-                            new_vehicle = Vehicle(vehicle.id, x - i, y, vehicle.orientation, vehicle.length)
-
-                            # exchange old with new vehicle
-                            new_vehicles[vehicle.id - 2] = new_vehicle
-
-                            # add to child_fields
-                            child_fields.append(new_vehicles)
-
-                            # break if next is on the edge
-                            if x - i == 0:
-                                break
-                            else:
-
-                                # go to next place
-                                i += 1
-
-
-                # if vehicle is not on right edge
-                if x + vehicle.length != self.size:
-
-                        i = 1
-                        while self.field[y][x + vehicle.length - 1 + i] == 0:
-                            new_vehicles = vehicles.copy()
-                            new_vehicle = Vehicle(vehicle.id, x + i, y, vehicle.orientation, vehicle.length)
+                            new_vehicle = Vehicle(vehicle.id, vehicle.x - i, vehicle.y,
+                                                  vehicle.orientation, vehicle.length)
                             new_vehicles[vehicle.id - 2] = new_vehicle
                             child_fields.append(new_vehicles)
-
-                            if x + vehicle.length + i == self.size:
+                            if vehicle.x - i == 0:
                                 break
                             else:
                                 i += 1
 
-            # if vehicle is vertical
+                # move right
+                if vehicle.x + vehicle.length != self.size:
+                        i = 1
+                        while self.field[vehicle.y][vehicle.x + vehicle.length - 1 + i] == 0:
+                            new_vehicles = vehicles.copy()
+                            new_vehicle = Vehicle(vehicle.id, vehicle.x + i, vehicle.y,
+                                                  vehicle.orientation, vehicle.length)
+                            new_vehicles[vehicle.id - 2] = new_vehicle
+                            child_fields.append(new_vehicles)
+                            if vehicle.x + vehicle.length + i == self.size:
+                                break
+                            else:
+                                i += 1
+
             if vehicle.orientation == 'V':
 
-                # if vehicle is not on upper edge
-                if y != 0:
-
+                # move up
+                if vehicle.y != 0:
                         i = 1
-                        while self.field[y - i][x] == 0:
+                        while self.field[vehicle.y - i][vehicle.x] == 0:
                             new_vehicles = vehicles.copy()
-                            new_vehicle = Vehicle(vehicle.id, x, y - i, vehicle.orientation, vehicle.length)
+                            new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y - i,
+                                                  vehicle.orientation, vehicle.length)
                             new_vehicles[vehicle.id - 2] = new_vehicle
                             child_fields.append(new_vehicles)
-
                             if y - i == 0:
                                 break
                             else:
                                 i += 1
 
-                # if vehicle is not on lower edge
-                if y + vehicle.length != self.size:
-
+                # move down
+                if vehicle.y + vehicle.length != self.size:
                         i = 1
-                        while self.field[y + vehicle.length - 1 + i][x] == 0:
+                        while self.field[vehicle.y + vehicle.length - 1 + i][vehicle.x] == 0:
                             new_vehicles = vehicles.copy()
-                            new_vehicle = Vehicle(vehicle.id, x, y + i, vehicle.orientation, vehicle.length)
+                            new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y + i,
+                                                  vehicle.orientation, vehicle.length)
                             new_vehicles[vehicle.id - 2] = new_vehicle
                             child_fields.append(new_vehicles)
-
-                            if y + vehicle.length + i == self.size:
+                            if vehicle.y + vehicle.length + i == self.size:
                                 break
                             else:
                                 i += 1
@@ -510,80 +318,134 @@ class RushHour(object):
         return child_fields
 
 
+    def get_child_fields_whole_step(self, vehicles):
+        """ Get child fields, moving vehicles to their furthest possible coordinate.
+        The function is dependent on self.field being filled by the fill_field function.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
+        """
+
+        child_fields = []
+        for vehicle in vehicles:
+            if vehicle.orientation == 'H':
+
+                # move left
+                if vehicle.x != 0:
+                    if self.field[vehicle.y][vehicle.x - 1] == 0:
+                        i = 0
+                        while self.field[vehicle.y][vehicle.x - 1 - i] == 0:
+                            i += 1
+                            if vehicle.x - i == 0:
+                                break
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x - i, vehicle.y,
+                                              vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+                # move right
+                if vehicle.x + vehicle.length != self.size:
+                    if self.field[vehicle.y][vehicle.x + vehicle.length] == 0:
+                        i = 0
+                        while self.field[vehicle.y][vehicle.x + vehicle.length + i] == 0:
+                            i += 1
+                            if vehicle.x + vehicle.length + i == self.size:
+                                break
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x + i, vehicle.y,
+                                              vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+            if vehicle.orientation == 'V':
+
+                # move up
+                if vehicle.y != 0:
+                    if self.field[vehicle.y - 1][vehicle.x] == 0:
+                        i = 0
+                        while self.field[vehicle.y - 1 - i][vehicle.x] == 0:
+                            i += 1
+                            if vehicle.y - i == 0:
+                                break
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y - i,
+                                              vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+                # move down
+                if vehicle.y + vehicle.length != self.size:
+                    if self.field[vehicle.y + vehicle.length][vehicle.x] == 0:
+                        i = 0
+                        while self.field[vehicle.y + vehicle.length + i][vehicle.x] == 0:
+                            i += 1
+                            if vehicle.y + vehicle.length + i == self.size:
+                                break
+                        new_vehicles = vehicles.copy()
+                        new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y + i,
+                                              vehicle.orientation, vehicle.length)
+                        new_vehicles[vehicle.id - 2] = new_vehicle
+                        child_fields.append(new_vehicles)
+
+        return child_fields
+
+
     def is_unique(self, field):
-        """
-        Return true if field is not in archive, calls hash function
+        """ Check whether a field configuration has already been made by storing
+        it in an archive set. Hash field using create_hash function. Return true
+        if field is not in archive, thus being unique.
+
+        Keyword arguments:
+        field -- list of vehicle objects
         """
 
-        # remember old length of archive (type: set)
         old_length = len(self.archive)
-
-        # add hash value of field to archive
         self.archive.add(self.create_hash(field))
-
-        # if it has been added, the field is unique
         return len(self.archive) > old_length
 
 
-        # # check whether there already is an archive for this layer. If not,
-        # #  add a new set and add the hash to it
-        # if not moves in [key for key, value in self.all_archives.items()]:
-        #     self.all_archives[moves] = set()
-        #     old_length_curr = 0
-        #     old_length_prev = len(self.all_archives[moves - 1])
-        #     self.all_archives[moves].add(self.create_hash_hex(field))
-        #     self.all_archives[moves - 1].add(self.create_hash_hex(field))
-        #
-        # else:
-        #     # remember old length of layer archive (type: set)
-        #     old_length_curr = len(self.all_archives[moves])
-        #     old_length_prev = len(self.all_archives[moves - 1])
-        #
-        #     self.all_archives[moves].add(self.create_hash_hex(field))
-        #     self.all_archives[moves - 1].add(self.create_hash_hex(field))
-        # # if it has been added, the field is unique
-        # return len(self.all_archives[moves]) > old_length_curr and len(self.all_archives[moves - 1]) > old_length_prev
-
-
-    # def update_archive(self, moves):
-    #
-    #     if moves > 1:
-    #         self.all_archives[moves - 2] = 0
-    #
-    #     # print(self.all_archives[moves-1])
-    #     else:
-    #         self.all_archives[moves - 1] = 0
-    #
-    #     return True
-
     def create_hash(self, vehicles):
-        """ Creates a unique respresentation of field """
+        """ Create a unique respresentation of the field. The field is represented
+        by an integer. Every vehicle is represented by a single digit in this
+        integer, ordered by id: vehicle 1 will always be on the last place of the
+        integer, vehicle 2 will be represented on the second to last place, et cetera.
+        This order is always maintained, as the get_child_fields functions render
+        lists of vehicles ordered based on their id. To avoid multiplying by a
+        value of 0, 1 is added to every coordinate (which can be 0). This hash
+        function does not work on fields larger than 9x9. Return the hash integer.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
+        """
 
         field = 0
-
         for i, vehicle in enumerate(vehicles):
             if vehicle.orientation == 'H':
-
-                # add coordinate to integer field, as if it's made up of
-                # single digits -> from the last car id until the red car
-                # coordinate + 1, because multiplying with 0 doesn't work
-                # this only works for fields 9 x 9 or smaller
                 x = vehicle.x + 1
                 field += x * pow(10, i)
             else:
                 y = vehicle.y + 1
                 field += y * pow(10, i)
-
         return field
 
+
     def create_hash_hex(self, vehicles):
-        """ Creates a unique respresentation of field """
+        """ Create a unique respresentation of fields larger than 9x9. The field
+        is represented in a string. Every vehicle is represented by a single character
+        in this string, ordered by id: vehicle 1 will always be on the first place of the
+        string, vehicle 2 will be represented on place two, et cetera. This order
+        is always maintained, as the get_child_fields functions render lists of
+        vehicles ordered based on their id. This function is made especially
+        for fields of size 12x12. Return the hash string.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
+        """
 
         field = ""
-
         for i, vehicle in enumerate(vehicles):
             if vehicle.orientation == 'H':
-
                 x = vehicle.x
                 if x == 10:
                     x = "a"
@@ -597,136 +459,128 @@ class RushHour(object):
                 elif y == 11:
                     y = "b"
                 field += str(y)
-
         return field
 
 
     def cars_to_exit(self, vehicles):
-        """
-        Checks whether a car is blocking the red car.
-        Heuristic: fewer cars between the red car and the exit makes for a
-        higher priority.
+        """ Heuristic: check how many cars are blocking the red car from leaving
+        the board. Fewer cars between the red car and the exit eventually make
+        for a higher priority, as the boards score is dependent on the number of
+        cars between the red car and the exit.
+        First, fill the field with vehicle objects. Check whether the red car,
+        which is on index 0 of the vehicles list, is blocked by other vehicles.
+        For every vehicle blocking the car, add 1 to blocking_vehicles. Return
+        blocking_vehicles.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
         """
 
         self.fill_field(vehicles)
-
-        # get red car's x
-        my_car = vehicles[0]
-
-        # if red car is on x = 4, the game is finished
-        # return 0 means priority = 0, i.e. the highest priority
-        if my_car.x == self.size - 2:
-            return 0
-
         blocking_vehicles = 0
-        blocks_to_exit = self.size - (my_car.x + 2)
+
+        if won(vehicles):
+            return blocking_vehicles
+
+        blocks_to_exit = self.size - (vehicles[0].x + 2)
         for i in range(blocks_to_exit):
-            if not self.field[my_car.y][my_car.x + 2 + i] == 0:
+            if not self.field[vehicles[0].y][vehicles[0].x + 2 + i] == 0:
                 blocking_vehicles += 1
 
         return blocking_vehicles
 
-    def cars_in_traffic(self, vehicles):
-        self.fill_field(vehicles)
 
+    def cars_in_traffic(self, vehicles):
+        """ Heuristic: starting from the red car, check how many vehicles need
+        to be moved before the red car can move towards the exit.
+        First, fill the field with vehicle objects. Check whether the red car,
+        which is on index 0 of the vehicles list, can move towards the exit.
+        If the car is blocked, add 1 to prio and check whether the blocking vehicle
+        can move using the function check_traffic. If not, add 1 to prio and check
+        whether its blocking vehicle can move, et cetera. Store which vehicles
+        have already been checked, to prevent ending up in a loop. If a vehicle can
+        indeed move, return prio.
+
+        Keyword arguments:
+        vehicles -- list of vehicle objects
+        """
+
+        self.fill_field(vehicles)
         prio = 0
 
-        if vehicles[0].x == self.size - 2:
+        if won(vehicles):
             return prio
 
-        # check for first vehicle blocking
+        # get first vehicle blocking exit
         i = 1
         while self.field[vehicles[0].y][vehicles[0].x + 1 + i] == 0:
             i += 1
-
-            # return 0 if no vehicles blocking red car
             if vehicles[0].x + 1 + i == self.size:
-                return 0
-
-        # get first vehicle blocking exit
+                return prio
         vehicle = self.field[vehicles[0].y][vehicles[0].x + 1 + i]
         prio += 1
 
         archive = []
         archive.append(vehicle.id)
-
-        # get vehicles that block current vehicle
         blocking_traffic = self.check_traffic(vehicle)
 
         while not len(blocking_traffic) == 0:
-
-            # check blocking_traffic
             vehicle = blocking_traffic.pop(0)
-
-            # if vehicle is checked, go to next
             if vehicle.id in archive:
                 continue
             else:
                 archive.append(vehicle.id)
                 prio += 1
-
-
-
             list = self.check_traffic(vehicle)
             if len(list) == 0:
                 break
             blocking_traffic.extend(list)
 
-
         return prio
 
 
     def check_traffic(self, vehicle):
-        x = vehicle.x
-        y = vehicle.y
-        length = vehicle.length
+        """ Helper function for cars_in_traffic. Check whether a vehicle is
+        blocked by another vehicle. Relies on self.field to be filled beforehand
+        with vehicle objects, which should happen in the cars_in_traffic function.
+        Check whether the car can move one block in its orientaion. If a vehicle
+        is blocking its movement. Append the blocking vehicle to blocking_traffic.
+        Return blocking_traffic.
+
+        Keyword arguments:
+        vehicle -- vehicle object
+        """
 
         blocking_traffic = []
 
+        # check both down and up
         if vehicle.orientation == 'V':
+            if not vehicle.y + vehicle.length == self.size:
+                if not self.field[vehicle.y + vehicle.length][vehicle.x] == 0:
+                    blocking_traffic.append(self.field[vehicle.y + vehicle.length][vehicle.x])
+            if not vehicle.y == 0:
+                if not self.field[vehicle.y - 1][vehicle.x] == 0:
+                    blocking_traffic.append(self.field[vehicle.y - 1][vehicle.x])
 
-            # check below if other vehicle and if not edge
-            if not y + length == self.size:
-                if not self.field[y + length][x] == 0:
-                    blocking_traffic.append(self.field[y + length][x])
-
-            # check above
-            if not y == 0:
-                if not self.field[y - 1][x] == 0:
-                    blocking_traffic.append(self.field[y - 1][x])
-
-        # if vehicle is horizontal
+        # check both right and left
         else:
-            # check right
-            if not x + length == self.size:
-                if not self.field[y][x + length] == 0:
-                    blocking_traffic.append(self.field[y][x + length])
-
-            # check left
-            if not x == 0:
-                if not self.field[y][x - 1] == 0:
-                    blocking_traffic.append(self.field[y][x - 1])
+            if not vehicle.x + vehicle.length == self.size:
+                if not self.field[vehicle.y][vehicle.x + vehicle.length] == 0:
+                    blocking_traffic.append(self.field[vehicle.y][vehicle.x + vehicle.length])
+            if not vehicle.x == 0:
+                if not self.field[vehicle.y][vehicle.x - 1] == 0:
+                    blocking_traffic.append(self.field[vehicle.y][vehicle.x - 1])
 
         return blocking_traffic
 
-    def both(self, vehicles):
-        return self.cars_for_exit(vehicles) + self.cars_in_traffic(vehicles)
-
-    def heuristic_game7(self, vehicles):
-        self.fill_field(vehicles)
-
-        empty_spots = [[11, 3],[10, 4], [11, 4], [6, 5], [7, 5], [8, 5], [9, 5],
-                       [8, 6], [8, 7], [10, 8], [7, 9], [7, 10] ,[8, 10]]
-
-        for coordinate in empty_spots:
-            if not self.field[coordinate[1]][coordinate[0]] == 0:
-                return 100
-
-        return 0
 
     def play(self, game):
-        """
-        Show visualization of game being won (hardcoded)
+        """ Show visualization of game being won (hardcoded). Implement moves
+        for the visualisation of a game being won. The moves are hardcoded for
+        the purpose of being able to show a winning sequence of moves.
+
+        Keyword arguments:
+        game -- game id (1 to 7)
         """
         if game == "1":
             self.move(6, -4)
@@ -768,9 +622,6 @@ class RushHour(object):
             # leave red vehicle in place to show game is actually won
             for i in range(8):
                 self.move(2, 0)
-
-
-
 
         elif game == "2":
             self.move(3, - 2)
@@ -944,26 +795,25 @@ class RushHour(object):
             for i in range(8):
                 self.move(2, 0)
 
+
     def move(self, id, move):
+        """ Helper function for play function. Move one vehicle left, right,
+        up or down a number of blocks. Show the resulting field using the function
+        show_field.
+
+        Keyword arguments:
+        id -- the id of the vehicle to be moved
+        move -- number of blocks to be moved (negative: left or up, positive:
+                right or down)
         """
-        Move vehicle
-        """
+
         vehicle = self.vehicles[id]
-
-
-        # if vehicle is placed horizontally
         if vehicle.orientation == 'H' :
-
-            # move vehicle
             self.vehicles[id].x += move
-
         elif vehicle.orientation == 'V':
             self.vehicles[id].y += move
-
-
-        # fill field and show move quick
         self.fill_field(list(self.vehicles.values()))
-        self.show_field2(list(self.vehicles.values()), True)
+        self.show_field(list(self.vehicles.values()), True)
 
 
 class PriorityQueue:

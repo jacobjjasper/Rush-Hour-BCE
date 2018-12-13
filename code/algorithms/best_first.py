@@ -1,50 +1,41 @@
-"""
-File containing Best First algorithm.
-"""
-
+""" Module containing Best First algorithm to solve Rush Hour. Contains a
+function best_first, which solves a Rush Hour game using breadth first search
+combined with a heuristic of choice."""
 from rush import RushHour, PriorityQueue
 
 
 def best_first(game, heuristic):
-    """ Best-First with priority """
+    """ Create priority queue for all child fields of Rush Hour board, get first
+    in first out. Check if field is unique, then call heuristic and append to queue.
+    Heuristic 'cars to exit' counts the number of cars blocking the red car to the exit.
+    Hueristic 'cars in traffic' counts the number of cars to move, before the
+    red car can be moved.
+    Return number of moves needed to solve the game and number of states checked.
 
-    # to proberen:
-    # deque for fast appends and pops
+    Keyword arguments:
+    game -- RushHour object
+    heuristic -- string containing heuristic to apply
+    """
+
     queue = PriorityQueue()
     moves = 0
     states = 0
-
     vehicles = list(game.vehicles.values())
-
-    # append field and moves to queue
     queue.push([moves, vehicles], 0)
 
     while not game.won(vehicles):
-
-        # get first (highest priority) item from queue
         moves, vehicles = queue.get_prio()
-
-        # fill game.field with vehicles
         game.fill_field(vehicles)
-        # game.show_field2(vehicles, True)
-
-        # get childs
         child_fields = game.get_child_fields_whole_step(vehicles)
-
         moves += 1
         states += 1
         print(moves)
-
-        # check if field is in archive and add to queue
         for field in child_fields:
             if game.is_unique(field):
                 if heuristic == "cars_to_exit":
                     priority = moves + game.cars_to_exit(field)
                 elif heuristic == "cars_in_traffic":
                     priority = moves + game.cars_in_traffic(field)
-
                 queue.push([moves, field], priority)
-
-
 
     return moves, states

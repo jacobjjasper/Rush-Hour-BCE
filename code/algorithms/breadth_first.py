@@ -1,9 +1,11 @@
-from rush import RushHour, PriorityQueue
-import time
-import secrets
+"""
+File containing Breadth First algorithm.
+"""
+
+from rush import RushHour
 from collections import deque
 
-def breadth_first_2(game):
+def breadth_first(game):
     """
     First in first out
     """
@@ -18,11 +20,6 @@ def breadth_first_2(game):
     # append field and moves to queue
     queue.append(vehicles)
     queue.append(moves)
-
-    previous = []
-    current = []
-
-    previous.append(game.create_hash_hex(vehicles))
 
     while not game.won(vehicles):
 
@@ -43,14 +40,12 @@ def breadth_first_2(game):
         print(moves, states)
 
         # check if field is in archive and add to queue
+        # ADDED: moves in is_unique(). Delete also in function when we don't use
+        # the archive trick
         for field in child_fields:
-            hash = game.create_hash_hex(field)
-            if not hash in previous:
+            if game.is_unique(field):
                 queue.append(field)
                 queue.append(moves)
-                current.append(hash)
-
-        # exchange previous for child fields
-        previous = current
+        # game.update_archive(moves)
 
     return moves, states

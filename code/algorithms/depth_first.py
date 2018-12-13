@@ -1,3 +1,7 @@
+"""
+File containing Depth First algorithm.
+"""
+
 from rush import RushHour
 
 def depth_first(game):

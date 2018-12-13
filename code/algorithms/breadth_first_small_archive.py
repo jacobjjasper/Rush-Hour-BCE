@@ -1,9 +1,14 @@
-from rush import RushHour
+"""
+File containing Breadth First algorithm which only holds the previous
+generation as archive.
+"""
+
+from rush import RushHour, PriorityQueue
 import time
 import secrets
 from collections import deque
 
-def breadth_first(game):
+def breadth_first_2(game):
     """
     First in first out
     """
@@ -18,6 +23,11 @@ def breadth_first(game):
     # append field and moves to queue
     queue.append(vehicles)
     queue.append(moves)
+
+    previous = []
+    current = []
+
+    previous.append(game.create_hash_hex(vehicles))
 
     while not game.won(vehicles):
 
@@ -38,12 +48,14 @@ def breadth_first(game):
         print(moves, states)
 
         # check if field is in archive and add to queue
-        # ADDED: moves in is_unique(). Delete also in function when we don't use
-        # the archive trick
         for field in child_fields:
-            if game.is_unique(field):
+            hash = game.create_hash_hex(field)
+            if not hash in previous:
                 queue.append(field)
                 queue.append(moves)
-        # game.update_archive(moves)
+                current.append(hash)
+
+        # exchange previous for child fields
+        previous = current
 
     return moves, states

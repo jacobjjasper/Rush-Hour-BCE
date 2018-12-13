@@ -1,3 +1,7 @@
+"""
+File containing Best First algorithm.
+"""
+
 from rush import RushHour, PriorityQueue
 
 

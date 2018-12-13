@@ -1,28 +1,23 @@
-# voeg de huidige structuur toe aan path
-import os, sys
-import csv
+"""
+File containing.
+"""
+
+import os, sys, csv
+
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
-# sys.path.append(os.path.join(directory, "code", "classes"))
-# sys.path.append(os.path.join(directory, "code", "algoritmes"))
+sys.path.append(os.path.join(directory, "code", "classes"))
+sys.path.append(os.path.join(directory, "code", "algorithms"))
 
 import numpy as np
 import statistics as stat
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-import algorithms
-import depth_first
-import breadth_first
-import random
-import breadth_first_small_archive
+import depth_first, breadth_first, breadth_first_small_archive, random
 from rush import RushHour
-
-
 
 class Main():
 
     def __init__(self, board):
-        self.board_no = board
         self.board = f"data/game{board}.txt"
         self.rush = RushHour(f"data/game{board}.txt")
         self.results_csv = f"results/random_bb_whole_step_results/csv_data/random_bb_whole_step_game{board}.csv"

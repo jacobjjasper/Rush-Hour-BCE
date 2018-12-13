@@ -1,3 +1,7 @@
+"""
+File containing random algorithm.
+"""
+
 from rush import RushHour
 import time
 import secrets

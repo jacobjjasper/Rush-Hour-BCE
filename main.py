@@ -137,7 +137,7 @@ if __name__ == "__main__":
     if algorithm == "show":
         main.rush.show_field(list(main.rush.vehicles.values()), False)
     elif algorithm == "play":
-        main.rush.show_field(list(main.rush.vehicles.values()), True)
+        main.rush.show_field(list(main.rush.vehicles.values()), False)
         main.rush.play(game)
     elif algorithm == "random":
         show = sys.argv[3]

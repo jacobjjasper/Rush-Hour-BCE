@@ -87,6 +87,7 @@ class Main():
             moves_info = {}
             moves_info['total runs'] = len(moves)
             moves_info['min'] = min(moves)
+            moves_info['bound'] = max(moves)
 
             # histogram
             plt.style.use('ggplot')
@@ -95,9 +96,9 @@ class Main():
             plt.grid(b = True, axis = 'y', zorder = 0)
 
             plt.plot(moves)
-
-            plt.suptitle('Number of steps to solution, branch & bound', fontsize = 16)
-            plt.title(f"{algorithm} solutions of game {self.board_no}")
+            plt.axis([-1000, 30000, 0, moves_info['bound']])
+            plt.suptitle('Number of steps to solution, with bound', fontsize = 16)
+            plt.title(f"{algorithm} solutions of game {self.board_no}, min = {moves_info['min']}")
             plt.xlabel('Runs')
             plt.ylabel('Number of moves')
             plt.show()
@@ -137,7 +138,7 @@ if __name__ == "__main__":
     if algorithm == "show":
         main.rush.show_field(list(main.rush.vehicles.values()), False)
     elif algorithm == "play":
-        main.rush.show_field(list(main.rush.vehicles.values()), False)
+        main.rush.show_field(list(main.rush.vehicles.values()), True)
         main.rush.play(game)
     elif algorithm == "random":
         show = sys.argv[3]

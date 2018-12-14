@@ -232,7 +232,7 @@ class RushHour(object):
                         child_fields.append(new_vehicles)
 
                 # move down
-                if y + vehicle.length != self.size:
+                if vehicle.y + vehicle.length != self.size:
                     if self.field[vehicle.y + vehicle.length][vehicle.x] == 0:
                         new_vehicles = vehicles.copy()
                         new_vehicle = Vehicle(vehicle.id, vehicle.x, vehicle.y + 1,
@@ -296,7 +296,7 @@ class RushHour(object):
                                                   vehicle.orientation, vehicle.length)
                             new_vehicles[vehicle.id - 2] = new_vehicle
                             child_fields.append(new_vehicles)
-                            if y - i == 0:
+                            if vehicle.y - i == 0:
                                 break
                             else:
                                 i += 1

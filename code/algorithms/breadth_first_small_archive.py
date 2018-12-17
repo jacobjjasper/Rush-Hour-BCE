@@ -21,10 +21,12 @@ def breadth_first_small_archive(game):
     vehicles = list(game.vehicles.values())
     queue.append(vehicles)
     queue.append(moves)
-    current = []
-    next = []
-    current.append(game.create_hash_hex(vehicles))
-    current.append(moves)
+
+    archive = [set(),0]
+    next = set()
+
+    archive[0].add(game.create_hash_hex(vehicles))
+    archive[1] = moves
 
     while not game.won(vehicles):
         vehicles = queue.popleft()
@@ -35,14 +37,15 @@ def breadth_first_small_archive(game):
         states += 1
         for field in child_fields:
             hash = game.create_hash_hex(field)
-            if not hash in current and not hash in next:
+            if not hash in archive[0] and not hash in next:
                 queue.append(field)
                 queue.append(moves)
-                next.append(hash)
-                next.append(moves)
-        if moves > current[1] + 1:
-            current = next
-            next = []
+                next.add(hash)
+
+        if moves > archive[1]:
+            archive[0] = next
+            archive[1] = moves
+            next = set()
             print(moves, states)
 
 

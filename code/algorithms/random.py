@@ -1,5 +1,6 @@
 """ File containing random algorithm to solve Rush Hour. Contains a function
-random which solves a Rush Hour game using random search."""
+random which solves a Rush Hour game using random search.
+"""
 from rush import RushHour
 import secrets
 
@@ -13,7 +14,6 @@ def random(game, show, bound):
     show -- boolean for visualization
     bound -- bound for branch & bound (default 0)
     """
-
     vehicles = list(game.vehicles.values())
     child_fields = game.get_child_fields_whole_step(vehicles)
     moves = 0

@@ -1,6 +1,7 @@
 """ Module containing Best First algorithm to solve Rush Hour. Contains a
 function best_first, which solves a Rush Hour game using breadth first search
-combined with a heuristic of choice."""
+combined with a heuristic of choice.
+"""
 from rush import RushHour
 from priority_queue import PriorityQueue
 
@@ -17,7 +18,6 @@ def best_first(game, heuristic):
     game -- RushHour object
     heuristic -- string containing heuristic to apply
     """
-
     queue = PriorityQueue()
     moves = 0
     states = 0

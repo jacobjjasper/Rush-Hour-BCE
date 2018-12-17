@@ -1,6 +1,9 @@
-""" File containing Breadth First algorithm to solve Rush Hour. """
+""" Module containing a Breadth First algorithm to solve Rush Hour. Contains a
+function breadth_first, which solves a Rush Hour game using depth first search.
+"""
 from rush import RushHour
 from collections import deque
+
 
 def breadth_first(game):
     """ Create queue for all child fields of Rush Hour board, get first in
@@ -10,7 +13,6 @@ def breadth_first(game):
     Keyword arguments:
     game -- RushHour object
     """
-
     queue = deque()
     moves = 0
     states = 0

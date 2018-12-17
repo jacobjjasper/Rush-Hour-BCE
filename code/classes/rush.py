@@ -50,7 +50,6 @@ class RushHour(object):
         Keyword arguments:
         field -- directory in data folder of the game to be solved
         """
-
         self.vehicles = {}
 
         with open(field) as file:
@@ -85,7 +84,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         for index, y in enumerate(self.field):
             for i, x in enumerate(y):
                     self.field[index][i] = 0
@@ -100,7 +98,6 @@ class RushHour(object):
         Keyword arguments:
         vehicle -- vehicle object to be loaded into the field
         """
-
         if vehicle.orientation.upper() == 'H':
             for i in range(vehicle.length):
                 self.field[vehicle.y][vehicle.x + i] = vehicle
@@ -185,7 +182,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         return vehicles[0].x == self.size - 2
 
 
@@ -197,7 +193,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         child_fields = []
         for vehicle in vehicles:
             if vehicle.orientation == 'H':
@@ -251,7 +246,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         child_fields = []
         for vehicle in vehicles:
 
@@ -325,7 +319,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         child_fields = []
         for vehicle in vehicles:
             if vehicle.orientation == 'H':
@@ -399,7 +392,6 @@ class RushHour(object):
         Keyword arguments:
         field -- list of vehicle objects
         """
-
         old_length = len(self.archive)
         self.archive.add(self.create_hash(field))
         return len(self.archive) > old_length
@@ -418,7 +410,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         field = 0
         for i, vehicle in enumerate(vehicles):
             if vehicle.orientation == 'H':
@@ -442,7 +433,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         field = ""
         for i, vehicle in enumerate(vehicles):
             if vehicle.orientation == 'H':
@@ -475,7 +465,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         self.fill_field(vehicles)
         blocking_vehicles = 0
 
@@ -504,7 +493,6 @@ class RushHour(object):
         Keyword arguments:
         vehicles -- list of vehicle objects
         """
-
         self.fill_field(vehicles)
         prio = 0
 
@@ -550,7 +538,6 @@ class RushHour(object):
         Keyword arguments:
         vehicle -- vehicle object
         """
-
         blocking_traffic = []
 
         # check both down and up
@@ -806,7 +793,6 @@ class RushHour(object):
         move -- number of blocks to be moved (negative: left or up, positive:
                 right or down)
         """
-
         vehicle = self.vehicles[id]
         if vehicle.orientation == 'H' :
             self.vehicles[id].x += move

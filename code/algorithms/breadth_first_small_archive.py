@@ -1,8 +1,8 @@
+""" Module containing a Breadth First algorithm which only holds the previous
+generation as archive. Contains a function breadth_first_small_archive, which
+solves a Rush Hour game using breadth first search, combined with a heavily
+downscaled archive.
 """
-Module containing Breadth First algorithm which only holds the previous
-generation as archive.
-"""
-
 from rush import RushHour
 from collections import deque
 
@@ -15,7 +15,6 @@ def breadth_first_small_archive(game):
     Keyword arguments:
     game -- RushHour object
     """
-
     queue = deque()
     moves = 0
     states = 0

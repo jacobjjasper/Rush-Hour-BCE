@@ -23,4 +23,4 @@ This folder contains data for loading in and visualizing Rush Hour games. A game
 
 ## Rush Hour Images
 This subfolder contains images for visualizing 6x6, 9x9 or 12x12 Rush Hour boards up to 40 vehicles. 
-These files are used by the function show_field in [rush.py](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/data/rush.py).
+These files are used by the function show_field in [rush.py](https://github.com/jacobjjasper/Rush-Hour-BCE/tree/master/code/classes/rush.py).

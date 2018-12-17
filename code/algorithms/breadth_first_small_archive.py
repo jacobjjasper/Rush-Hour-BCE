@@ -16,17 +16,15 @@ def breadth_first_small_archive(game):
     game -- RushHour object
     """
     queue = deque()
+    old_moves = 0
     moves = 0
     states = 0
     vehicles = list(game.vehicles.values())
     queue.append(vehicles)
     queue.append(moves)
-
-    archive = [set(),0]
+    archive = set()
     next = set()
-
-    archive[0].add(game.create_hash_hex(vehicles))
-    archive[1] = moves
+    archive.add(game.create_hash_hex(vehicles))
 
     while not game.won(vehicles):
         vehicles = queue.popleft()
@@ -37,16 +35,15 @@ def breadth_first_small_archive(game):
         states += 1
         for field in child_fields:
             hash = game.create_hash_hex(field)
-            if not hash in archive[0] and not hash in next:
+            if not hash in archive and not hash in next:
                 queue.append(field)
                 queue.append(moves)
                 next.add(hash)
 
-        if moves > archive[1]:
-            archive[0] = next
-            archive[1] = moves
+        if moves > old_moves:
+            archive = next
+            old_moves = moves
             next = set()
             print(moves, states)
-
 
     return moves, states

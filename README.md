@@ -6,7 +6,7 @@ Rush Hour looks like an easy game, but can be quite hard. The goal is to move th
 
 
 ## Data
-The following games will be played. The data files of these games are in the folder 'data2' and contain:
+The following games will be played. The data files of these games are in the folder 'data' and contain:
 * The game board size (e.g. 6, 9, or 12) on the first line
 * The red car on the second line
 * Other vehicles thereafter (no particular order)
